@@ -16,11 +16,25 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from django.conf.urls.static import static
+from django.conf import settings
+
+
+
 from . import views
 
 urlpatterns = [
+    # path('__debug__/',include('debug_toolbar.urls')), # 장고디버그툴바 사용
     path('admin/', admin.site.urls),
-    path('',views.HomeView.as_view(),name='home'),
-    path('labelcanner/',include('labelscanner.urls'))
-    path('showcase/',include('showcase.urls'))
+    path('',views.upload,name='home'),
+
+    # path('',views.HomeView.as_view(),name='home'),
+    # path('labelcanner/',include('labelscanner.urls')),
+    # path('showcase/',include('showcase.urls')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
