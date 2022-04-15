@@ -64,13 +64,13 @@ def upload(request):
         #<Teachable Machine>
         img_result = teachablemachine(file)
         
-        whisky_name = ["jameson","wildturckey"]
+        whisky_name = ["JAMESONE","WILD TURCKEY"]
         
 
         
         for order in range(2):
             print(np.max(img_result),img_result[0,order])
-            if img_result[0,order]>=0.9:
+            if img_result[0,order]>=0.999:
                 global name1
                 global percent1
                 name1 = whisky_name[order]
@@ -79,10 +79,10 @@ def upload(request):
             else:
                 name1 = "비슷한 위스키가 없습니다"
                 percent1 = "-"
-                continue
-
+                continue 
         
-        return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':img_result[0,0],'test_result2':img_result[0,1]})
+        
+        return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':"신기하지??!!!"})
     return render(request, 'home.html')
 
 

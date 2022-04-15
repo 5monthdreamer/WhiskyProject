@@ -9,7 +9,7 @@
 
 
 <main>
-    <section>
+    <!-- <section>
         <h1>My showcase</h1>
         <br>
         <figure>
@@ -17,7 +17,7 @@
             <figcaption></figcaption>
         </figure>  
     </section>
-    <br><br>
+    <br><br> -->
     <section>
         <h1>Whisky label scanner</h1>
         <br>
@@ -31,8 +31,6 @@
 
     </section>
 
-
-    
       <div class="container">
 
         <!--Simple Form-->
@@ -43,7 +41,6 @@
               <br>
               <button class="btn btn-dark my-4" type="submit">Submit</button>
         </form>
-
         <!--See Image Uploaded-->
         <h2 class="my-4">Whisky machine learning</h2>
         <div class="row">
@@ -51,14 +48,15 @@
           <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
             <img src="{{ file_url }}" class="img-fluid">
             <br>
-            <ul>{{ result1 }} : {{ result2 }}</ul>
+            <ul class="my-4">{{ result1 }} : {{ result2 }}</ul>
             <ul>{{test_result1}}</ul>
-            <ul>{{test_result2}}</ul>
             <br>
             <a class="btn btn-dark my-4" href="">Return to Homepage</a>
           {% else %}
           <p>No whisky picture added.</p>
           {% endif %}
+          <br>
+          <br>
         </div>
 
       </div>
