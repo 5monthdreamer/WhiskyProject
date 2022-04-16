@@ -1,7 +1,6 @@
 {%extends "base.html"%}
 
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
 
 
 {% block sidebar %}
@@ -9,66 +8,93 @@
 
 
 <main>
-    <!-- <section>
-        <h1>My showcase</h1>
+
+    <div class="container">
+        <h2 class="my-2">Whisky label scanner</h2>
         <br>
-        <figure>
-            <img src="https://media.giphy.com/media/3ohhwgtQD2DweNJzcA/giphy.gif"/>
-            <figcaption></figcaption>
-        </figure>  
-    </section>
-    <br><br> -->
-    <section>
-        <h1>Whisky label scanner</h1>
-        <br>
-        <a href="http://jiyk528.pythonanywhere.com/">
-            <figure>
-                <img src="https://lh5.googleusercontent.com/9_pogaVd58YbUnIFrRZuRxqKEQbjH0Cl0Xj6lKWZmnDVgMiJhqsXWbBgJGXWTMBxXZa0EIzY5oCP8n1WRIL-8rEwrk61L-3rNfY7wVr3-hrKlkmfrj1vpMsHcNKNNvCUFTNpnUhS"/>
-            <figcaption></figcaption>
-            </figure>          
-        </a>
+        <img src="https://lh5.googleusercontent.com/9_pogaVd58YbUnIFrRZuRxqKEQbjH0Cl0Xj6lKWZmnDVgMiJhqsXWbBgJGXWTMBxXZa0EIzY5oCP8n1WRIL-8rEwrk61L-3rNfY7wVr3-hrKlkmfrj1vpMsHcNKNNvCUFTNpnUhS" class="img-fluid"/>     
+    </div>
 
+    <br>
 
-    </section>
-
-      <div class="container">
-
-        <!--Simple Form-->
-        <h2 class="my-4">Add your whisky</h2>
-        <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-              <input type="file" name="upload" accept="image/*">
-              <br>
-              <button class="btn btn-dark my-4" type="submit">Submit</button>
-        </form>
-        <!--See Image Uploaded-->
-        <h2 class="my-4">Whisky machine learning</h2>
-        <div class="row">
-          {% if file_url %}
-          <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
-            <img src="{{ file_url }}" class="img-fluid">
-            <br>
-            <ul class="my-4">{{ result1 }} : {{ result2 }}</ul>
-            <ul>{{test_result1}}</ul>
-            <br>
-            <a class="btn btn-dark my-4" href="">Return to Homepage</a>
-          {% else %}
-          <p>No whisky picture added.</p>
-          {% endif %}
-          <br>
-          <br>
+    <div class="container">
+      <!--See Image Uploaded-->
+      <h2 class="my-2">Whisky Picture Scanning</h2>
+      <div class="row">
+        {% if file_url %}
+        <!-- style="width: 18rem;" -->
+        <div class="card" >
+          <img src="{{ file_url }}" class="card-img-top" alt="No image">
+          <div class="card-body">
+            <h5 class="whisky-name">{{ result1 }}</h5>
+            <p class="whisky-percent">Percentage : {{ result2 }}</p>
+            <a href="" class="btn btn-primary">Again</a>
+          </div>
         </div>
+        
 
+        {% else %}
+        <div class="card" >
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+                <input type="file" name="upload" accept="image/*">
+                <p>No whisky picture added</p>
+                <p>(It takes time to loading)</p>
+                <br>
+          <div class="card-body">
+            <h5 class="whisky-name">{{ result1 }}</h5>
+            <p class="whisky-percent"></p>
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+          </form> 
+        </div>
+        {% endif %}
+        <br>
+    </div>
+
+    <br>
+
+    <!-- Go to www.addthis.com/dashboard to customize your tools --> <div class="addthis_inline_share_toolbox_rwcp"></div>
+
+    <br>
+
+    <div id="disqus_thread"></div>
+        <script>
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://mywhisky-1.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <p></p>
+    </div>
+
+
+    
+    
+    <br><br>
+
+    <div class="container">
+      <div class="row">
+        <a class="btn btn-dark my-4" href="">Return to Homepage</a>
       </div>
+    </div>
+    
+
 
 
 
 </main>
-
-
-
-
-
-
 
 {%endblock%}
