@@ -64,7 +64,7 @@ def upload(request):
         #<Teachable Machine>
         img_result = teachablemachine(file)
         
-        whisky_name = ["JAMESONE","WILD TURCKEY"]
+        whisky_name = ["JAMESON","WILD TURCKEY"]
         
 
         
@@ -83,6 +83,7 @@ def upload(request):
         
         
         return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':"신기하지??!!!"})
+        
     return render(request, 'home.html')
 
 
