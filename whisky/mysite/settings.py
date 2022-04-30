@@ -40,8 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'showcase.apps.ShowcaseConfig',
     'labelscanner.apps.LabelScannerConfig',
-    'django_extensions',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,7 +84,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 

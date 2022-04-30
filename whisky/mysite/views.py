@@ -13,18 +13,18 @@ import time
 
 
 class HomeView(TemplateView):
-    
+
     template_name = 'home.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['app_list'] = ['labelscanner','showcase']
         return context
-    
 
+print(os.path.join(os.getcwd(),'mysite/keras_model.h5'))
 
 def teachablemachine(image_path):
-    
+
     # Load the model
     model = load_model(os.path.join(os.getcwd(),'mysite/keras_model.h5'))
     print(os.path.join(os.getcwd(),'keras_model.h5'))
@@ -63,11 +63,11 @@ def upload(request):
 
         #<Teachable Machine>
         img_result = teachablemachine(file)
-        
-        whisky_name = ["JAMESON","WILD TURCKEY"]
-        
 
-        
+        whisky_name = ["JAMESON","WILD TURCKEY"]
+
+
+
         for order in range(2):
             print(np.max(img_result),img_result[0,order])
             if img_result[0,order]>=0.999:
@@ -79,15 +79,46 @@ def upload(request):
             else:
                 name1 = "비슷한 위스키가 없습니다"
                 percent1 = "-"
-                continue 
-        
-        
+                continue
+
+
         return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':"신기하지??!!!"})
-        
+
     return render(request, 'home.html')
 
 
 
+def mobile_upload(request):
+    if request.method == 'POST' and request.FILES['upload']:
+        upload = request.FILES['upload']
+        fss = FileSystemStorage()
+        file = fss.save(upload.name, upload)
+        file_url = fss.url(file)
+
+        #<Teachable Machine>
+        img_result = teachablemachine(file)
+
+        whisky_name = ["JAMESON","WILD TURCKEY"]
+
+
+
+        for order in range(2):
+            print(np.max(img_result),img_result[0,order])
+            if img_result[0,order]>=0.999:
+                global name1
+                global percent1
+                name1 = whisky_name[order]
+                percent1 = str(round(img_result[0,order]*100))+"%"
+                break
+            else:
+                name1 = "비슷한 위스키가 없습니다"
+                percent1 = "-"
+                continue
+
+
+        return render(request, 'mobilehome.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':"신기하지??!!!"})
+
+    return render(request, 'mobilehome.html')
 
 
 

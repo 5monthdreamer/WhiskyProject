@@ -18,15 +18,26 @@ from django.urls import path, include
 
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic import TemplateView
+from django_sitemaps import robots_txt
+from .sitemap import * 
+from django.contrib.sitemaps.views import sitemap
+
 
 
 
 from . import views
 
+sitemaps = { 'static':StaticViewSitemap, }
+
+
 urlpatterns = [
     # path('__debug__/',include('debug_toolbar.urls')), # 장고디버그툴바 사용
     path('admin/', admin.site.urls),
     path('',views.upload,name='home'),
+    path('m/',views.mobile_upload,name='mobilehome'),
+    path('robots.txt',  TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
 
     # path('',views.HomeView.as_view(),name='home'),
     # path('labelcanner/',include('labelscanner.urls')),
