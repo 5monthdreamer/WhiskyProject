@@ -23,10 +23,9 @@ from django_sitemaps import robots_txt
 from .sitemap import * 
 from django.contrib.sitemaps.views import sitemap
 
-
-
-
 from . import views
+
+
 
 sitemaps = { 'static':StaticViewSitemap, }
 
@@ -38,7 +37,7 @@ urlpatterns = [
     path('m/',views.mobile_upload,name='mobilehome'),
     path('robots.txt',  TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
-
+    path('common/',include('common.urls')),
     # path('',views.HomeView.as_view(),name='home'),
     # path('labelcanner/',include('labelscanner.urls')),
     # path('showcase/',include('showcase.urls')),
