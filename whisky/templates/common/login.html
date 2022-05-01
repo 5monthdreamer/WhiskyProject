@@ -19,6 +19,7 @@
                    value="{{ form.password.value|default_if_none:'' }}">
         </div>
         <button type="submit" class="btn btn-primary">로그인</button>
+        <button class="btn btn-primary" type="button" onclick="location.href='{% url 'common:signup' %}'">회원가입</button>
         <br>
         <br>
         {% include "common/form_errors.html" %}
