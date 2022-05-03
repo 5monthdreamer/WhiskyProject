@@ -22,7 +22,9 @@
     <div class="container">
         <h2 class="my-2">Whisky label scanner</h2>
         <br>
-        <img src="https://lh5.googleusercontent.com/9_pogaVd58YbUnIFrRZuRxqKEQbjH0Cl0Xj6lKWZmnDVgMiJhqsXWbBgJGXWTMBxXZa0EIzY5oCP8n1WRIL-8rEwrk61L-3rNfY7wVr3-hrKlkmfrj1vpMsHcNKNNvCUFTNpnUhS" class="img-fluid"/>
+        <a href="showcase/">
+          <img src="https://lh5.googleusercontent.com/9_pogaVd58YbUnIFrRZuRxqKEQbjH0Cl0Xj6lKWZmnDVgMiJhqsXWbBgJGXWTMBxXZa0EIzY5oCP8n1WRIL-8rEwrk61L-3rNfY7wVr3-hrKlkmfrj1vpMsHcNKNNvCUFTNpnUhS" class="img-fluid">
+        </a>
     </div>
 
     <br>
@@ -47,7 +49,8 @@
         <div class="card" >
           <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-                <input type="file" name="upload" accept="image/*">
+            {{form}}
+                <!-- <input type="file" name="upload" accept="image/*"> -->
                 <p>No whisky picture added</p>
                 <p>(It takes time to load your image)</p>
                 <br>
@@ -61,6 +64,29 @@
         {% endif %}
         <br>
     </div>
+
+    <br>
+
+
+
+<!-- 
+    showcase용 술장 form post
+    <div class="container"> -->
+      <!--See Image Uploaded-->
+      <!-- <h2 class="my-2">Whisky Picture Scanning2</h2>
+      <div class="row">
+        <form method="post" enctype="multipart/form-data">  
+          {% csrf_token %}  
+          {{ form.as_p }}  
+          <button type="submit">Upload</button>  
+        </form>  
+    
+        {% if img_obj %}  
+          <h3>Succesfully uploaded : {{img_obj.caption}}</h3>  
+          <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">  
+        {% endif %}   -->
+    <!-- </div> -->
+
 
     <br>
 
@@ -98,14 +124,18 @@
     <div class="container">
       <div class="row">
         <a class="btn btn-dark my-4" href="">Return to Homepage</a>
-        <p class="btn">(pc version)</p>
+
       </div>
     </div>
 
-
-
-
-
 </main>
+{%endblock%}
 
+
+{% block content1 %}
+<div class="container">
+  <div class="row">
+    <p class="btn">(pc version)</p> 
+  </div>
+</div>
 {%endblock%}

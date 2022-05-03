@@ -11,6 +11,10 @@ import numpy as np
 import os
 import time
 
+# image form 저장
+from showcase.forms import UserImageForm  
+from showcase.models import UploadImageModel 
+
 
 class HomeView(TemplateView):
 
@@ -35,7 +39,7 @@ def teachablemachine(image_path):
     # determined by the first position in the shape tuple, in this case 1.
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
     # Replace this with the path to your image
-    image = Image.open(os.path.join(os.getcwd(),'media/'+image_path))
+    image = Image.open(os.path.join(os.getcwd(),'media/'+str(image_path)))
     #resize the image to a 224x224 with the same strategy as in TM2:
     #resizing the image to be at least 224x224 and then cropping from the center
     size = (224, 224)
@@ -87,7 +91,6 @@ def upload(request):
     return render(request, 'home.html')
 
 
-
 def mobile_upload(request):
     if request.method == 'POST' and request.FILES['upload']:
         upload = request.FILES['upload']
@@ -119,6 +122,66 @@ def mobile_upload(request):
         return render(request, 'mobilehome.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':"신기하지??!!!"})
 
     return render(request, 'mobilehome.html')
+
+
+
+
+
+
+def showcase_upload(request):
+    if request.method == 'POST' and request.FILES:
+        form = UserImageForm(request.POST, request.FILES)  
+        if form.is_valid():  
+            form.save()  #form.save(commit=False)
+            
+            
+            saved_image = form.cleaned_data['image']
+            fss = FileSystemStorage()
+            file_url = fss.url(saved_image)
+
+            # Getting the current instance object to display in the template  
+            # img_object = form.instance  
+            
+            
+            img_result = teachablemachine(saved_image)
+
+            whisky_name = ["JAMESON","WILD TURCKEY"]
+
+
+            for order in range(2):
+                print(np.max(img_result),img_result[0,order])
+                if img_result[0,order]>=0.999:
+                    global name1
+                    global percent1
+                    name1 = whisky_name[order]
+                    percent1 = str(round(img_result[0,order]*100))+"%"
+                    break
+                else:
+                    name1 = "비슷한 위스키가 없습니다"
+                    percent1 = "-"
+                    continue
+
+
+            return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':"신기하지??!!!"})
+                        
+            # return render(request, 'showcase.showcase.html', {'form': form, 'img_obj': img_object})
+            
+    else:
+        form = UserImageForm()
+        images = UploadImageModel.objects.all()
+        return render(request, 'home.html', {'form':form, 'images':images})
+     
+    
+            
+            
+            
+            
+            
+
+        
+        
+
+
 
 
 

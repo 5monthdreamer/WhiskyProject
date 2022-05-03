@@ -33,11 +33,12 @@ sitemaps = { 'static':StaticViewSitemap, }
 urlpatterns = [
     # path('__debug__/',include('debug_toolbar.urls')), # 장고디버그툴바 사용
     path('admin/', admin.site.urls),
-    path('',views.upload,name='home'),
-    path('m/',views.mobile_upload,name='mobilehome'),
+    path('',views.showcase_upload,name='home'),
+    path('m/',views.showcase_upload,name='mobilehome'),
     path('robots.txt',  TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path('common/',include('common.urls')),
+    path('showcase/',include('showcase.urls')),
     # path('',views.HomeView.as_view(),name='home'),
     # path('labelcanner/',include('labelscanner.urls')),
     # path('showcase/',include('showcase.urls')),

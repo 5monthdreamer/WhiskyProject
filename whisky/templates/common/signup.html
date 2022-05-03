@@ -25,6 +25,7 @@
                    value="{{ form.email.value|default_if_none:'' }}">
         </div>
         <button type="submit" class="btn btn-primary">생성하기</button>
+        <p>(Raw passwords are not stored, so there is no way to see user’s password)</p>
         <br><br>
         {% include "common/form_errors.html" %}
     </form>
