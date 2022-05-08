@@ -1,8 +1,14 @@
 {% extends 'base.html' %}  
-  
-{% block sidebar %}
-{{ block.super }}
 
+{% load static %}
+
+
+{% block sidebar0 %}
+{{ block.super }}
+{% endblock %}
+
+
+{% block sidebar1 %}
 
 <div class="row">
 {% for m in images %}
@@ -17,5 +23,4 @@
 {% endfor %}
 </div>
 
-  
 {%endblock%}  

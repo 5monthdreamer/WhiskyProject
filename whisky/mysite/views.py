@@ -29,10 +29,10 @@ print(os.path.join(os.getcwd(),'mysite/keras_model.h5'))
 
 def teachablemachine(image_path):
 
-    # Load the model
+    # Load the model # ☆☆☆☆☆ os.getcwd()는 다 다르다
     model = load_model(os.path.join(os.getcwd(),'mysite/keras_model.h5'))
     print(os.path.join(os.getcwd(),'keras_model.h5'))
-# 'C:\\Users\\jiyon\\Desktop\\Python\\Project\\위스키 어플, 홈페이지 제작\\project test\\whisky\\mysite\\keras_model.h5'
+# 'C:\\Users\\jiyon\\Desktop\\Python\\Project\\위스키 어플, 홈페이지 제작\\project test\\whisky\\mysite\\keras_model.h5'ㅉ
 
     # Create the array of the right shape to feed into the keras model
     # The 'length' or number of images you can put into the array is
@@ -133,12 +133,12 @@ def showcase_upload(request):
         form = UserImageForm(request.POST, request.FILES)  
         if form.is_valid():  
             form.save()  #form.save(commit=False)
-            
-            
+        
+            global file_url
             saved_image = form.cleaned_data['image']
             fss = FileSystemStorage()
             file_url = fss.url(saved_image)
-
+            
             # Getting the current instance object to display in the template  
             # img_object = form.instance  
             
@@ -173,7 +173,48 @@ def showcase_upload(request):
      
     
             
+def showcase_upload_mobile(request):
+    if request.method == 'POST' and request.FILES:
+        form = UserImageForm(request.POST, request.FILES)  
+        if form.is_valid():  
+            form.save()  #form.save(commit=False)
             
+            global file_url
+            saved_image = form.cleaned_data['image']
+            fss = FileSystemStorage()
+            file_url = fss.url(saved_image)
+
+            # Getting the current instance object to display in the template  
+            # img_object = form.instance  
+            
+            
+            img_result = teachablemachine(saved_image)
+
+            whisky_name = ["JAMESON","WILD TURCKEY"]
+
+
+            for order in range(2):
+                print(np.max(img_result),img_result[0,order])
+                if img_result[0,order]>=0.999:
+                    global name1
+                    global percent1
+                    name1 = whisky_name[order]
+                    percent1 = str(round(img_result[0,order]*100))+"%"
+                    break
+                else:
+                    name1 = "비슷한 위스키가 없습니다"
+                    percent1 = "-"
+                    continue
+
+
+            return render(request, 'mobilehome.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':"신기하지??!!!"})
+                        
+            # return render(request, 'showcase.showcase.html', {'form': form, 'img_obj': img_object})
+            
+    else:
+        form = UserImageForm()
+        images = UploadImageModel.objects.all()
+        return render(request, 'mobilehome.html', {'form':form, 'images':images})
             
             
             

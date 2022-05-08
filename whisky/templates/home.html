@@ -3,10 +3,8 @@
 {% load static %}
 
 
-{% block sidebar %}
-{{ block.super }}
 
-
+{% block ifmobile %}
 <!--모바일 기기 접속시 (꼭 haed나 body등 안에 있어야함☆)-->
 <script type="text/javascript">
   var url = "{% url 'mobilehome' %}";
@@ -15,8 +13,16 @@
       location.replace(url);
   }
 </script>
+{% endblock %}
 
 
+{% block sidebar0 %}
+{{ block.super }}
+{% endblock %}
+
+
+
+{% block sidebar1 %}
 <main>
 
     <div class="container">
@@ -26,7 +32,13 @@
           <img src="https://lh5.googleusercontent.com/9_pogaVd58YbUnIFrRZuRxqKEQbjH0Cl0Xj6lKWZmnDVgMiJhqsXWbBgJGXWTMBxXZa0EIzY5oCP8n1WRIL-8rEwrk61L-3rNfY7wVr3-hrKlkmfrj1vpMsHcNKNNvCUFTNpnUhS" class="img-fluid">
         </a>
     </div>
+</main>
 
+{% endblock %}
+
+{% block sidebar2 %}
+
+<main>
     <br>
 
     <div class="container">
@@ -130,6 +142,7 @@
 
 </main>
 {%endblock%}
+
 
 
 {% block content1 %}

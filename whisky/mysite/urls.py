@@ -19,7 +19,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.generic import TemplateView
-from django_sitemaps import robots_txt
+# from django_sitemaps import robots_txt
 from .sitemap import * 
 from django.contrib.sitemaps.views import sitemap
 
@@ -34,7 +34,7 @@ urlpatterns = [
     # path('__debug__/',include('debug_toolbar.urls')), # 장고디버그툴바 사용
     path('admin/', admin.site.urls),
     path('',views.showcase_upload,name='home'),
-    path('m/',views.showcase_upload,name='mobilehome'),
+    path('m/',views.showcase_upload_mobile,name='mobilehome'),
     path('robots.txt',  TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path('common/',include('common.urls')),

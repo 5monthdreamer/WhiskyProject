@@ -8,3 +8,8 @@ def show(request):
     form = UserImageForm()
     images = UploadImageModel.objects.all()
     return render(request, 'showcase/showcase.html', {'form':form, 'images':images})
+
+def mobile_show(request):
+    form = UserImageForm()
+    images = UploadImageModel.objects.all()
+    return render(request, 'showcase/mobileshowcase.html', {'form':form, 'images':images})

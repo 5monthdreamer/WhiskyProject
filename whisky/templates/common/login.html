@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 
-{% block sidebar %}
+{% block sidebar0 %}
 {{ block.super }}
+{% endblock %}
 
-
+{% block sidebar1 %}
 <div class="container my-3">
     <form method="post" action="{% url 'common:login' %}">
         {% csrf_token %}

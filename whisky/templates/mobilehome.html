@@ -2,9 +2,28 @@
 
 {% load static %}
 
-{% block sidebar %}
-{{ block.super }}
-{%endblock%}
+
+{% block ifmobile %}{%endblock%}
+
+{% block sidebar1 %}
+
+<main>
+
+  <div class="container">
+      <h2 class="my-2">Whisky label scanner</h2>
+      <br>
+      <a href="{% url 'showcase:mobile_main_showcase' %}">
+        <img src="https://lh5.googleusercontent.com/9_pogaVd58YbUnIFrRZuRxqKEQbjH0Cl0Xj6lKWZmnDVgMiJhqsXWbBgJGXWTMBxXZa0EIzY5oCP8n1WRIL-8rEwrk61L-3rNfY7wVr3-hrKlkmfrj1vpMsHcNKNNvCUFTNpnUhS" class="img-fluid">
+      </a>
+  </div>
+</main>
+
+{% endblock %}
+
+
+
+
+
 
 {% block content1 %}
 <div class="container">
