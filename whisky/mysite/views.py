@@ -32,7 +32,7 @@ def teachablemachine(image_path):
     # Load the model # ☆☆☆☆☆ os.getcwd()는 다 다르다
     model = load_model(os.path.join(os.getcwd(),'mysite/keras_model.h5'))
     print(os.path.join(os.getcwd(),'keras_model.h5'))
-# 'C:\\Users\\jiyon\\Desktop\\Python\\Project\\위스키 어플, 홈페이지 제작\\project test\\whisky\\mysite\\keras_model.h5'ㅉ
+    # pythonanywhere에서는 'WhiskyProject/whisky/mysite/keras_model.h5'
 
     # Create the array of the right shape to feed into the keras model
     # The 'length' or number of images you can put into the array is
@@ -40,6 +40,7 @@ def teachablemachine(image_path):
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
     # Replace this with the path to your image
     image = Image.open(os.path.join(os.getcwd(),'media/'+str(image_path)))
+    # pythonanywhere에서는 'WhiskyProject/whisky/media/'
     #resize the image to a 224x224 with the same strategy as in TM2:
     #resizing the image to be at least 224x224 and then cropping from the center
     size = (224, 224)
@@ -127,14 +128,22 @@ def mobile_upload(request):
 
 
 
-
 def showcase_upload(request):
     if request.method == 'POST' and request.FILES:
+        # usernickname = UploadImageModel(nickname=request.user)
+
         form = UserImageForm(request.POST, request.FILES)  
+        # form.save()
         if form.is_valid():  
-            form.save()  #form.save(commit=False)
-        
-            global file_url
+            # form.nickname = request.user
+            post = form.save(commit=False)
+            post.nickname = request.user
+            post.save()
+            
+            # record = UploadImageModel.objects.all()
+            # record.delete()
+            # form.save()  #form.save(commit=False)
+            
             saved_image = form.cleaned_data['image']
             fss = FileSystemStorage()
             file_url = fss.url(saved_image)
@@ -162,7 +171,7 @@ def showcase_upload(request):
                     continue
 
 
-            return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':"신기하지??!!!"})
+            return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':post.nickname})
                         
             # return render(request, 'showcase.showcase.html', {'form': form, 'img_obj': img_object})
             
@@ -175,17 +184,26 @@ def showcase_upload(request):
             
 def showcase_upload_mobile(request):
     if request.method == 'POST' and request.FILES:
+        # usernickname = UploadImageModel(nickname=request.user)
+
         form = UserImageForm(request.POST, request.FILES)  
+        # form.save()
         if form.is_valid():  
-            form.save()  #form.save(commit=False)
+            # form.nickname = request.user
+            post = form.save(commit=False)
+            post.nickname = request.user
+            post.save()
             
-            global file_url
+            # record = UploadImageModel.objects.all()
+            # record.delete()
+            # form.save()  #form.save(commit=False)
+            
             saved_image = form.cleaned_data['image']
             fss = FileSystemStorage()
             file_url = fss.url(saved_image)
-
+            
             # Getting the current instance object to display in the template  
-            # img_object = form.instance  
+            # img_object = form.instance   
             
             
             img_result = teachablemachine(saved_image)
