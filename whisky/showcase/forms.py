@@ -10,4 +10,5 @@ class UserImageForm(ModelForm):
         # To specify the model to be used to create form  
         model = UploadImageModel
         # It includes all the fields of model  
-        exclude = ('nickname',)
+        fields = ['image',]
+        # exclude = ('nickname','owner','pub_date','is_public')

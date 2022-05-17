@@ -137,7 +137,11 @@ def showcase_upload(request):
         if form.is_valid():  
             # form.nickname = request.user
             post = form.save(commit=False)
-            post.nickname = request.user
+            
+            if request.user.is_authenticated:
+                post.owner = request.user
+            else:
+                pass
             post.save()
             
             # record = UploadImageModel.objects.all()
@@ -171,7 +175,7 @@ def showcase_upload(request):
                     continue
 
 
-            return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':post.nickname})
+            return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':'없음'})
                         
             # return render(request, 'showcase.showcase.html', {'form': form, 'img_obj': img_object})
             

@@ -155,3 +155,5 @@ LOGOUT_REDIRECT_URL = '/'
 
 # from showcase.models import UploadImage
 # admin.site.register(UploadImage)
+
+AUTH_USER_MODEL='common.User'
