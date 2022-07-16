@@ -2,3 +2,36 @@
 
 {% load static %}
 
+{% block sidebar0 %}
+
+{% if user.is_authenticated %}
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg" align="right">
+    <a class="item" href="{% url 'common:logout' %}">
+      <i class="large green user circle icon"></i>
+    </a>
+  </div>
+{% else %}
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg" align="right">
+    <a class="ui item" href="{% url 'common:login' %}">
+      <i class="grey large user circle icon"></i>
+    </a>
+  </div>
+{% endif %}
+
+{%endblock%}

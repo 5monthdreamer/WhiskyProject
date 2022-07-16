@@ -1,0 +1,24 @@
+html {
+    height: 100%;
+}
+
+
+.image_upload_input {
+    display: flex;
+    justify-content: center;
+}
+label {
+    cursor: pointer;
+    font-size: 1em;
+}
+
+/* 못생긴 기존 input 숨기기 */
+#chooseFile {
+    visibility: hidden;
+}
+
+.massage1 {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}

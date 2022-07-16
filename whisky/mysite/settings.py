@@ -128,10 +128,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-# ]  # 추가
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]  # 추가 (sementic ui의 css, js 반영위해 필요)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -156,4 +156,5 @@ LOGOUT_REDIRECT_URL = '/'
 # from showcase.models import UploadImage
 # admin.site.register(UploadImage)
 
+# user 커스터마이징용 (필요한지는 모름)
 AUTH_USER_MODEL='common.User'

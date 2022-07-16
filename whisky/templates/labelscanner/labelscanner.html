@@ -1,0 +1,71 @@
+{%extends "base.html"%}
+
+{% load static %}
+
+{% block css1 %}
+  <link rel="stylesheet" type="text/css" href="{% static 'style_labelscanner.css'%}">
+{%endblock%}
+
+{% block sidebar1 %}
+<br><br>
+<div align="center">
+  <h2 class="my-2">Whisky Photo Scanning</h2>
+</div>
+<main>
+    <br>
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          {% if file_url %}
+          <div class="card" >
+            <img src="{{ file_url }}" class="card-img-top" alt="No image">
+            <div class="card-body">
+              <h5 class="whisky-name">{{ result1 }}</h5>
+              <p class="whisky-percent">Percentage : {{ result2 }}</p>
+            </div>
+          </div>
+          <br>
+          <a href="" class="btn btn-primary">Again</a>
+          <br>
+          
+          {% else %}
+            <form action="{% url 'labelscanner:main_labelscanner'%}" method="post" enctype="multipart/form-data">
+              <div class="card" >
+              <br><br><br>
+              {% csrf_token %}
+              <div class="image_upload_input">
+                <label for="chooseFile">
+                  <i class="massive expand icon">
+                  </i>
+                  <p class="massage1">Upload Your whisky!</p>
+                </label>
+              </div>
+              <input type="file" id="chooseFile" name="image" alt="Your photo!" accept="image/*" onchange="form.submit()">
+
+              <br><br><br>
+              </div>
+              <p class="massage2">※ If you upload your photo, after a few seconds you can find your whisky!</p>
+              <br>
+              
+              <!-- Button 대신 input type="image"도 사용가능!!★★★★★
+              <input type="image" id="submit" name="image" alt="Your photo!" accept="image/*"> -->
+              
+              <!-- 기본적인 submit방법
+              <button type="submit" class="btn btn-primary" id="submit-file" align="right">Submit</button> -->
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+</main>
+
+{% endblock %}
+
+<!-- style='display:none;' -->
+<!-- <label className="input-file-button" for="submit-file">
+  submit
+</label>
+<input type="submit" id="submit-file" style='display:none;'> -->
+
+

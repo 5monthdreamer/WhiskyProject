@@ -88,6 +88,7 @@ def upload(request):
 
 
         return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':"신기하지??!!!"})
+    
 
     return render(request, 'home.html')
 
@@ -133,6 +134,7 @@ def showcase_upload(request):
         # usernickname = UploadImageModel(nickname=request.user)
 
         form = UserImageForm(request.POST, request.FILES)  
+
         # form.save()
         if form.is_valid():  
             # form.nickname = request.user
@@ -178,7 +180,8 @@ def showcase_upload(request):
             return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':'없음'})
                         
             # return render(request, 'showcase.showcase.html', {'form': form, 'img_obj': img_object})
-            
+    
+    
     else:
         form = UserImageForm()
         images = UploadImageModel.objects.all()
@@ -195,7 +198,11 @@ def showcase_upload_mobile(request):
         if form.is_valid():  
             # form.nickname = request.user
             post = form.save(commit=False)
-            post.nickname = request.user
+            
+            if request.user.is_authenticated:
+                post.owner = request.user
+            else:
+                pass
             post.save()
             
             # record = UploadImageModel.objects.all()
@@ -224,7 +231,7 @@ def showcase_upload_mobile(request):
                     percent1 = str(round(img_result[0,order]*100))+"%"
                     break
                 else:
-                    name1 = "비슷한 위스키가 없습니다"
+                    name1 = "비슷한 위스키가 없습니다."
                     percent1 = "-"
                     continue
 
@@ -237,8 +244,6 @@ def showcase_upload_mobile(request):
         form = UserImageForm()
         images = UploadImageModel.objects.all()
         return render(request, 'mobilehome.html', {'form':form, 'images':images})
-            
-            
             
 
         

@@ -5,9 +5,49 @@
 
 {% block ifmobile %}{%endblock%}
 
-{% block sidebar1 %}
 
-<main>
+
+{% block sidebar0 %}
+
+{% if user.is_authenticated %}
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg" align="right">
+    <a class="item" href="{% url 'common:logout' %}">
+      <i class="large green user circle icon"></i>
+    </a>
+  </div>
+{% else %}
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg"> </div>
+  <div class="col-lg" align="right">
+    <a class="ui item" href="{% url 'common:login' %}">
+      <i class="grey large user circle icon"></i>
+    </a>
+  </div>
+{% endif %}
+
+{%endblock%}
+
+
+
+
+{% block sidebar1 %}
+{{ block.super }}
+
+<!-- <main>
 
   <div class="container">
       <h2 class="my-2">Whisky label scanner</h2>
@@ -16,19 +56,20 @@
         <img src="https://lh5.googleusercontent.com/9_pogaVd58YbUnIFrRZuRxqKEQbjH0Cl0Xj6lKWZmnDVgMiJhqsXWbBgJGXWTMBxXZa0EIzY5oCP8n1WRIL-8rEwrk61L-3rNfY7wVr3-hrKlkmfrj1vpMsHcNKNNvCUFTNpnUhS" class="img-fluid">
       </a>
   </div>
-</main>
+</main> -->
 
 {% endblock %}
 
 
 
 
-
-
 {% block content1 %}
-<div class="container">
-  <div class="row">
-    <p class="btn">(mobile version)</p> 
-  </div>
-</div>
+<!-- <div class="container"> -->
+  <!-- <div class="row"> -->
+    <p align="center">
+      <i class="mobile alternate icon"></i>
+      mobile version
+    </p> 
+  <!-- </div> -->
+<!-- </div> -->
 {%endblock%}

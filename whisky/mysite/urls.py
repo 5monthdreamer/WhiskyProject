@@ -23,6 +23,8 @@ from django.views.generic import TemplateView
 from .sitemap import * 
 from django.contrib.sitemaps.views import sitemap
 
+
+
 from . import views
 
 
@@ -39,9 +41,10 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path('common/',include('common.urls')),
     path('showcase/',include('showcase.urls')),
+    path('labelcanner/',include('labelscanner.urls')),
     # path('',views.HomeView.as_view(),name='home'),
-    # path('labelcanner/',include('labelscanner.urls')),
     # path('showcase/',include('showcase.urls')),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
