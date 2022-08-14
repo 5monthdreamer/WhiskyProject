@@ -14,8 +14,8 @@ import os
 import time
 
 # image form 저장
-from showcase.forms import UserImageForm  
-from showcase.models import UploadImageModel 
+from showcase.forms import UserImageForm, UserTastingNoteForm  
+from showcase.models import UploadImageModel, TastingNoteModel
 
 
 def teachablemachine(image_path):
@@ -56,25 +56,34 @@ def img_scanning(request):
         # usernickname = UploadImageModel(nickname=request.user)
 
         form = UserImageForm(request.POST, request.FILES)  
+
         # form.save()
         if form.is_valid():  
             # form.nickname = request.user
+            global post
             post = form.save(commit=False)
             
             if request.user.is_authenticated:
                 post.owner = request.user
             else:
                 pass
+            
+            # <사진 저장하고 싶을때 아래 명령어 사용!!!>
             post.save()
+            postID = post.id
             
             # record = UploadImageModel.objects.all()
             # record.delete()
             # form.save()  #form.save(commit=False)
             
+            # img_ID = form.cleaned_data['pk']
             saved_image = form.cleaned_data['image']
             fss = FileSystemStorage()
             file_url = fss.url(saved_image)
             
+            # global model
+            # model = UploadImageModel.objects.get(image=post.image)
+            # modelID = model.id
             # Getting the current instance object to display in the template  
             # img_object = form.instance  
             
@@ -93,16 +102,66 @@ def img_scanning(request):
                     percent1 = str(round(img_result[0,order]*100))+"%"
                     break
                 else:
-                    name1 = "비슷한 위스키가 없습니다"
+                    name1 = "There is not the same whisky in our AI."
                     percent1 = "-"
                     continue
 
 
-            return render(request, 'labelscanner/labelscanner.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':'없음'})
+            return render(request, 'labelscanner/labelscanner.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':'없음','postID':postID})
                         
             # return render(request, 'showcase.showcase.html', {'form': form, 'img_obj': img_object})
+    
+    # elif request.method == 'POST':
+    #     tastingform = UserTastingNoteForm (request.POST)  
+        
+    #     # form.save()
+    #     if tastingform.is_valid():  
+
+    #         # global note
+    #         note = tastingform.save(commit=False)
             
+    #         # # <사진 저장하고 싶을때 아래 명령어 사용!!!>
+            
+            
+    #         # tasingnote = TastingNoteModel.objects.all()
+            
+            
+            
+            
+    #         # review = note.one_line_review
+    #         # sweetness = note.sweetness
+    #         # acidity = note.acidity
+    #         # alchol = note.alchol_finish
+            
+    #         review = note.cleaned_data['one_line_review']
+    #         sweetness = note.cleaned_data['sweetness']
+    #         acidity = note.cleaned_data['acidity']
+    #         alchol = note.cleaned_data['alchol_finish']
+            
+    #         note.save()
+            
+    #         # review.save()
+    #         # sweetness.save()
+    #         # acidity.save()
+    #         # alchol.save()
+            
+            
+            
+    #         # record = UploadImageModel.objects.all()
+    #         # record.delete()
+    #         # form.save()  #form.save(commit=False)
+            
+
+    #         return render(request, 'tastingnote/tastingnote.html', {'review':review, 'sweetness': sweetness, 'acidity':acidity,'alchol':alchol,'tastingform':tastingform})
+        
+    
+    
     else:
         form = UserImageForm()
         images = UploadImageModel.objects.all()
-        return render(request, 'labelscanner/labelscanner.html', {'form':form, 'images':images})
+        return render(request, 'labelscanner/labelscanner.html', {'form':form,'images':images})
+    
+
+
+        # form2 = UserTastingNoteForm()
+        # 'form2':form2, 

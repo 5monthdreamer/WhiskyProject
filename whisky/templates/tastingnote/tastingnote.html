@@ -1,0 +1,292 @@
+{% extends 'base.html' %}  
+
+{% load static %}
+
+{% block sidebar0 %}
+{{ block.super }}
+{% endblock %}
+
+
+{% block sidebar1 %}
+
+<div class="container">
+    <div class="row">
+      <div class="col">
+
+
+        <div class="card" >
+        <img src="{{ file_url }}" class="card-img-top" alt="No image">
+        <div class="card-body">
+            <h5 class="whisky-name">{{the_uploadimagemodel.owner}}</h5>
+            <p class="whisky-percent">{{the_uploadimagemodel.owner.nickname}}</p>
+            <p class="whisky-percent">{{the_uploadimagemodel.pub_date}}</p>
+        </div>
+        </div>
+
+        <form action="{% url 'tastingnote:main_tastingnote' the_uploadimagemodel.id %}" method="post">
+            {% csrf_token %}
+
+            <h4 class="ui dividing header">Whisky Name</h4>
+            <div class="ui form">
+            <div class="ui blue segment">
+                <textarea name="name" id="" cols="20" rows="1"></textarea>
+            </div>
+            </div>
+
+            <h4 class="ui dividing header">Drumtong Rating</h4>
+            <div class="ui form">
+            <div class="ui red segment">
+                <label>Choose whisky grade :</label>
+                <div class="ui radio checkbox">
+                <div class="container text-left">
+                    <div class="row">
+                    <div class="col-md-auto">
+                        <input type="radio" id="star_rating1" name="drumtong_rating" class="hidden" value="1">
+                        <label for="star_rating1">
+                            <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top">
+                        </label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="star_rating2" name="drumtong_rating" class="hidden" value="2">
+                        <label for="star_rating2">
+                            <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top"><img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top">
+                        </label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="star_rating3" name="drumtong_rating" class="hidden" value="3">
+                        <label for="star_rating3">
+                            <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top"><img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top"><img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top">
+                        </label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="star_rating4" name="drumtong_rating"  class="hidden" value="4">
+                        <label for="star_rating4">
+                            <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top"><img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top"><img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top"><img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top">
+                        </label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="star_rating5" name="drumtong_rating" class="hidden" value="5">
+                        <label for="star_rating5">
+                            <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top"><img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top"><img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top"><img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top"><img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top">
+                        </label>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <h4 class="ui dividing header">One Line Review</h4>
+            <div class="ui form">
+            <div class="ui green segment">
+                Write what you think :
+                <textarea name="one_line_review" id="" cols="10" rows="5"></textarea>
+            </div>
+            </div>
+
+            <h4 class="ui dividing header">Taste</h4>
+            <div class="ui form">
+            <div class="ui orange segment">
+                <label>Taste you feel :</label>
+                <div class="ui radio checkbox">
+                <div class="container text-left">
+                    <div class="row">
+                    <div class="col-md-auto">
+                        <input type="radio" id="taste1" name="taste" class="hidden" value="Salty">
+                        <label for="taste1">Salty</label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="taste2" name="taste" class="hidden" value="Spicy">
+                        <label for="taste2">Spicy</label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="taste3" name="taste" class="hidden" value="Sour">
+                        <label for="taste3">Sour</label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="taste4" name="taste"  class="hidden" value="Astringency">
+                        <label for="taste4">Astringency</label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="taste5" name="taste" class="hidden" value="Bitter">
+                        <label for="taste5">Bitter</label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="taste6" name="taste" class="hidden" value="Fat">
+                        <label for="taste6">Fat</label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="taste7" name="taste" class="hidden" value="Sweety">
+                        <label for="taste7">Sweety</label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="taste8" name="taste" class="hidden" value="Umami">
+                        <label for="taste8">Umami</label>
+                    </div>
+
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <h4 class="ui dividing header">Taste Intensity</h4>
+            <div class="ui form">
+            <div class="ui orange segment">
+                <label for="taste_intensity" class="form-label">Choose intensity you feel :</label>
+                <input type="range" name="taste_intensity" class="form-range" min="1" max="5" step="1" id="taste_intensity">
+            </div>
+            </div>
+
+            <h4 class="ui dividing header">Flavor</h4>
+            <div class="ui form">
+            <div class="ui olive segment">
+                <label>Flavor you feel :</label>
+                <div class="ui radio checkbox">
+                <div class="container text-left">
+                    <div class="row">
+                    <div class="col-md-auto">
+                        <input type="radio" id="flavor1" name="flavor" class="hidden" value="Floral">
+                        <label for="flavor1">Floral</label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="flavor2" name="flavor" class="hidden" value="Fruity">
+                        <label for="flavor2">Fruity</label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="flavor3" name="flavor" class="hidden" value="Peaty">
+                        <label for="flavor3">Peaty</label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="flavor4" name="flavor"  class="hidden" value="Woody">
+                        <label for="flavor4">Woody</label>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <input type="radio" id="flavor5" name="flavor" class="hidden" value="Spicy">
+                        <label for="flavor5">Spicy</label>
+                    </div>
+
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <h4 class="ui dividing header">Flavor Intensity</h4>
+            <div class="ui form">
+            <div class="ui olive segment">
+                <label for="flavor_intensity" class="form-label">Choose intensity you feel :</label>
+                <input type="range" name="flavor_intensity" class="form-range" min="1" max="5" step="1" id="flavor_intensity">
+            </div>
+            </div>
+
+            <h4 class="ui dividing header">Alchol finish</h4>
+            <div class="ui form">
+            <div class="ui yellow segment">
+                <label for="alchol_finish" class="form-label">Choose what you feel :</label>
+                <input type="range" name="alchol_finish" class="form-range" min="1" max="5" step="1" id="alchol_finish">
+            </div>
+            </div>
+
+            <!-- <h4 class="ui dividing header">Heart</h4>
+            <div class="ui orange segment">Orange</div>
+            <div class="ui yellow segment">Yellow</div>
+            <div class="ui olive segment">Olive</div>
+            <div class="ui green segment">Green</div> -->
+
+            <br>
+            <div>
+            <button type="submit" class="btn btn-primary" id="submit-file">Save</button>
+            </div>
+        </form>
+        </div>
+    </div>
+
+    <br><hr><br>
+
+    <div class="row">
+        <div class="card" >
+            <div class="card-body">
+                <h5 class="whisky-name">Tasting Note</h5>
+                <p class="whisky-percent">name :
+                    {{ name }}</p>
+                <p class="whisky-percent">drumtong_rating :
+                    {{ drumtong_rating }}</p>
+                    <p class="whisky-percent">one_line_review :
+                        {{ one_line_review }}</p>
+                        <p class="whisky-percent">Etc :
+                            {{note.taste}}</p>
+                            
+                        </div>
+                    </div>
+        {% if sweetness == "10" %}
+        {% else %}
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+
+
+<br>
+
+
+<!-- {{note.id}}
+{{note.owner}}
+{{note.image}}
+{{note.pub_date}}
+{{note.is_public}} -->
+
+<!-- {{note.UploadImagekey}}
+{{note.review}}
+{{note.sweetness}}
+{{note.acidity}}
+{{note.alchol_finish}} -->
+
+<br>
+<!-- {{tastingnote.one_line_review}} -->
+
+
+
+<!-- 
+<div class="row">
+    {% for m in tastingnote %}
+    <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+        <div class="card h-100 p-4">
+        <img src="{{ m.image.url }}" class="card-img-top">  
+        {% if m.owner.nickname %}
+            <p>{{m.owner.nickname}}</p>
+        {% else %}
+            <p>Anonymous</p>
+        {% endif %}
+            {{m.one_line_review}}
+            {{m.sweetness}}
+            {{m.acidity}}
+            {{m.alchol_finish}}
+        </div>
+    </div>
+    {% empty %}
+    <p>No whisky added.</p>
+    {% endfor %}
+</div> -->
+
+
+
+{% endblock %} 

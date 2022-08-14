@@ -247,7 +247,7 @@ def showcase_upload_mobile(request):
             
 
         
-        
+    
 
 
 

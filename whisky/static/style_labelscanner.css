@@ -17,6 +17,15 @@ label {
     visibility: hidden;
 }
 
+#one-line-review {
+    visibility: hidden;
+    display: flex;
+}
+
+.ui red segment{
+    size: flex;
+}
+
 .massage1 {
     display: flex;
     justify-content: center;

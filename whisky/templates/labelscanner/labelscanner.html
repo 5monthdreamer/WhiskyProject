@@ -2,6 +2,21 @@
 
 {% load static %}
 
+{% block ifmobile %}
+<!--버튼 클릭 시 div 보여줌-->
+<script type="text/javascript">
+  function myFunction() {
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+</script>
+{% endblock %}
+
+
 {% block css1 %}
   <link rel="stylesheet" type="text/css" href="{% static 'style_labelscanner.css'%}">
 {%endblock%}
@@ -17,18 +32,55 @@
     <div class="container">
       <div class="row">
         <div class="col">
+
+          <!-- 파일 첨부 후 자동 스캐닝 -->
           {% if file_url %}
           <div class="card" >
             <img src="{{ file_url }}" class="card-img-top" alt="No image">
+            <br>
             <div class="card-body">
               <h5 class="whisky-name">{{ result1 }}</h5>
               <p class="whisky-percent">Percentage : {{ result2 }}</p>
             </div>
+            <br>
+          </div>
+          <div class="ui three bottom attached buttons">
+            <div class="ui animated button" tabindex="0">
+              <div class="visible content">
+                <i class="undo icon"></i>
+              </div>
+              <div class="hidden content">
+                <a href="">Again</a>
+              </div>
+            </div>
+            <div class="ui animated button" tabindex="0">
+              <div class="visible content">
+                <i class="edit outline icon"></i>
+              </div>
+              <div class="hidden content">
+                <a href="{% url 'tastingnote:main_tastingnote' postID %}" onclick="myFunction()">Tasting note{{postID}}</a>
+              </div>
+            </div>
+            <div class="ui animated button" tabindex="0">
+              <div class="visible content">
+                <i class="icons">
+                  <i class="glass martini icon"></i>
+                  <i class="bottom right corner bookmark outline icon"></i>
+                </i>
+              </div>
+              <div class="hidden content">
+                <a href="showcase">Showcase</a>
+              </div>
+            </div>
           </div>
           <br>
-          <a href="" class="btn btn-primary">Again</a>
-          <br>
+
+          <!-- 클릭하면 밑에 열림. 테이스팅노트 한줄평 완료 -->
+          <div id="myDIV"></div>
+
+          <br><br>
           
+          <!-- 파일 첨부 전 처음 화면 -->
           {% else %}
             <form action="{% url 'labelscanner:main_labelscanner'%}" method="post" enctype="multipart/form-data">
               <div class="card" >

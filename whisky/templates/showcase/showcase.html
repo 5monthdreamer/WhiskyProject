@@ -10,16 +10,71 @@
 {% block sidebar1 %}
 
 <div class="row">
-{% for m in images %}
-<div class="col-lg-4 col-md-6 col-sm-12 pb-4">
-    <div class="card h-100 p-4">
-    <img src="{{ m.image.url }}" class="card-img-top">  
-    <p>{{m.owner.nickname}}</p>
+    {% for m in images %}
+    <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+        <div class="card h-100 p-4">
+            <img src="{{ m.image.url }}" class="card-img-top">
+            <br>  
+            {% if m.owner.nickname %}
+                <p>ID : {{m.id}}</p>
+                <p>image : {{m.image}}</p>
+                <p>name : {{m.owner.username}}</p>
+                <p>nickname : {{m.owner.nickname}}</p>
+                <p>imagekey : {{m.imagekey}}</p>
+                <p>date : {{m.pub_date}}</p>
+                <p>is_public : {{m.is_public}}</p>
+
+            {% else %}
+                <p>Anonymous</p>
+            {% endif %}
+
+                        
+            {% for n in m.tastingnotemodel_set.all %} 
+                <p>notekey : {{n.notekey}}</p>
+                <p>one_line_review : {{n.TastingNoteModel_set.one_line_review}}</p>
+                <p>sweetness : {{n.sweetness}}</p>
+                <p>acidity : {{n.acidity}}</p>
+                <p>alchol_finish : {{n.alchol_finish}}</p>
+            
+            {% empty %}
+            <p>No TastingNote added.</p>
+            {% endfor %}
+        </div>
     </div>
-</div>
-{% empty %}
-<p>No movies added.</p>
-{% endfor %}
+    {% empty %}
+    <p>No whisky added.</p>
+    {% endfor %}
 </div>
 
-{%endblock%}  
+
+
+
+<div>
+    {% for t in note %} 
+        {{t.owner}}
+        {{t.image}}
+        {{t.UploadImagekey}}
+        {{t.name}}
+        {{t.drumtong_rating}}
+        
+    {% empty %}
+    <p>No TastingNote added.</p>
+    {% endfor %}
+
+
+    {% for t in note.uploadimagemodel.all %} 
+        <p>ID : {{m.id}}</p>
+        <p>image : {{m.image}}</p>
+        <p>name : {{m.owner.username}}</p>
+        <p>nickname : {{m.owner.nickname}}</p>
+        <p>imagekey : {{m.imagekey}}</p>
+        <p>date : {{m.pub_date}}</p>
+        <p>is_public : {{m.is_public}}</p>
+
+    {% empty %}
+        <p>Anonymous</p>
+    {% endfor %}
+
+</div>
+
+{%endblock%}

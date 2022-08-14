@@ -42,6 +42,7 @@ urlpatterns = [
     path('common/',include('common.urls')),
     path('showcase/',include('showcase.urls')),
     path('labelcanner/',include('labelscanner.urls')),
+    path('tastingnote/',include('tastingnote.urls')),
     # path('',views.HomeView.as_view(),name='home'),
     # path('showcase/',include('showcase.urls')),
 
