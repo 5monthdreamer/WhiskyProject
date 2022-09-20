@@ -1,19 +1,19 @@
 from django.views.generic.base import TemplateView
 
-from django.shortcuts import  render
-from django.core.files.storage import FileSystemStorage
-
-# from tensorflow import keras
-from keras.models import load_model
-from PIL import Image, ImageOps
-import numpy as np
-# from tensorflow import keras model = keras.models.load_model('path/to/location')
-import os
-import time
+from django.shortcuts import  render, get_object_or_404, redirect
+from django.urls import reverse
 
 # image form 저장
-from showcase.forms import UserImageForm  
-from showcase.models import UploadImageModel 
+from showcase.forms import *
+from showcase.models import *
+
+
+# pagination 설정
+from django.core.paginator import Paginator
+
+
+
+
 
 
 class HomeView(TemplateView):
@@ -25,226 +25,105 @@ class HomeView(TemplateView):
         context['app_list'] = ['labelscanner','showcase']
         return context
 
-print(os.path.join(os.getcwd(),'mysite/keras_model.h5'))
-
-def teachablemachine(image_path):
-
-    # Load the model # ☆☆☆☆☆ os.getcwd()는 다 다르다
-    model = load_model(os.path.join(os.getcwd(),'mysite/keras_model.h5'))
-    print(os.path.join(os.getcwd(),'keras_model.h5'))
-    # pythonanywhere에서는 'WhiskyProject/whisky/mysite/keras_model.h5'
-
-    # Create the array of the right shape to feed into the keras model
-    # The 'length' or number of images you can put into the array is
-    # determined by the first position in the shape tuple, in this case 1.
-    data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-    # Replace this with the path to your image
-    image = Image.open(os.path.join(os.getcwd(),'media/'+str(image_path)))
-    # pythonanywhere에서는 'WhiskyProject/whisky/media/'
-    #resize the image to a 224x224 with the same strategy as in TM2:
-    #resizing the image to be at least 224x224 and then cropping from the center
-    size = (224, 224)
-    image = ImageOps.fit(image, size, Image.ANTIALIAS)
-
-    #turn the image into a numpy array
-    image_array = np.asarray(image)
-    # Normalize the image
-    normalized_image_array = (image_array.astype(np.float32) / 127.0) - 1
-    # Load the image into the array
-    data[0] = normalized_image_array
-
-    # run the inference
-    prediction = model.predict(data)
-    return prediction
 
 
 
-def upload(request):
-    if request.method == 'POST' and request.FILES['upload']:
-        upload = request.FILES['upload']
-        fss = FileSystemStorage()
-        file = fss.save(upload.name, upload)
-        file_url = fss.url(file)
 
-        #<Teachable Machine>
-        img_result = teachablemachine(file)
-
-        whisky_name = ["JAMESON","WILD TURCKEY"]
-
-
-
-        for order in range(2):
-            print(np.max(img_result),img_result[0,order])
-            if img_result[0,order]>=0.999:
-                global name1
-                global percent1
-                name1 = whisky_name[order]
-                percent1 = str(round(img_result[0,order]*100))+"%"
-                break
-            else:
-                name1 = "비슷한 위스키가 없습니다"
-                percent1 = "-"
-                continue
-
-
-        return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':"신기하지??!!!"})
+def home_main(request):
     
+    obj = UploadImageModel.objects.exclude(owner__isnull=True)
+    images_public = obj.filter(is_public=True)
 
-    return render(request, 'home.html')
-
-
-def mobile_upload(request):
-    if request.method == 'POST' and request.FILES['upload']:
-        upload = request.FILES['upload']
-        fss = FileSystemStorage()
-        file = fss.save(upload.name, upload)
-        file_url = fss.url(file)
-
-        #<Teachable Machine>
-        img_result = teachablemachine(file)
-
-        whisky_name = ["JAMESON","WILD TURCKEY"]
-
-
-
-        for order in range(2):
-            print(np.max(img_result),img_result[0,order])
-            if img_result[0,order]>=0.999:
-                global name1
-                global percent1
-                name1 = whisky_name[order]
-                percent1 = str(round(img_result[0,order]*100))+"%"
-                break
-            else:
-                name1 = "비슷한 위스키가 없습니다"
-                percent1 = "-"
-                continue
-
-
-        return render(request, 'mobilehome.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':"신기하지??!!!"})
-
-    return render(request, 'mobilehome.html')
-
-
-
-
-
-def showcase_upload(request):
-    if request.method == 'POST' and request.FILES:
-        # usernickname = UploadImageModel(nickname=request.user)
-
-        form = UserImageForm(request.POST, request.FILES)  
-
-        # form.save()
-        if form.is_valid():  
-            # form.nickname = request.user
-            post = form.save(commit=False)
-            
-            if request.user.is_authenticated:
-                post.owner = request.user
-            else:
-                pass
-            post.save()
-            
-            # record = UploadImageModel.objects.all()
-            # record.delete()
-            # form.save()  #form.save(commit=False)
-            
-            saved_image = form.cleaned_data['image']
-            fss = FileSystemStorage()
-            file_url = fss.url(saved_image)
-            
-            # Getting the current instance object to display in the template  
-            # img_object = form.instance  
-            
-            
-            img_result = teachablemachine(saved_image)
-
-            whisky_name = ["JAMESON","WILD TURCKEY"]
-
-
-            for order in range(2):
-                print(np.max(img_result),img_result[0,order])
-                if img_result[0,order]>=0.999:
-                    global name1
-                    global percent1
-                    name1 = whisky_name[order]
-                    percent1 = str(round(img_result[0,order]*100))+"%"
-                    break
-                else:
-                    name1 = "비슷한 위스키가 없습니다"
-                    percent1 = "-"
-                    continue
-
-
-            return render(request, 'home.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':'없음'})
-                        
-            # return render(request, 'showcase.showcase.html', {'form': form, 'img_obj': img_object})
+    paginator = Paginator(images_public,9)
+    page = request.GET.get('page')
+    images = paginator.get_page(page)
     
     
-    else:
-        form = UserImageForm()
-        images = UploadImageModel.objects.all()
-        return render(request, 'home.html', {'form':form, 'images':images})
-     
+    try:
+        follow = ImageFollowModel.objects.filter(follower=request.user)
+                                                         
+        return render(request, 'home.html', {'images':images, 'follow':follow})
     
-            
-def showcase_upload_mobile(request):
-    if request.method == 'POST' and request.FILES:
-        # usernickname = UploadImageModel(nickname=request.user)
-
-        form = UserImageForm(request.POST, request.FILES)  
-        # form.save()
-        if form.is_valid():  
-            # form.nickname = request.user
-            post = form.save(commit=False)
-            
-            if request.user.is_authenticated:
-                post.owner = request.user
-            else:
-                pass
-            post.save()
-            
-            # record = UploadImageModel.objects.all()
-            # record.delete()
-            # form.save()  #form.save(commit=False)
-            
-            saved_image = form.cleaned_data['image']
-            fss = FileSystemStorage()
-            file_url = fss.url(saved_image)
-            
-            # Getting the current instance object to display in the template  
-            # img_object = form.instance   
-            
-            
-            img_result = teachablemachine(saved_image)
-
-            whisky_name = ["JAMESON","WILD TURCKEY"]
+    except:
+        
+        return render(request, 'home.html', {'images':images})
+    
 
 
-            for order in range(2):
-                print(np.max(img_result),img_result[0,order])
-                if img_result[0,order]>=0.999:
-                    global name1
-                    global percent1
-                    name1 = whisky_name[order]
-                    percent1 = str(round(img_result[0,order]*100))+"%"
-                    break
-                else:
-                    name1 = "비슷한 위스키가 없습니다."
-                    percent1 = "-"
-                    continue
 
 
-            return render(request, 'mobilehome.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':"신기하지??!!!"})
-                        
-            # return render(request, 'showcase.showcase.html', {'form': form, 'img_obj': img_object})
-            
-    else:
-        form = UserImageForm()
-        images = UploadImageModel.objects.all()
-        return render(request, 'mobilehome.html', {'form':form, 'images':images})
-            
+def home_imagesave(request, imagemodel_id):
+    
+    the_uploadimagemodel = get_object_or_404(UploadImageModel, pk=imagemodel_id, is_public=True)
+    # ImageFollowModel.UploadImagekey = the_UploadImageModel
+    
+    try:
+        the_ImageFollowModel = get_object_or_404(ImageFollowModel, UploadImagekey_id = imagemodel_id, follower=request.user)
+        
+        if the_ImageFollowModel.is_follow == True:
+            the_ImageFollowModel.is_follow = False
+            the_ImageFollowModel.save()
+        else:
+            the_ImageFollowModel.is_follow = True
+            the_ImageFollowModel.save()
+
+    except:
+        the_ImageFollowModel = ImageFollowModel()
+        the_ImageFollowModel.UploadImagekey = the_uploadimagemodel
+        the_ImageFollowModel.follower = request.user
+        the_ImageFollowModel.is_follow = True
+        the_ImageFollowModel.save()
+    
+    return redirect(reverse('home'))
+
+
+def home_imagelike(request, imagemodel_id):
+    
+    the_uploadimagemodel = get_object_or_404(UploadImageModel, pk=imagemodel_id, is_public=True)
+    # ImageFollowModel.UploadImagekey = the_UploadImageModel
+    
+    try:
+        the_ImagelikeModel = get_object_or_404(ImageFollowModel, UploadImagekey_id = imagemodel_id, follower=request.user)
+        
+        if the_ImagelikeModel.is_like == True:
+            the_ImagelikeModel.is_like = False
+            the_ImagelikeModel.save()
+        else:
+            the_ImagelikeModel.is_like = True
+            the_ImagelikeModel.save()
+
+    except:
+        the_ImagelikeModel = ImageFollowModel()
+        the_ImagelikeModel.UploadImagekey = the_uploadimagemodel
+        the_ImagelikeModel.follower = request.user
+        the_ImagelikeModel.is_like = True
+        the_ImagelikeModel.save()
+    
+    return redirect(reverse('home'))
+ 
+
+
+def home_notesave(request, notemodel_id):
+
+    the_tastingnotemodel = get_object_or_404(NoteFollowModel, pk=notemodel_id, is_public=True)
+    # ImageFollowModel.UploadImagekey = the_UploadImageModel
+    
+    try:
+        the_notefollowmodel = get_object_or_404(NoteFollowModel, UploadNotekey_id = notemodel_id, follower=request.user, is_follow = True)     
+        the_notefollowmodel.delete()
+
+    except:
+        the_notefollowmodel = ImageFollowModel()
+        the_notefollowmodel.UploadImagekey = the_tastingnotemodel
+        the_notefollowmodel.follower = request.user
+        the_notefollowmodel.is_follow = True
+        the_notefollowmodel.save()
+    
+    return redirect(reverse('home'))
+
+
+
+
 
         
     

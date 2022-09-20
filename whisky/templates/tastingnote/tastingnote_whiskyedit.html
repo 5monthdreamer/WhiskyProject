@@ -1,0 +1,86 @@
+{%extends "base.html"%}
+
+{% load static %}
+
+{% block ifmobile %}
+<!--버튼 클릭 시 div 보여줌-->
+<script type="text/javascript">
+  function myFunction() {
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+</script>
+{% endblock %}
+
+
+
+{% block sidebar1 %}
+<br><br>
+<div align="center">
+  <h2 class="my-2">Change your Whisky Photo and Name</h2>
+</div>
+<main>
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+
+          
+          <!-- 클릭하면 밑에 열림. 테이스팅노트 한줄평 완료 -->
+          <div id="myDIV"></div>
+
+          <br><br>
+          
+          <!-- 파일 첨부 전 처음 화면 -->
+            <img src="{{ the_UploadImageModel.image.url }}" class="card-img-top">
+            <form action="{% url 'tastingnote:edit_whisky' the_UploadImageModel.id %}" method="post" enctype="multipart/form-data">
+              <div class="card" >
+              {% csrf_token %}
+              <br>
+                  <div class="card h-10 p-2">
+                  <h3>Whisky Photo</h3>
+                  <div class="mb-3">
+                      <input class="form-control" type="file" id="chooseFile" name="image" alt="Your photo!" accept="image/*">
+                  </div>
+  
+                  <h3>Whisky Name</h3>
+                  <select class="form-select" size="10" aria-label="size 3 select example" name="whiskyname">
+                      <option selected>None</option>
+                      <option value="1792 Small Batch Kentucky Straight Bourbon Whiskey">1792 Small Batch Kentucky Straight Bourbon Whiskey</option>
+                      <option value="Angel’s Envy Kentucky Straight Bourbon Whiskey">Angel’s Envy Kentucky Straight Bourbon Whiskey</option>
+                      <option value="Barrell Dovetail Whiskey">Barrell Dovetail Whiskey</option>
+                  </select>
+                  <br>
+                  </div>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-primary" id="submit-file" align="right">Submit</button>
+              <br><br>
+              <p class="massage2">※ If you change your whisky photo and name, Click submit button</p>
+              <br>
+              
+              <!-- Button 대신 input type="image"도 사용가능!!★★★★★
+              <input type="image" id="submit" name="image" alt="Your photo!" accept="image/*"> -->
+              
+              <!-- 기본적인 submit방법 -->
+              
+            </form>
+
+        </div>
+      </div>
+    </div>
+</main>
+
+{% endblock %}
+
+<!-- style='display:none;' -->
+<!-- <label className="input-file-button" for="submit-file">
+  submit
+</label>
+<input type="submit" id="submit-file" style='display:none;'> -->
+
+

@@ -9,7 +9,7 @@ class UserImageForm(ModelForm):
         # To specify the model to be used to create form  
         model = UploadImageModel
         # It includes all the fields of model  
-        fields = ['image',]
+        fields = ['image','whiskyname',]
         # exclude = ('nickname','owner','pub_date','is_public')
         
         
@@ -17,6 +17,18 @@ class UserImageForm(ModelForm):
             'image' : forms.FileInput(attrs={'class':'form-control'})
             
         }
+
+
+# 위스키 이름만 부여하기 위한 폼
+class UserwhiskynameForm(ModelForm):
+    class Meta:
+        # To specify the model to be used to create form  
+        model = UploadImageModel
+        # It includes all the fields of model  
+        fields = ['whiskyname',]
+        # exclude = ('nickname','owner','pub_date','is_public')
+        
+        
 
 
 
@@ -30,6 +42,9 @@ class UserTastingNoteForm(ModelForm):
         
         # It includes all the fields of model  
         fields = ['name','drumtong_rating','one_line_review','taste','taste_intensity','flavor','flavor_intensity','alchol_finish',]
+
+
+
         
         
     

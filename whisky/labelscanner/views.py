@@ -68,6 +68,8 @@ def img_scanning(request):
             else:
                 pass
             
+            post.whiskyname = "None"
+            
             # <사진 저장하고 싶을때 아래 명령어 사용!!!>
             post.save()
             postID = post.id

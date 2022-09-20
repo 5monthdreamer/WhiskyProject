@@ -8,32 +8,151 @@
 
 
 {% block sidebar1 %}
-
+<br>
 <div class="container">
     <div class="row">
       <div class="col">
 
-
         <div class="card" >
-        <img src="{{ file_url }}" class="card-img-top" alt="No image">
-        <div class="card-body">
-            <h5 class="whisky-name">{{the_uploadimagemodel.owner}}</h5>
-            <p class="whisky-percent">{{the_uploadimagemodel.owner.nickname}}</p>
-            <p class="whisky-percent">{{the_uploadimagemodel.pub_date}}</p>
+            <!-- 이미지 기본정보 -->
+            <br>
+            <div class="row" style="text-align:right">
+                <h4 style="text-align:right">{{the_uploadimagemodel.owner}}({{the_uploadimagemodel.owner.nickname}})&nbsp;&nbsp;&nbsp;</h4>
+            </div>
+            <div class="row" style="text-align:right">
+                <p style="text-align:right">{{the_uploadimagemodel.image}}&nbsp;&nbsp;&nbsp;</p>
+            </div>
+            <div class="row" style="text-align:right">
+                <p style="text-align:right">{{the_uploadimagemodel.pub_date}}&nbsp;&nbsp;&nbsp;</p>
+            </div>
+            <img src="{{ file_url }}" class="card-img-top" alt="No image">
+            <div class="card-body">
+                <div class="row" style="text-align:center">
+                    <h2>{{the_uploadimagemodel.whiskyname}}</h2>
+                </div>
+            </div>
         </div>
-        </div>
+        <br>
+                
+                <!-- 테이스팅노트 작성 후 모습 -->
+                {% if name %}
+                <h4 style="text-align:center">TASTING NOTE (saved)</h4>
 
+                <div class="row">
+                    <div class="card h-10 p-4">
+                        <div class="row">
+                            <div class="col">
+                                <p style="text-align:right">{{the_uploadimagemodel.pub_date}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h1>Whisky Name : {{the_uploadimagemodel.whiskyname}}</h1>
+                            <h2>Tasting Note Name : {{name}}</h2>
+                            
+                        </div>
+                        <br>
+                        
+                        <hr><br>
+                        <p style="text-align:left">One_Line_Review :</p>
+                        <p> {{one_line_review}}</p>
+                        <hr><br>
+                        <p style="text-align:left">Barrel_Rating : {{drumtong_rating}}</p>
+                        <p style="text-align:left">Taste : {{taste}} (intensity : {{taste_intensity}})</p>
+                        <p style="text-align:left">Flavor : {{flavor}} (intensity : {{flavor_intensity}})</p>
+                        <p style="text-align:left">alchol_finish : {{alchol_finish}}</p>
+                    </div>
+                </div>
+
+                <!-- 테이스팅노트 에디팅 -->
+                {% elif the_tastingnotemodel %}
+                <h4 style="text-align:center">TASTING NOTE (before edited)</h4>
+
+                <div class="row">
+                    <div class="card h-10 p-4">
+                        <div class="row">
+                            <div class="col">
+                                <p style="text-align:right">{{the_tastingnotemodel.pub_date}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h1>{{the_tastingnotemodel.UploadImagekey.whiskyname}}</h1>
+                            <h2>{{the_tastingnotemodel.name}}</h2>
+                        </div>
+                        <br>
+                        
+                        <hr><br>
+                        <p style="text-align:left">One_Line_Review :</p>
+                        <p> {{the_tastingnotemodel.one_line_review}}</p>
+                        <hr><br>
+                        <p style="text-align:left">Barrel_Rating : {{the_tastingnotemodel.drumtong_rating}}</p>
+                        <p style="text-align:left">Taste : {{the_tastingnotemodel.taste}} (intensity : {{the_tastingnotemodel.taste_intensity}})</p>
+                        <p style="text-align:left">Flavor : {{the_tastingnotemodel.flavor}} (intensity : {{the_tastingnotemodel.flavor_intensity}})</p>
+                        <p style="text-align:left">alchol_finish : {{the_tastingnotemodel.alchol_finish}}</p>
+                    </div>
+                </div>
+
+                <!-- 아무것도 없을때 테이스팅노트 추가 -->
+                {% else %}
+
+
+                {% endif %}
+
+
+
+    <!-- 테이스팅노트 작성 폼 -->
+
+        <!-- 테이스팅노트 작성 후 모습 -->
+        {% if name %}
+        <form action="{% url 'tastingnote:main_tastingnote' the_uploadimagemodel.id %}" method="post">
+        
+            {% csrf_token %}
+
+            <h4 class="ui dividing header">Whisky Name</h4>
+            <div class="ui form">
+            <div class="ui blue segment">
+                <select class="form-select" size="10" aria-label="size 3 select example" name="whiskyname">
+                    <option selected>None</option>
+                    <option value="1792 Small Batch Kentucky Straight Bourbon Whiskey">1792 Small Batch Kentucky Straight Bourbon Whiskey</option>
+                    <option value="Angel’s Envy Kentucky Straight Bourbon Whiskey">Angel’s Envy Kentucky Straight Bourbon Whiskey</option>
+                    <option value="Barrell Dovetail Whiskey">Barrell Dovetail Whiskey</option>
+                </select>
+            </div>
+            </div>
+
+
+        <!-- 테이스팅노트 에디팅 -->
+        {% elif the_tastingnotemodel %}
+        <form action="{% url 'tastingnote:edit_tastingnote' the_tastingnotemodel.id %}" method="post">
+            {% csrf_token %}
+
+        <!-- 아무것도 없을때 테이스팅노트 추가 -->
+        {% else %}
         <form action="{% url 'tastingnote:main_tastingnote' the_uploadimagemodel.id %}" method="post">
             {% csrf_token %}
 
             <h4 class="ui dividing header">Whisky Name</h4>
             <div class="ui form">
             <div class="ui blue segment">
+                <select class="form-select" size="10" aria-label="size 3 select example" name="whiskyname">
+                    <option selected>None</option>
+                    <option value="1792 Small Batch Kentucky Straight Bourbon Whiskey">1792 Small Batch Kentucky Straight Bourbon Whiskey</option>
+                    <option value="Angel’s Envy Kentucky Straight Bourbon Whiskey">Angel’s Envy Kentucky Straight Bourbon Whiskey</option>
+                    <option value="Barrell Dovetail Whiskey">Barrell Dovetail Whiskey</option>
+                </select>
+            </div>
+            </div>
+            
+        {% endif %}
+
+            <br>
+            <h4 class="ui dividing header">Tasting Note Name</h4>
+            <div class="ui form">
+            <div class="ui blue segment">
                 <textarea name="name" id="" cols="20" rows="1"></textarea>
             </div>
             </div>
 
-            <h4 class="ui dividing header">Drumtong Rating</h4>
+            <h4 class="ui dividing header">Barrel Rating</h4>
             <div class="ui form">
             <div class="ui red segment">
                 <label>Choose whisky grade :</label>
@@ -213,80 +332,19 @@
             <div>
             <button type="submit" class="btn btn-primary" id="submit-file">Save</button>
             </div>
+
         </form>
         </div>
     </div>
 
     <br><hr><br>
 
-    <div class="row">
-        <div class="card" >
-            <div class="card-body">
-                <h5 class="whisky-name">Tasting Note</h5>
-                <p class="whisky-percent">name :
-                    {{ name }}</p>
-                <p class="whisky-percent">drumtong_rating :
-                    {{ drumtong_rating }}</p>
-                    <p class="whisky-percent">one_line_review :
-                        {{ one_line_review }}</p>
-                        <p class="whisky-percent">Etc :
-                            {{note.taste}}</p>
-                            
-                        </div>
-                    </div>
-        {% if sweetness == "10" %}
-        {% else %}
-        {% endif %}
-    </div>
+
 </div>
 
 
 
-
-
-
-<br>
-
-
-<!-- {{note.id}}
-{{note.owner}}
-{{note.image}}
-{{note.pub_date}}
-{{note.is_public}} -->
-
-<!-- {{note.UploadImagekey}}
-{{note.review}}
-{{note.sweetness}}
-{{note.acidity}}
-{{note.alchol_finish}} -->
-
-<br>
-<!-- {{tastingnote.one_line_review}} -->
-
-
-
-<!-- 
-<div class="row">
-    {% for m in tastingnote %}
-    <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
-        <div class="card h-100 p-4">
-        <img src="{{ m.image.url }}" class="card-img-top">  
-        {% if m.owner.nickname %}
-            <p>{{m.owner.nickname}}</p>
-        {% else %}
-            <p>Anonymous</p>
-        {% endif %}
-            {{m.one_line_review}}
-            {{m.sweetness}}
-            {{m.acidity}}
-            {{m.alchol_finish}}
-        </div>
-    </div>
-    {% empty %}
-    <p>No whisky added.</p>
-    {% endfor %}
-</div> -->
-
+<br><br>
 
 
 {% endblock %} 

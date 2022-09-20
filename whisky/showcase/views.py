@@ -1,16 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 # image form 저장
-from showcase.forms import UserImageForm  
-from showcase.models import UploadImageModel, TastingNoteModel
+from showcase.forms import * 
+from showcase.models import *
 
 # Create your views here.
 def show(request):
-    form = UserImageForm()
-    images = UploadImageModel.objects.all()
-    note = TastingNoteModel.objects.all()
-    return render(request, 'showcase/showcase.html', {'form':form, 'images':images, 'note':note})
+    obj = UploadImageModel.objects.exclude(owner__isnull=True)
+    images = obj.filter(is_public=True)
+    
 
-def mobile_show(request):
-    form = UserImageForm()
-    images = UploadImageModel.objects.all()
-    return render(request, 'showcase/mobileshowcase.html', {'form':form, 'images':images})
+    return render(request, 'showcase/showcase.html', {'images':images})
+
+

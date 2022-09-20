@@ -35,16 +35,17 @@ sitemaps = { 'static':StaticViewSitemap, }
 urlpatterns = [
     # path('__debug__/',include('debug_toolbar.urls')), # 장고디버그툴바 사용
     path('admin/', admin.site.urls),
-    path('',views.showcase_upload,name='home'),
-    path('m/',views.showcase_upload_mobile,name='mobilehome'),
+    path('',views.home_main,name='home'),
     path('robots.txt',  TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path('common/',include('common.urls')),
     path('showcase/',include('showcase.urls')),
     path('labelcanner/',include('labelscanner.urls')),
     path('tastingnote/',include('tastingnote.urls')),
-    # path('',views.HomeView.as_view(),name='home'),
-    # path('showcase/',include('showcase.urls')),
+    path('save/<int:imagemodel_id>',views.home_imagesave,name='home_imagesave'), #이미지 follow
+    path('like/<int:imagemodel_id>',views.home_imagelike,name='home_imagelike'), #이미지 like
+    path('save/<int:notemodel_id>',views.home_notesave,name='home_notesave'), #노트 저장
+
 
 ]
 

@@ -16,6 +16,7 @@ class UploadImageModel(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)  # 사용자가 입력하지 않고 업로드 하는 순간 자동으로 세팅이 됨.
     is_public = models.BooleanField(default=False)      # 비공개 사진인지, 공개 사진인지에 대한 필드
     # nickname = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    whiskyname = models.CharField(max_length=50, blank=True, null=True)
     
     
     
@@ -28,7 +29,7 @@ class UploadImageModel(models.Model):
   
 class TastingNoteModel(models.Model):
     
-    UploadImagekey = models.ForeignKey(UploadImageModel, related_name="UploadImageModel", on_delete=models.CASCADE)
+    UploadImagekey = models.ForeignKey(UploadImageModel, on_delete=models.CASCADE)
     # notekey = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, db_column="note_id")
     name = models.CharField(max_length=20) #required 넣기!!
     drumtong_rating = models.IntegerField()
@@ -47,3 +48,23 @@ class TastingNoteModel(models.Model):
     is_public = models.BooleanField(default=False)      # 비공개 사진인지, 공개 사진인지에 대한 필드
 
     
+
+class ImageFollowModel(models.Model): 
+    follower = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, db_constraint=False, blank=False, null=False) # 하나의 사진은 여려명의 팔로워에게 속할 수 있음. 1:N의 관계
+    UploadImagekey = models.ForeignKey(UploadImageModel, on_delete=models.CASCADE) # 팔로우 이미지
+    is_follow = models.BooleanField(default=False) # 팔로우 여부
+    is_like = models.BooleanField(default=False) # 좋아요 여부
+    
+    
+# class ImageCommentModel(models.Model): 
+#     UploadImagekey = models.ForeignKey(ImageFollowModel, on_delete=models.CASCADE)
+#     comment = models.CharField(max_length=20, blank=True, null=True)
+
+
+class UserFollowModel(models.Model): 
+    User = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, blank=False, null=False, related_name='following') # 팔로우 이미지
+    follower = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,  blank=False, null=False, related_name='followers') # 하나의 사진은 여려명의 팔로워에게 속할 수 있음. 1:N의 관계
+
+
+
+# 댓글모델을 따로 만들기!!

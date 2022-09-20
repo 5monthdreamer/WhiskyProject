@@ -58,7 +58,7 @@
                 <i class="edit outline icon"></i>
               </div>
               <div class="hidden content">
-                <a href="{% url 'tastingnote:main_tastingnote' postID %}" onclick="myFunction()">Tasting note{{postID}}</a>
+                <a href="{% url 'tastingnote:main_tastingnote' postID %}" onclick="myFunction()">Tasting note</a>
               </div>
             </div>
             <div class="ui animated button" tabindex="0">
@@ -69,7 +69,7 @@
                 </i>
               </div>
               <div class="hidden content">
-                <a href="showcase">Showcase</a>
+                <a href="{% url 'showcase:main_showcase' %}">Showcase</a>
               </div>
             </div>
           </div>

@@ -78,3 +78,9 @@ body {
 .navigation-bar .list-items .item.active .link i {
   font-size: 1.4rem;
 }
+
+.buttondesign{
+  padding: 0;
+  border: none;
+  background: none
+}

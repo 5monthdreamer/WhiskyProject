@@ -10,71 +10,129 @@
 {% block sidebar1 %}
 
 <div class="row">
-    {% for m in images %}
-    <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
-        <div class="card h-100 p-4">
-            <img src="{{ m.image.url }}" class="card-img-top">
-            <br>  
-            {% if m.owner.nickname %}
-                <p>ID : {{m.id}}</p>
-                <p>image : {{m.image}}</p>
-                <p>name : {{m.owner.username}}</p>
-                <p>nickname : {{m.owner.nickname}}</p>
-                <p>imagekey : {{m.imagekey}}</p>
-                <p>date : {{m.pub_date}}</p>
-                <p>is_public : {{m.is_public}}</p>
+    {% for m in images reversed %}
+    {% for p in m.imagefollowmodel_set.all %}
+    {% if p.is_follow == True and p.follower == request.user %}
+      <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+          <div class="card h-100 p-4">
+                    <div>
+                    <div style="text-align:right">
+                        <a href="{% url 'home_imagesave' m.id %}" style="color:#000000">
+                        &nbsp;&nbsp;<i class="large bookmark icon"></i>
+                        </a>
+                    </div>
+                    </div>
 
-            {% else %}
-                <p>Anonymous</p>
-            {% endif %}
+                    <div class="row">
+                    <i class="large user circle outline icon"></i>&nbsp;&nbsp;&nbsp;{{m.owner.username}}
+                    </div>
+                    <br>
 
+                    <div class="card h-10 p-2">
+                    <h3 style="text-align:center">{{m.whiskyname}}</h3>
+                    </div>
+                    <img src="{{ m.image.url }}" class="card-img-top">
+
+                <br>
+                <div class="card p-2">
+                    <h4 style="text-align:center">Tasting note</h4>
+                </div>
+
+
+                <div class="card h-10 p-4">
+                {% for n in m.tastingnotemodel_set.all %}
+                    {% if n.is_public == True %}
+
+                        <h3>
+                        <i class="paw icon"></i>
+                        {{n.name}}
+                        </h3>
+
+                        <table class="table" >
+
+                        <thead>
+                            <tr>
+                            <th style="width:40%; text-align:center;">Category</th>
+                            <th style="width:60%; text-align:center;">Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="center aligned">
+                            <td>
+                                Barrel Rating
+                            </td>
+                            <td style="text-align:center;">
+                                <p>
+                                {% if n.drumtong_rating == 1 %}
+                                <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                                {% elif n.drumtong_rating == 2 %}
+                                <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                                {% elif n.drumtong_rating == 3 %}
+                                <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                                {% elif n.drumtong_rating == 4 %}
+                                <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                                {% elif n.drumtong_rating == 5 %}
+                                <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                                {% endif %}
+                                </p>
+                            </td>
+                            </tr>
+                            <tr class="center aligned">
+                            <td>
+                                Taste
+                            </td>
+                            <td style="text-align:center;">
+                                {{n.taste}} ({{n.taste_intensity}})
+                            </td>
+                            </tr>
+                            <tr class="center aligned">
+                            <td>
+                                Flavor
+                            </td>
+                            <td style="text-align:center;">
+                                {{n.flavor}} ({{n.flavor_intensity}})
+                            </td>
+                            </tr>
+                            <tr class="center aligned">
+                            <td>
+                                Alchol Finish
+                            </td>
+                            <td style="text-align:center;">
+                                {{n.alchol_finish}}
+                            </td>
+                            </tr>
+                            <tr>
+                                <td colspan='2' class="center aligned">
+                                One Line Review
+                                <br>
+                                &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;{{n.one_line_review}}
+                                
+                                </td>
+                            </tr>
+                            
+
+                        </tbody>
+                        </table>
+                        <hr>
+
+                    {% endif %}
                         
-            {% for n in m.tastingnotemodel_set.all %} 
-                <p>notekey : {{n.notekey}}</p>
-                <p>one_line_review : {{n.TastingNoteModel_set.one_line_review}}</p>
-                <p>sweetness : {{n.sweetness}}</p>
-                <p>acidity : {{n.acidity}}</p>
-                <p>alchol_finish : {{n.alchol_finish}}</p>
-            
-            {% empty %}
-            <p>No TastingNote added.</p>
-            {% endfor %}
+                {% empty %}
+                        
+                {% endfor %}
+                </div>
+                
+            </div>
         </div>
-    </div>
+    {% endif %}
+    {% endfor %}
+
+
     {% empty %}
     <p>No whisky added.</p>
     {% endfor %}
 </div>
 
 
-
-
-<div>
-    {% for t in note %} 
-        {{t.owner}}
-        {{t.image}}
-        {{t.UploadImagekey}}
-        {{t.name}}
-        {{t.drumtong_rating}}
-        
-    {% empty %}
-    <p>No TastingNote added.</p>
-    {% endfor %}
-
-
-    {% for t in note.uploadimagemodel.all %} 
-        <p>ID : {{m.id}}</p>
-        <p>image : {{m.image}}</p>
-        <p>name : {{m.owner.username}}</p>
-        <p>nickname : {{m.owner.nickname}}</p>
-        <p>imagekey : {{m.imagekey}}</p>
-        <p>date : {{m.pub_date}}</p>
-        <p>is_public : {{m.is_public}}</p>
-
-    {% empty %}
-        <p>Anonymous</p>
-    {% endfor %}
-
-</div>
 
 {%endblock%}

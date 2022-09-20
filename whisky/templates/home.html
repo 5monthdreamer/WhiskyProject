@@ -6,13 +6,7 @@
 
 {% block ifmobile %}
 <!--모바일 기기 접속시 (꼭 haed나 body등 안에 있어야함☆)-->
-<script type="text/javascript">
-  var url = "{% url 'mobilehome' %}";
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent)
-  if (isMobile) {
-      location.replace(url);
-  }
-</script>
+
 {% endblock %}
 
 
@@ -24,58 +18,239 @@
 
 {% block sidebar1 %}
 <main>
+
     <br><hr><br>
 
     <div class="about">
       <div class="container">
         <div class="row d_flex">
             <div class="col-md-5">
-              <div class="about_img">
-                  <figure><img src="https://lh5.googleusercontent.com/9_pogaVd58YbUnIFrRZuRxqKEQbjH0Cl0Xj6lKWZmnDVgMiJhqsXWbBgJGXWTMBxXZa0EIzY5oCP8n1WRIL-8rEwrk61L-3rNfY7wVr3-hrKlkmfrj1vpMsHcNKNNvCUFTNpnUhS" class="img-fluid" alt="#"/></figure>
-              </div>
-            </div>
-            <div class="col-md-7">
               <div class="titlepage">
-                  <h2>Find your whisky and Record!</h2>
+                  <br>
+                  <h2 style="text-align:center">What you can do</h2>
+
+                  <h3>Scanning your whisky!</h3>
+                  <p>You can find what your whisky is!</p>
+
+                  <h3>Find your whisky and Record!</h3>
                   <p>You can find your Whisky! and record how you taste!</p>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
 
-    <br><hr><br>
-
-    <div class="about">
-      <div class="container">
-        <div class="row d_flex">
-            <div class="col-md-5">
-              <div class="titlepage">
-                  <h2>Make your spacial whisky showcase!</h2>
+                  <h3>Make your spacial whisky showcase!</h3>
                   <p>You can make showcase only one in the world!</p>
+                  <br>
               </div>
             </div>
             <div class="col-md-7">
-              <div class="about_img">
-                <figure><img src="https://images.unsplash.com/photo-1582819509237-d5b75f20ff7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80" class="img-fluid" alt="#"/></figure>
+              <div class="about_img" style="text-align:center">
+                <figure><img src="{%static 'img/base/mainhomeimage.png'%}" class="img-fluid" alt="#" width="420"/></figure>
               </div>
             </div>
         </div>
       </div>
     </div>
 
-    <br><hr><br>
+    <br><hr>
+    <h2 style="text-align:center">News Feed</h2>
+    <br>
+    <div class="row">
+    {% for m in images reversed %}
+      <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+          <div class="card h-100 p-4">
+              
+              {% if m.is_public == True %}
 
-    <!-- <main>
+                
+                <div class="row">
+                  <div class="col">
+                    <a href="{% url 'tastingnote:user_tastingnote' m.owner.id %}" style="color:#000000">
+                      <i class="large user circle outline icon"></i>&nbsp;&nbsp;&nbsp;{{m.owner.username}}
+                    </a>
+                  </div>
+                </div>
+                <br>
 
-      <div class="container">
-          <h2 class="my-2">Whisky label scanner</h2>
-          <br>
-          <a href="{% url 'showcase:mobile_main_showcase' %}">
-            <img src="https://lh5.googleusercontent.com/9_pogaVd58YbUnIFrRZuRxqKEQbjH0Cl0Xj6lKWZmnDVgMiJhqsXWbBgJGXWTMBxXZa0EIzY5oCP8n1WRIL-8rEwrk61L-3rNfY7wVr3-hrKlkmfrj1vpMsHcNKNNvCUFTNpnUhS" class="img-fluid">
-          </a>
+                <div class="card h-10 p-2">
+                  <h3 style="text-align:center">{{m.whiskyname}}</h3>
+                </div>
+                <img src="{{ m.image.url }}" class="card-img-top">
+
+                <!-- 좋아요, 댓글, 저장버튼 -->
+                <div class="top attached card" style="padding:10px;">
+                  <div class="row">
+                    <div class="col" style="text-align:left">
+                      &nbsp;&nbsp;&nbsp;<i class="large heart red icon"></i>&nbsp;13
+                      &nbsp;&nbsp;&nbsp;<i class="large bookmark blue icon"></i>&nbsp;15
+                    </div>
+                    <div class="col" style="text-align:right">
+                      
+                        <a href="{% url 'home_imagelike' m.id %}" style="color:#000000" >
+                          <i class="large icons">
+                            <i class="heart outline icon"></i>
+                            {% for p in follow %}
+                              {% if p.UploadImagekey.id == m.id %}
+                                {% if p.is_like == True  %}
+                                <i class="corner red heart icon"></i></a>
+                                {% endif %}
+                              {% endif %}
+                            {% endfor %}
+                          </i>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;
+                        <i class="large icons">
+                          <i class="comments outline icon"></i>
+                          <i class="corner green comments icon"></i>
+                        </i>
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="{% url 'home_imagesave' m.id %}" style="color:#000000" >
+                          <i class="large icons">
+                            <i class="bookmark outline icon"></i>
+                            {% for p in follow %}
+                              {% if p.UploadImagekey.id == m.id %}
+                                {% if p.is_follow == True %}
+                                <i class="corner blue bookmark icon"></i>
+                                {% endif %}
+                              {% endif %}
+                            {% endfor %}
+                          </i>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;
+
+
+                            
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+              {% else %}
+                  <p>Anonymous</p>
+              {% endif %}
+              <br>
+              <div class="card p-2">
+                <h4 style="text-align:center">Tasting note</h4>
+              </div>
+
+
+              <div class="card h-10 p-4">
+              {% for n in m.tastingnotemodel_set.all %}
+                {% if n.is_public == True %}
+
+                    
+                    <h3>
+                      <i class="paw icon"></i>
+                      {{n.name}}
+                    </h3>
+
+                    <table class="table" >
+
+                      <thead>
+                        <tr>
+                          <th style="width:40%; text-align:center;">Category</th>
+                          <th style="width:60%; text-align:center;">Rating</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="center aligned">
+                          <td>
+                            Barrel Rating
+                          </td>
+                          <td style="text-align:center;">
+                            <p>
+                              {% if n.drumtong_rating == 1 %}
+                              <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                              {% elif n.drumtong_rating == 2 %}
+                              <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                              {% elif n.drumtong_rating == 3 %}
+                              <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                              {% elif n.drumtong_rating == 4 %}
+                              <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                              {% elif n.drumtong_rating == 5 %}
+                              <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                              {% endif %}
+                            </p>
+                          </td>
+                        </tr>
+                        <tr class="center aligned">
+                          <td>
+                            Taste
+                          </td>
+                          <td style="text-align:center;">
+                            {{n.taste}} ({{n.taste_intensity}})
+                          </td>
+                        </tr>
+                        <tr class="center aligned">
+                          <td>
+                            Flavor
+                          </td>
+                          <td style="text-align:center;">
+                            {{n.flavor}} ({{n.flavor_intensity}})
+                          </td>
+                        </tr>
+                        <tr class="center aligned">
+                          <td>
+                            Alchol Finish
+                          </td>
+                          <td style="text-align:center;">
+                            {{n.alchol_finish}}
+                          </td>
+                        </tr>
+                        <tr>
+                            <td colspan='2' class="center aligned">
+                              One Line Review
+                              <br>
+                              &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;{{n.one_line_review}}
+                              
+                            </td>
+                        </tr>
+                        
+
+                      </tbody>
+                    </table>
+                    <hr>
+
+                {% endif %}
+                    
+              {% empty %}
+                    
+              {% endfor %}
+              </div>
+          </div>
       </div>
-    </main> -->
+
+
+
+
+      {% empty %}
+      <p>No whisky added.</p>
+      {% endfor %}
+    </div>
+
+    <br>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        {% if images.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{images.previous_page_number}}">Previous</a></li>
+        {% else %}
+        <li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+        {% endif %}
+        
+        <li class="page-item disabled"><a class="page-link" href="">{{images.number}}/{{images.paginator.num_pages}}</a></li>
+        
+        {% if images.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{images.next_page_number}}">Next</a></li>
+        {% else %}
+        <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+
+
+
+
+
+    <br><hr><br>
 
 
 
