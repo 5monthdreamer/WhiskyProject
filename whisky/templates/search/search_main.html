@@ -1,0 +1,49 @@
+{%extends "base.html"%}
+
+{% load static %}
+
+{% block ifmobile %}
+<!--버튼 클릭 시 div 보여줌-->
+<script type="text/javascript">
+  function myFunction() {
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+</script>
+{% endblock %}
+
+
+{% block css1 %}
+
+
+{%endblock%}
+
+{% block sidebar1 %}
+<br><br>
+<div align="center">
+  <h2 class="my-2">Search everything</h2>
+</div>
+<br>
+<main>
+  <div class="ui big fluid center aligned search" style="text-align:center;">
+    <div class="ui icon input">
+      <input class="prompt" type="text" placeholder="what you want to search">
+      <i class="search icon"></i>
+    </div>
+    <div class="results"></div>
+  </div>
+</main>
+
+{% endblock %}
+
+<!-- style='display:none;' -->
+<!-- <label className="input-file-button" for="submit-file">
+  submit
+</label>
+<input type="submit" id="submit-file" style='display:none;'> -->
+
+

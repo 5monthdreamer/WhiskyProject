@@ -12,6 +12,18 @@
 
 {% block sidebar0 %}
 {{ block.super }}
+
+<script type="text/javascript">
+  function myFunction(value) {
+    var x = document.getElementById("myDIV"+value);
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+</script>
+
 {% endblock %}
 
 
@@ -50,7 +62,7 @@
     </div>
 
     <br><hr>
-    <h2 style="text-align:center">News Feed</h2>
+    <h2 style="text-align:center" id="NewsFeed">News Feed</h2>
     <br>
     <div class="row">
     {% for m in images reversed %}
@@ -72,17 +84,38 @@
                 <div class="card h-10 p-2">
                   <h3 style="text-align:center">{{m.whiskyname}}</h3>
                 </div>
-                <img src="{{ m.image.url }}" class="card-img-top">
-
+                <br>
+                <img src="{{ m.image.url }}" class="card-img-top" style="max-height: 560px; object-fit: contain;">
+                <br>
                 <!-- 좋아요, 댓글, 저장버튼 -->
                 <div class="top attached card" style="padding:10px;">
                   <div class="row">
                     <div class="col" style="text-align:left">
-                      &nbsp;&nbsp;&nbsp;<i class="large heart red icon"></i>&nbsp;13
-                      &nbsp;&nbsp;&nbsp;<i class="large bookmark blue icon"></i>&nbsp;15
+
+                      &nbsp;&nbsp;&nbsp;<i class="large heart red icon"></i>&nbsp;
+                      {% for follow in likecounting %}
+                        {% if follow.image == m.image %}
+                        {{follow.like_count}}
+                        {% endif %}
+                      {% endfor %}
+                      {{b}}
+
+                      &nbsp;&nbsp;&nbsp;<i class="large bookmark blue icon"></i>&nbsp;
+                      {% for follow in followcounting %}
+                        {% if follow.image == m.image %}
+                        {{follow.follow_count}}
+                        {% endif %}
+                      {% endfor %}
+
                     </div>
                     <div class="col" style="text-align:right">
-                      
+                        <a data-bs-toggle="collapse" href="#collapseExample{{m.id}}" style="color:#000000">
+                          <i class="large icons">
+                            <i class="comments outline icon"></i>
+                          </i>
+                        </a>
+                        
+                        &nbsp;&nbsp;&nbsp;
                         <a href="{% url 'home_imagelike' m.id %}" style="color:#000000" >
                           <i class="large icons">
                             <i class="heart outline icon"></i>
@@ -95,11 +128,6 @@
                             {% endfor %}
                           </i>
                         </a>
-                        &nbsp;&nbsp;&nbsp;
-                        <i class="large icons">
-                          <i class="comments outline icon"></i>
-                          <i class="corner green comments icon"></i>
-                        </i>
                         &nbsp;&nbsp;&nbsp;
                         <a href="{% url 'home_imagesave' m.id %}" style="color:#000000" >
                           <i class="large icons">
@@ -124,20 +152,84 @@
 
 
 
+
               {% else %}
                   <p>Anonymous</p>
               {% endif %}
               <br>
-              <div class="card p-2">
-                <h4 style="text-align:center">Tasting note</h4>
+
+              <!-- 댓글리스트 -->
+
+              <div class="collapse" id="collapseExample{{m.id}}">
+                <div class="card p-2 h-2">
+                  <div class="ui comments">
+                    <h3 class="ui dividing header">Comments</h3>
+                    <div class="comment">
+                      <a class="avatar">
+                        <img src="/images/avatar/small/elliot.jpg">
+                      </a>
+                      <div class="content">
+                        <a class="author">Elliot Fu</a>
+                        <div class="metadata">
+                          <span class="date">Yesterday at 12:30AM</span>
+                        </div>
+                        <div class="text">
+                          <p>This has been very useful for my research. Thanks as well!</p>
+                        </div>
+                        <div class="actions">
+                          <a class="reply">Reply</a>
+                        </div>
+                      </div>
+                      <div class="comments">
+                        <div class="comment">
+                          <a class="avatar">
+                            <img src="/images/avatar/small/jenny.jpg">
+                          </a>
+                          <div class="content">
+                            <a class="author">Jenny Hess</a>
+                            <div class="metadata">
+                              <span class="date">Just now</span>
+                            </div>
+                            <div class="text">
+                              Elliot you are always so right :)
+                            </div>
+                            <div class="actions">
+                              <a class="reply">Reply</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <form class="ui reply form">
+                      <div class="field">
+                        <textarea></textarea>
+                      </div>
+                      <div class="ui blue labeled submit icon button">
+                        <i class="icon edit"></i> Add Reply
+                      </div>
+                    </form>
+                  </div>
+
+                </div>
+                <br>
               </div>
+              
 
 
-              <div class="card h-10 p-4">
+              <!-- 테이스팅노트 -->
+
+              
+              <div class="card p-2 h-2">
+                <a data-bs-toggle="collapse" href="#collapsenote{{m.id}}" style="color:#000000">
+                  <h4 style="text-align:center">Tasting note</h4>
+                </a>
+              </div>
+              
+              <div class="collapse" id="collapsenote{{m.id}}">
+              
               {% for n in m.tastingnotemodel_set.all %}
-                {% if n.is_public == True %}
-
-                    
+              {% if n.is_public == True %}
+                <div class="card p-2 h-2">
                     <h3>
                       <i class="paw icon"></i>
                       {{n.name}}
@@ -208,13 +300,14 @@
 
                       </tbody>
                     </table>
-                    <hr>
-
-                {% endif %}
+                </div> 
+                <br>
+              {% endif %}
                     
               {% empty %}
-                    
+              
               {% endfor %}
+              
               </div>
           </div>
       </div>
@@ -252,7 +345,10 @@
 
     <br><hr><br>
 
-
+    <!-- 맨위로 버튼 생성 -->
+    <div style="position:fixed; bottom:50px; right:15px;">
+      <a href="#NewsFeed" style="color:#000000"><i class="large caret square up outline icon"></i>Top</a>
+    </div>
 
 </main>
 

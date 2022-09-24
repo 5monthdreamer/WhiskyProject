@@ -40,12 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'showcase.apps.ShowcaseConfig',
     'labelscanner.apps.LabelScannerConfig',
-    'common.apps.CommonConfig', # 앱추가
+    'common.apps.CommonConfig',
+    'search.apps.SearchConfig',
     'django.contrib.sites',
     'django.contrib.sitemaps',
 ]
 
-SITE_ID = 1   # stiempa 추가 관련
+SITE_ID = 1   # stiemap 추가 관련
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -129,9 +130,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# 추가 (sementic ui의 css, js 반영위해 필요)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-]  # 추가 (sementic ui의 css, js 반영위해 필요)
+]  
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

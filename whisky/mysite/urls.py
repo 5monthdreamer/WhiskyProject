@@ -42,6 +42,7 @@ urlpatterns = [
     path('showcase/',include('showcase.urls')),
     path('labelcanner/',include('labelscanner.urls')),
     path('tastingnote/',include('tastingnote.urls')),
+    path('search/',include('search.urls')),
     path('save/<int:imagemodel_id>',views.home_imagesave,name='home_imagesave'), #이미지 follow
     path('like/<int:imagemodel_id>',views.home_imagelike,name='home_imagelike'), #이미지 like
     path('save/<int:notemodel_id>',views.home_notesave,name='home_notesave'), #노트 저장

@@ -65,7 +65,7 @@
                 <a class="nav-link" href="">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="">Search</a>
+                <a class="nav-link" href="{% url 'search:search_main' %}">Search</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'labelscanner:main_labelscanner' %}">Scanner</a>
@@ -197,11 +197,13 @@
 
 
   <div class="ui bottom fixed fluid five item menu bg-light">
+
     <a class="item" href="{% url 'home' %}">
       <i class="home icon">
       </i>
     </a>
-    <a class="item">
+
+    <a class="item" href="{% url 'search:search_main' %}">
       <i class="search icon">
       </i>
     </a>

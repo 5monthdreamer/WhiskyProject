@@ -11,8 +11,8 @@ from showcase.models import *
 # pagination 설정
 from django.core.paginator import Paginator
 
-
-
+# Django ORM
+from django.db.models import F, Sum, Count, Case, When
 
 
 
@@ -41,12 +41,62 @@ def home_main(request):
     
     try:
         follow = ImageFollowModel.objects.filter(follower=request.user)
-                                                         
-        return render(request, 'home.html', {'images':images, 'follow':follow})
+        
+        # Django DRM 미쳤다... 이래서 django가 중요. DB를 잘 조작하는게 핵심 능력. html은 표현만 할뿐
+        
+        follow_qs = ImageFollowModel.objects.annotate(
+            image=F('UploadImagekey__image')
+        ).values(
+            'image', 'is_follow', 'is_like'
+        )
+        
+        
+        followcounting = follow_qs.filter(
+            is_follow = True
+        ).values(
+            'image'
+        ).annotate(
+            follow_count = Count('is_follow')
+        )
+        
+        likecounting = follow_qs.filter(
+            is_like = True
+        ).values(
+            'image'
+        ).annotate(
+            like_count = Count('is_like')
+        )
+        
+                                             
+        return render(request, 'home.html', {'images':images, 'follow':follow, 'follow_qs':follow_qs, 'followcounting':followcounting, 'likecounting':likecounting})
     
     except:
         
-        return render(request, 'home.html', {'images':images})
+        follow_qs = ImageFollowModel.objects.annotate(
+            image=F('UploadImagekey__image')
+        ).values(
+            'image', 'is_follow', 'is_like'
+        )
+        
+        
+        followcounting = follow_qs.filter(
+            is_follow = True
+        ).values(
+            'image'
+        ).annotate(
+            follow_count = Count('is_follow')
+        )
+        
+        likecounting = follow_qs.filter(
+            is_like = True
+        ).values(
+            'image'
+        ).annotate(
+            like_count = Count('is_like')
+        )
+        
+        
+        return render(request, 'home.html', {'images':images, 'follow_qs':follow_qs, 'followcounting':followcounting, 'likecounting':likecounting})
     
 
 

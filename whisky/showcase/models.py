@@ -56,6 +56,8 @@ class ImageFollowModel(models.Model):
     is_like = models.BooleanField(default=False) # 좋아요 여부
     
     
+    
+    
 # class ImageCommentModel(models.Model): 
 #     UploadImagekey = models.ForeignKey(ImageFollowModel, on_delete=models.CASCADE)
 #     comment = models.CharField(max_length=20, blank=True, null=True)
