@@ -38,6 +38,9 @@ def home_main(request):
     page = request.GET.get('page')
     images = paginator.get_page(page)
     
+    # 댓글 폼과 모델
+    form = CommentModelForm()
+    commentmodel = CommentModel.objects.all()
     
     try:
         follow = ImageFollowModel.objects.filter(follower=request.user)
@@ -68,7 +71,7 @@ def home_main(request):
         )
         
                                              
-        return render(request, 'home.html', {'images':images, 'follow':follow, 'follow_qs':follow_qs, 'followcounting':followcounting, 'likecounting':likecounting})
+        return render(request, 'home.html', {'images':images, 'follow':follow, 'follow_qs':follow_qs, 'followcounting':followcounting, 'likecounting':likecounting, 'form':form, 'commentmodel':commentmodel})
     
     except:
         
@@ -96,7 +99,7 @@ def home_main(request):
         )
         
         
-        return render(request, 'home.html', {'images':images, 'follow_qs':follow_qs, 'followcounting':followcounting, 'likecounting':likecounting})
+        return render(request, 'home.html', {'images':images, 'follow_qs':follow_qs, 'followcounting':followcounting, 'likecounting':likecounting, 'form':form, 'commentmodel':commentmodel})
     
 
 
@@ -172,7 +175,30 @@ def home_notesave(request, notemodel_id):
     return redirect(reverse('home'))
 
 
+def home_imagecomment(request, imagemodel_id):
+    
+    the_uploadimagemodel = get_object_or_404(UploadImageModel, pk=imagemodel_id, is_public=True)
+    # ImageFollowModel.UploadImagekey = the_UploadImageModel
+    
+    if request.method == 'POST':
+        form1 = CommentModelForm(request.POST)
+        
+        if form1.is_valid():
+            
+            post = form1.save(commit=False) # 여기서 오류나는 중 해결해야함
+            
+            post.UploadImagekey = the_uploadimagemodel
+            post.comment_user = request.user
+            
+            post.save()
+                       
+           
 
+            return redirect(reverse('home'))
+    
+    else:
+
+        return redirect(reverse('home'))
 
 
         

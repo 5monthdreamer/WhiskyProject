@@ -46,6 +46,8 @@ urlpatterns = [
     path('save/<int:imagemodel_id>',views.home_imagesave,name='home_imagesave'), #이미지 follow
     path('like/<int:imagemodel_id>',views.home_imagelike,name='home_imagelike'), #이미지 like
     path('save/<int:notemodel_id>',views.home_notesave,name='home_notesave'), #노트 저장
+    path('savecomment/<int:imagemodel_id>',views.home_imagecomment,name='home_imagecomment'), #댓글 저장
+    
 
 
 ]

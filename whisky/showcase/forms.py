@@ -1,4 +1,4 @@
-from .models import UploadImageModel, TastingNoteModel
+from .models import *
 from django.forms import ModelForm
 from django import forms
 
@@ -33,9 +33,7 @@ class UserwhiskynameForm(ModelForm):
 
 
 class UserTastingNoteForm(ModelForm):
-    
-
-    
+        
     class Meta:
         # To specify the model to be used to create form  
         model = TastingNoteModel
@@ -45,14 +43,11 @@ class UserTastingNoteForm(ModelForm):
 
 
 
-        
-        
-    
-# def __init__(self, ids, *args,**kwargs):
-#     super(UserTastingNoteForm, self).__init__(*args,**kwargs)
-#     self.fields['UploadImageModel'].queryset = UploadImageModel.objects.get(id=ids)
-
-# def __init__(self, imagemodel=None, *args,**kwargs):
-#     user = kwargs.pop('user','')
-#     super(UserTastingNoteForm, self).__init__(*args,**kwargs)
-#     self.fields['UploadImagekey'] = forms.ModelChoiceField(queryset=UploadImageModel.objects.get(pk=imageid))
+# 댓글 입력 폼
+class CommentModelForm(ModelForm):
+    class Meta:
+        # To specify the model to be used to create form  
+        model = CommentModel
+        # It includes all the fields of model  
+        fields = ['comment',]
+        # exclude = ('nickname','owner','pub_date','is_public')

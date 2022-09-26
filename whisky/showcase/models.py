@@ -70,3 +70,27 @@ class UserFollowModel(models.Model):
 
 
 # 댓글모델을 따로 만들기!!
+class CommentModel(models.Model):
+    UploadImagekey = models.ForeignKey(UploadImageModel, on_delete=models.CASCADE) # 팔로우 이미지
+    comment_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, db_constraint=False, blank=False, null=False) # 하나의 사진은 여려명의
+    comment = models.CharField(max_length=50, blank=True, null=True)
+    pub_date = models.DateTimeField(auto_now_add=True)
+    
+    
+class CommentlikeModel(models.Model): 
+    commentmodelkey = models.ForeignKey(CommentModel, on_delete=models.CASCADE) # 팔로우 이미지
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, db_constraint=False, blank=False, null=False) # 하나의 사진은 여려명의 팔로워에게 속할 수 있음. 1:N의 관계
+    is_like = models.BooleanField(default=False) # 좋아요 여부
+
+# 대댓글모델
+class CommentCommentModel(models.Model): 
+    commentmodelkey = models.ForeignKey(CommentModel, on_delete=models.CASCADE) # 팔로우 이미지
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, db_constraint=False, blank=False, null=False) # 하나의 사진은 여려명의 팔로워에게 속할 수 있음. 1:N의 관계
+    usercomment = models.CharField(max_length=50, blank=True, null=True)
+    pub_date = models.DateTimeField(auto_now_add=True)
+
+class CommentCommentlikeModel(models.Model): 
+    commentcommentmodelkey = models.ForeignKey(CommentModel, on_delete=models.CASCADE) # 팔로우 이미지
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, db_constraint=False, blank=False, null=False) # 하나의 사진은 여려명의 팔로워에게 속할 수 있음. 1:N의 관계
+    is_like = models.BooleanField(default=False) # 좋아요 여부
+
