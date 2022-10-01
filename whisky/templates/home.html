@@ -64,7 +64,7 @@
     <br><hr>
     <h2 style="text-align:center" id="NewsFeed">News Feed</h2>
     <br>
-    <div class="row">
+    <div class="row" style="padding:20px;">
     {% for m in images reversed %}
       <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
           <div class="card h-100 p-4">
@@ -367,15 +367,14 @@
 
 {% block sidebar2 %}
 
-<main>
 
 
+    <!-- 쉬운 SNS공유기능 Go to www.addthis.com/dashboard to customize your tools --> 
+    <!-- <div class="addthis_inline_share_toolbox_rwcp"></div> -->
 
-    <!-- Go to www.addthis.com/dashboard to customize your tools --> <div class="addthis_inline_share_toolbox_rwcp"></div>
 
-    <br>
-
-    <div id="disqus_thread"></div>
+    <!-- 쉬운 댓글 기능 -->
+    <!-- <div id="disqus_thread"></div>
         <script>
             /**
             *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
@@ -395,12 +394,8 @@
         </script>
         <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         <p></p>
-    </div>
+    </div> -->
 
-    <br><br>
-
-
-</main>
 {%endblock%}
 
 

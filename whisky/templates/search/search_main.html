@@ -29,13 +29,236 @@
 </div>
 <br>
 <main>
-  <div class="ui big fluid center aligned search" style="text-align:center;">
-    <div class="ui icon input">
-      <input class="prompt" type="text" placeholder="what you want to search">
-      <i class="search icon"></i>
+
+  <form action="{% url 'search:search_main' %}" method="post">
+    {% csrf_token %}
+    <div class="ui fluid center aligned search" style="text-align:center;">
+      <div class="ui icon input">
+        <input class="prompt" name="word" type="text" placeholder="what you want to search">
+        &nbsp;&nbsp;
+        <i class="search icon"></i>
+        <input type="submit" value="Submit">
+        
+      </div>
     </div>
-    <div class="results"></div>
+  </form>
+
+  <br>
+  <hr>
+
+
+  <div class="results" style="text-align:center; padding:20px;">
+   
+    <h3>Master</h3>
+    <div class="row">
+    {% if owner_list %} 
+    {% for post in owner_list %}
+    <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+      <div class="card border-primary mb-3" style="text-align:center; padding:10px; margin:30px;">
+        <a href="{% url 'tastingnote:user_tastingnote' post.id %}" style="color:#000000">
+          <i class="large user circle outline icon"></i>
+          ID : {{ post.username }}
+          (nickname : {{ post.nickname }})
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="card border-primary mb-3">
+      Search Word "{{ search_word  }}" Not Found!
+    </div>
+    {% endif %}
+    </div>
+    <hr>
+
+
+    <h3>Whisky</h3>
+    <div class="row">
+    {% if whiskyname_list %}
+    {% for post in whiskyname_list %}
+    <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+      <div class="card h-100 p-4 border-success mb-3">
+        <div class="row">
+          <div class="col" style="text-align:left;">
+            {% if post.owner %}
+            <a href="{% url 'tastingnote:user_tastingnote' post.owner.id %}" style="color:#000000">
+              <i class="large user circle outline icon"></i>&nbsp;&nbsp;&nbsp;{{post.owner.username}}
+            </a>
+            {% else %}
+            <a style="color:#000000">
+              <i class="large user circle outline icon"></i>&nbsp;&nbsp;&nbsp;Anonymous
+            </a>
+            {% endif %}
+          </div>
+        </div>
+        <br>
+        <div class="card h-10 p-2">
+          <div class="col">
+            <h3 style="text-align:center">{{post.whiskyname}}</h3>
+          </div>
+        </div>
+        <br>
+        <img src="{{ post.image.url }}" class="card-img-top" style="max-height: 560px; object-fit: contain;">
+      </div>
+    </div>
+    <br>
+    {% endfor %}
+    {% else %}
+    <div class="card border-success mb-3">
+      Search Word "{{ search_word  }}" Not Found!
+    </div>
+    {% endif %}
+    </div>
+    <hr>
+
+    
+    <h3>Tasting Note</h3>
+    <div class="row">
+    {% if note_list %}
+    {% for post in note_list %}
+    <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+      <div class="card h-100 p-4 border-danger mb-3">
+        <div class="card p-2 h-2">
+          <h3 style="text-align:left;">
+            <p class="h4" style="text-align:center;"><strong>{{post.UploadImagekey.whiskyname}}</strong></p>
+            &nbsp;&nbsp;&nbsp;<i class="paw icon"></i>
+            {{post.name}}
+          </h3>
+
+          <table class="table" >
+
+            <thead>
+              <tr>
+                <th style="width:40%; text-align:center;">Category</th>
+                <th style="width:60%; text-align:center;">Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="center aligned">
+                <td>
+                  Barrel Rating
+                </td>
+                <td style="text-align:center;">
+                  <p>
+                    {% if post.drumtong_rating == 1 %}
+                    <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                    {% elif post.drumtong_rating == 2 %}
+                    <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                    {% elif post.drumtong_rating == 3 %}
+                    <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                    {% elif post.drumtong_rating == 4 %}
+                    <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                    {% elif post.drumtong_rating == 5 %}
+                    <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
+                    {% endif %}
+                  </p>
+                </td>
+              </tr>
+              <tr class="center aligned">
+                <td>
+                  Taste
+                </td>
+                <td style="text-align:center;">
+                  {{post.taste}} ({{post.taste_intensity}})
+                </td>
+              </tr>
+              <tr class="center aligned">
+                <td>
+                  Flavor
+                </td>
+                <td style="text-align:center;">
+                  {{post.flavor}} ({{post.flavor_intensity}})
+                </td>
+              </tr>
+              <tr class="center aligned">
+                <td>
+                  Alchol Finish
+                </td>
+                <td style="text-align:center;">
+                  {{post.alchol_finish}}
+                </td>
+              </tr>
+              <tr>
+                  <td colspan='2' class="center aligned" style="text-align:left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;One Line Review
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;{{post.one_line_review}}
+                    
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="text-align:center;">
+            <a href="{% url 'tastingnote:user_tastingnote' post.UploadImagekey.owner.id %}" style="color:#000000; font-size:small;">{{post.UploadImagekey.owner.username}} ({{post.UploadImagekey.owner.nickname}})</a>
+          </div>
+        </div> 
+      </div>
+    </div>
+    <br>
+    {% endfor %}
+    {% else %}
+    <div class="card border-danger mb-3">
+      Search Word "{{ search_word  }}" Not Found!
+    </div>
+    {% endif %}
+    </div>
+    <hr>
+
+
+
+    <h3>Comment</h3>
+    <div class="row">
+    {% if comment_list %}
+    {% for post in comment_list %}
+    <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
+      <div class="card h-100 p-4 border-warning mb-3">
+        <div class="card p-2 h-2">
+          <div class="ui comments">
+            <h3 class="ui dividing header">
+              {{ post.UploadImagekey.whiskyname }}
+              <br>
+              <a href="{% url 'tastingnote:user_tastingnote' post.UploadImagekey.owner.id %}" style="color:#000000; font-size:medium;">{{post.UploadImagekey.owner.username}}({{post.UploadImagekey.owner.nickname}})</a>
+            </h3>
+            <div class="comment">
+                <a class="avatar" style="color:#000000">
+                  <i class="large meh outline icon"></i>
+                </a>
+                <div class="content" style="text-align:left;">
+                  <a class="author" href="{% url 'tastingnote:user_tastingnote' post.comment_user.id %}">{{post.comment_user}}</a>
+                  <div class="metadata">
+                    <span class="date">{{post.pub_date}}</span>
+                  </div>
+                  <div class="text">
+                    <p>{{post.comment}}</p>
+                  </div>
+                  <div class="actions">
+                    <a class="reply">Reply</a>
+                    <a class="like">
+                      <i class="small heart icon"></i>
+                    </a>
+                  </div>
+                </div>
+                <br>
+              <br>
+            </div>            
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    {% endfor %}
+    {% else %}
+    <div class="card border-warning mb-3">
+      Search Word "{{ search_word  }}" Not Found!
+    </div>
+    {% endif %}
+    </div>
+
+
   </div>
+
+
+
 </main>
 
 {% endblock %}

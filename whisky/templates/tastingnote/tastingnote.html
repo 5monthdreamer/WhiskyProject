@@ -110,12 +110,13 @@
             <h4 class="ui dividing header">Whisky Name</h4>
             <div class="ui form">
             <div class="ui blue segment">
+
                 <select class="form-select" size="10" aria-label="size 3 select example" name="whiskyname">
-                    <option selected>None</option>
-                    <option value="1792 Small Batch Kentucky Straight Bourbon Whiskey">1792 Small Batch Kentucky Straight Bourbon Whiskey</option>
-                    <option value="Angel’s Envy Kentucky Straight Bourbon Whiskey">Angel’s Envy Kentucky Straight Bourbon Whiskey</option>
-                    <option value="Barrell Dovetail Whiskey">Barrell Dovetail Whiskey</option>
+                    {% for name in whiskynamelist %}
+                    <option value="{{name}}">{{name}}</option>
+                    {% endfor %}
                 </select>
+
             </div>
             </div>
 
@@ -133,12 +134,13 @@
             <h4 class="ui dividing header">Whisky Name</h4>
             <div class="ui form">
             <div class="ui blue segment">
+
                 <select class="form-select" size="10" aria-label="size 3 select example" name="whiskyname">
-                    <option selected>None</option>
-                    <option value="1792 Small Batch Kentucky Straight Bourbon Whiskey">1792 Small Batch Kentucky Straight Bourbon Whiskey</option>
-                    <option value="Angel’s Envy Kentucky Straight Bourbon Whiskey">Angel’s Envy Kentucky Straight Bourbon Whiskey</option>
-                    <option value="Barrell Dovetail Whiskey">Barrell Dovetail Whiskey</option>
+                    {% for name in whiskynamelist %}
+                    <option value="{{name}}">{{name}}</option>
+                    {% endfor %}
                 </select>
+
             </div>
             </div>
             

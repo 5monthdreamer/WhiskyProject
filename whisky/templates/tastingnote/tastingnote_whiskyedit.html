@@ -37,6 +37,7 @@
           
           <!-- 파일 첨부 전 처음 화면 -->
             <img src="{{ the_UploadImageModel.image.url }}" class="card-img-top">
+            <h2 style="text-align:center;">{{the_UploadImageModel.whiskyname}}</h2>
             <form action="{% url 'tastingnote:edit_whisky' the_UploadImageModel.id %}" method="post" enctype="multipart/form-data">
               <div class="card" >
               {% csrf_token %}
@@ -49,10 +50,9 @@
   
                   <h3>Whisky Name</h3>
                   <select class="form-select" size="10" aria-label="size 3 select example" name="whiskyname">
-                      <option selected>None</option>
-                      <option value="1792 Small Batch Kentucky Straight Bourbon Whiskey">1792 Small Batch Kentucky Straight Bourbon Whiskey</option>
-                      <option value="Angel’s Envy Kentucky Straight Bourbon Whiskey">Angel’s Envy Kentucky Straight Bourbon Whiskey</option>
-                      <option value="Barrell Dovetail Whiskey">Barrell Dovetail Whiskey</option>
+                    {% for name in whiskynamelist %}
+                    <option value="{{name}}">{{name}}</option>
+                    {% endfor %}
                   </select>
                   <br>
                   </div>

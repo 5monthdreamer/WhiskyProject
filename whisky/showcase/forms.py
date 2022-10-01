@@ -28,7 +28,6 @@ class UserwhiskynameForm(ModelForm):
         fields = ['whiskyname',]
         # exclude = ('nickname','owner','pub_date','is_public')
         
-        
 
 
 
@@ -51,3 +50,9 @@ class CommentModelForm(ModelForm):
         # It includes all the fields of model  
         fields = ['comment',]
         # exclude = ('nickname','owner','pub_date','is_public')
+        
+
+# 서치 폼
+class SearchForm(forms.Form):
+    word = forms.CharField(label='Search Word')
+    

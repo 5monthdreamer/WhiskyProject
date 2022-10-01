@@ -40,7 +40,9 @@ def tastingnote(request):
     # else:
     #     return render(request, 'tastingnote/tastingnote_main.html')
     
-    
+
+# whiskyname list
+whiskynamelist = ["None", "Angel’s Envy Kentucky Straight Bourbon Whiskey", "Basil Hayden’s Dark Rye Whiskey", "Basil Hayden’s Kentucky Straight Bourbon Whiskey", "Blanton’s Single Barrel Bourbon", "Buffalo Trace Bourbon", "Bulleit Bourbon", "Bulleit Rye", "Crown Royal Black Blended Canadian Whisky", "Crown Royal Fine Deluxe Blended Canadian Whisky", "Crown Royal Peach Flavored Whisky", "Crown Royal Regal Apple Flavored Whisky", "Crown Royal Salted Caramel Flavored Whisky", "Crown Royal Vanilla Flavored Whisky", "Eagle Rare 10yr Bourbon", "Elijah Craig Small Batch Bourbon", "Evan Williams Bourbon", "Fireball Cinnamon Whisky", "Four Roses Bourbon", "Four Roses Small Batch Bourbon", "Hibiki Japanese Harmony Whisky", "High West American Prairie Bourbon Whiskey", "Jack Daniel’s Gentleman Jack Tennessee Whiskey", "Jack Daniel’s Old No. 7 Tennessee Whiskey", "Jack Daniel’s Tennessee Fire Flavored Whiskey", "Jack Daniel’s Tennessee Honey", "Jameson Black Barrel", "Jameson Cold Brew", "Jameson Irish Whiskey", "Jim Beam Black Extra Aged Bourbon Whiskey", "Jim Beam Bourbon Whiskey", "Johnnie Walker Black Label Blended Scotch Whisky", "Johnnie Walker Red Label Blended Scotch Whisky", "Knob Creek Kentucky Straight Bourbon Whiskey", "Laphroaig 10 Year Old Islay Single Malt Scotch Whisky", "Maker’s 46 Bourbon Whisky", "Maker’s Mark Bourbon Whisky", "Monkey Shoulder Blended Scotch", "Proper No. Twelve Irish Whiskey", "Skrewball Peanut Butter Whiskey", "Southern Comfort Original", "Suntory Toki Japanese Whisky", "The Balvenie 12 Year Old DoubleWood Single Malt Scotch Whisky", "The Balvenie 14 Year Old Caribbean Cask Single Malt Scotch Whisky", "The Glenlivet 12 Year", "The Macallan Double Cask 12 Years Old", "Tullamore D.E.W. Irish Whiskey", "Uncle Nearest 1856 Premium Whiskey", "Wild Turkey 101", "Woodford Reserve Double Oaked Kentucky Straight Bourbon Whiskey", "Woodford Reserve Kentucky Straight Bourbon Whiskey"]
 
    
     
@@ -113,7 +115,10 @@ def tastingnote_write(request, UploadImagekey_id):
             form1 = UserwhiskynameForm()
             form2 = UserTastingNoteForm()
             
-            return render(request, 'tastingnote/tastingnote.html', {'form1':form1, 'form2':form2, 'tastingnote':tastingnote, 'the_uploadimagemodel':the_uploadimagemodel, 'file_url':file_url})
+            
+            whiskynamelist = ["None", "1792 Small Batch Kentucky Straight Bourbon Whiskey", "Angel’s Envy Kentucky Straight Bourbon Whiskey", "Barrell Dovetail Whiskey", "Basil Hayden’s Dark Rye Whiskey", "Basil Hayden’s Kentucky Straight Bourbon Whiskey", "Blanton’s Single Barrel Bourbon", "Booker’s Bourbon", "Breckenridge Bourbon Whiskey", "Buchanan’s DeLuxe Aged 12 Years Blended Scotch Whisky", "Buffalo Trace Bourbon", "Bulleit Bourbon", "Bulleit Rye", "Bushmills Irish Whiskey", "Canadian Club Whisky", "Chivas Regal 12 Year", "Clan Macgregor Scotch", "Crown Royal Black Blended Canadian Whisky", "Crown Royal Fine Deluxe Blended Canadian Whisky", "Crown Royal Peach Flavored Whisky", "Crown Royal Regal Apple Flavored Whisky", "Crown Royal Salted Caramel Flavored Whisky", "Crown Royal Vanilla Flavored Whisky", "E.H. Taylor, Jr. Small Batch Bourbon", "Eagle Rare 10yr Bourbon", "Elijah Craig Small Batch Bourbon", "Evan Williams Bourbon", "Fireball Cinnamon Whisky", "Fireball Sleeve", "Four Roses Bourbon", "Four Roses Single Barrel Bourbon", "Four Roses Small Batch Bourbon", "Four Roses Small Batch Select Bourbon", "Glenfiddich 12 Year Old Single Malt Scotch Whisky", "Glenfiddich Bourbon Barrel Reserve 14 Year", "Glenmorangie Original 10 Year Old Single Malt Whisky", "Hibiki Japanese Harmony Whisky", "High West American Prairie Bourbon Whiskey", "High West Double Rye Whiskey", "Hochstadter’s Slow & Low Rock and Rye", "Hudson Bourbon Whiskey", "Jack Daniel’s Gentleman Jack Tennessee Whiskey", "Jack Daniel’s Old No. 7 Tennessee Whiskey", "Jack Daniel’s Tennessee Apple Flavored Whiskey", "Jack Daniel’s Tennessee Fire Flavored Whiskey", "Jack Daniel’s Tennessee Honey", "Jameson Black Barrel", "Jameson Caskmates IPA Edition", "Jameson Caskmates Stout Edition", "Jameson Cold Brew", "Jameson Irish Whiskey", "Jim Beam Black Extra Aged Bourbon Whiskey", "Jim Beam Bourbon Whiskey", "Jim Beam Devil’s Cut Bourbon Whiskey", "Johnnie Walker Black Label Blended Scotch Whisky", "Johnnie Walker Double Black Label Blended Scotch Whisky", "Johnnie Walker Red Label Blended Scotch Whisky", "Johnnie Walker White Walker Blended Scotch Whisky", "Knob Creek Kentucky Straight Bourbon Whiskey", "Knob Creek Rye Whiskey", "Knob Creek Smoked Maple Bourbon Whiskey", "Laphroaig 10 Year Old Islay Single Malt Scotch Whisky", "Larceny Small Batch", "Legent Bourbon Whiskey", "Maker’s 46 Bourbon Whisky", "Maker’s Mark Bourbon Whisky", "Michter’s US-1 Kentucky Straight Bourbon", "Michter’s US-1 Kentucky Straight Rye", "Monkey Shoulder Blended Scotch", "Nikka Coffey Grain Whisky", "Nikka Whisky From The Barrel", "Oban 14 Year Single Malt", "Old Forester 86 Proof Kentucky Straight Bourbon Whisky", "Proper No. Twelve Irish Whiskey", "Redbreast 12 Year", "Redemption Straight Rye Whiskey", "Rittenhouse Rye", "Sazerac Rye Whiskey", "Skrewball Peanut Butter Whiskey", "Southern Comfort Original", "Suntory Toki Japanese Whisky", "The Balvenie 12 Year Old DoubleWood Single Malt Scotch Whisky", "The Balvenie 14 Year Old Caribbean Cask Single Malt Scotch Whisky", "The Glenlivet 12 Year", "The Glenlivet Founder’s Reserve", "The Macallan Double Cask 12 Years Old", "The Macallan Sherry Oak 12 Years Old", "TINCUP American Whiskey", "Tullamore D.E.W. Irish Whiskey", "TX Blended Whiskey", "Uncle Nearest 1856 Premium Whiskey", "Uncle Nearest 1884 Small Batch Whiskey", "Weller Special Reserve Bourbon", "Wild Turkey 101", "Wild Turkey American Honey", "Wild Turkey Bourbon", "Wild Turkey Longbranch", "Willett Pot Still Reserve Bourbon", "Woodford Reserve Double Oaked Kentucky Straight Bourbon Whiskey", "Woodford Reserve Kentucky Straight Bourbon Whiskey", "Woodford Reserve Kentucky Straight Rye Whiskey"]          
+            
+            return render(request, 'tastingnote/tastingnote.html', {'form1':form1, 'form2':form2, 'tastingnote':tastingnote, 'the_uploadimagemodel':the_uploadimagemodel, 'file_url':file_url, 'whiskynamelist':whiskynamelist})
     
     else:
         return render(request, 'labelscanner/labelscanner.html')
@@ -206,6 +211,9 @@ def tastingnote_edit(request, TastingNoteModel_id):
         
             form = UserTastingNoteForm()
             
+            
+            
+            
             return render(request, 'tastingnote/tastingnote.html', {'form':form, 'the_uploadimagemodel':the_uploadimagemodel, 'the_tastingnotemodel':the_tastingnotemodel, 'file_url':file_url})
     
 
@@ -282,21 +290,43 @@ def whisky_edit(request, UploadImagekey_id):
             
             if request.user.is_authenticated:
                 form.owner = request.user
+
+            else:
+                pass
+            
+            form.save()
+        
+            the_UploadImageModel.image = form.cleaned_data['image']
+            the_UploadImageModel.whiskyname = form.cleaned_data['whiskyname']
+            the_UploadImageModel.save()
+            
+            
+            return redirect(reverse('tastingnote:tastingnote'))
+    
+    
+    elif request.method == 'POST':
+        form = UserImageForm(request.POST)
+        
+        if form.is_valid():
+            
+            if request.user.is_authenticated:
+                form.owner = request.user              
             else:
                 pass
             
             form.save()
             
-            the_UploadImageModel.image = form.cleaned_data['image']
             the_UploadImageModel.whiskyname = form.cleaned_data['whiskyname']
             the_UploadImageModel.save()
             
             return redirect(reverse('tastingnote:tastingnote'))
-        
+    
     else:
         form = UserImageForm()
         
-        return render(request, 'tastingnote/tastingnote_whiskyedit.html', {'the_UploadImageModel': the_UploadImageModel, 'form':form})
+        whiskynamelist = ["None", "1792 Small Batch Kentucky Straight Bourbon Whiskey", "Angel’s Envy Kentucky Straight Bourbon Whiskey", "Barrell Dovetail Whiskey", "Basil Hayden’s Dark Rye Whiskey", "Basil Hayden’s Kentucky Straight Bourbon Whiskey", "Blanton’s Single Barrel Bourbon", "Booker’s Bourbon", "Breckenridge Bourbon Whiskey", "Buchanan’s DeLuxe Aged 12 Years Blended Scotch Whisky", "Buffalo Trace Bourbon", "Bulleit Bourbon", "Bulleit Rye", "Bushmills Irish Whiskey", "Canadian Club Whisky", "Chivas Regal 12 Year", "Clan Macgregor Scotch", "Crown Royal Black Blended Canadian Whisky", "Crown Royal Fine Deluxe Blended Canadian Whisky", "Crown Royal Peach Flavored Whisky", "Crown Royal Regal Apple Flavored Whisky", "Crown Royal Salted Caramel Flavored Whisky", "Crown Royal Vanilla Flavored Whisky", "E.H. Taylor, Jr. Small Batch Bourbon", "Eagle Rare 10yr Bourbon", "Elijah Craig Small Batch Bourbon", "Evan Williams Bourbon", "Fireball Cinnamon Whisky", "Fireball Sleeve", "Four Roses Bourbon", "Four Roses Single Barrel Bourbon", "Four Roses Small Batch Bourbon", "Four Roses Small Batch Select Bourbon", "Glenfiddich 12 Year Old Single Malt Scotch Whisky", "Glenfiddich Bourbon Barrel Reserve 14 Year", "Glenmorangie Original 10 Year Old Single Malt Whisky", "Hibiki Japanese Harmony Whisky", "High West American Prairie Bourbon Whiskey", "High West Double Rye Whiskey", "Hochstadter’s Slow & Low Rock and Rye", "Hudson Bourbon Whiskey", "Jack Daniel’s Gentleman Jack Tennessee Whiskey", "Jack Daniel’s Old No. 7 Tennessee Whiskey", "Jack Daniel’s Tennessee Apple Flavored Whiskey", "Jack Daniel’s Tennessee Fire Flavored Whiskey", "Jack Daniel’s Tennessee Honey", "Jameson Black Barrel", "Jameson Caskmates IPA Edition", "Jameson Caskmates Stout Edition", "Jameson Cold Brew", "Jameson Irish Whiskey", "Jim Beam Black Extra Aged Bourbon Whiskey", "Jim Beam Bourbon Whiskey", "Jim Beam Devil’s Cut Bourbon Whiskey", "Johnnie Walker Black Label Blended Scotch Whisky", "Johnnie Walker Double Black Label Blended Scotch Whisky", "Johnnie Walker Red Label Blended Scotch Whisky", "Johnnie Walker White Walker Blended Scotch Whisky", "Knob Creek Kentucky Straight Bourbon Whiskey", "Knob Creek Rye Whiskey", "Knob Creek Smoked Maple Bourbon Whiskey", "Laphroaig 10 Year Old Islay Single Malt Scotch Whisky", "Larceny Small Batch", "Legent Bourbon Whiskey", "Maker’s 46 Bourbon Whisky", "Maker’s Mark Bourbon Whisky", "Michter’s US-1 Kentucky Straight Bourbon", "Michter’s US-1 Kentucky Straight Rye", "Monkey Shoulder Blended Scotch", "Nikka Coffey Grain Whisky", "Nikka Whisky From The Barrel", "Oban 14 Year Single Malt", "Old Forester 86 Proof Kentucky Straight Bourbon Whisky", "Proper No. Twelve Irish Whiskey", "Redbreast 12 Year", "Redemption Straight Rye Whiskey", "Rittenhouse Rye", "Sazerac Rye Whiskey", "Skrewball Peanut Butter Whiskey", "Southern Comfort Original", "Suntory Toki Japanese Whisky", "The Balvenie 12 Year Old DoubleWood Single Malt Scotch Whisky", "The Balvenie 14 Year Old Caribbean Cask Single Malt Scotch Whisky", "The Glenlivet 12 Year", "The Glenlivet Founder’s Reserve", "The Macallan Double Cask 12 Years Old", "The Macallan Sherry Oak 12 Years Old", "TINCUP American Whiskey", "Tullamore D.E.W. Irish Whiskey", "TX Blended Whiskey", "Uncle Nearest 1856 Premium Whiskey", "Uncle Nearest 1884 Small Batch Whiskey", "Weller Special Reserve Bourbon", "Wild Turkey 101", "Wild Turkey American Honey", "Wild Turkey Bourbon", "Wild Turkey Longbranch", "Willett Pot Still Reserve Bourbon", "Woodford Reserve Double Oaked Kentucky Straight Bourbon Whiskey", "Woodford Reserve Kentucky Straight Bourbon Whiskey", "Woodford Reserve Kentucky Straight Rye Whiskey"]
+        
+        return render(request, 'tastingnote/tastingnote_whiskyedit.html', {'the_UploadImageModel': the_UploadImageModel, 'form':form, 'whiskynamelist':whiskynamelist})
             
 
     
