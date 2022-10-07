@@ -179,17 +179,54 @@
                 </td>
               </tr>
               <tr>
-                  <td colspan='2' class="center aligned" style="text-align:left;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;One Line Review
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;{{post.one_line_review}}
-                    
-                  </td>
-              </tr>
-            </tbody>
+                <td>
+                    One Line Review
+                </td>
+                <td></td>
+            </tr>
+          </tbody>
           </table>
+          <div style="overflow:auto; width:100%; height:50px; padding:2px; text-align:left;">
+              &nbsp;&nbsp;{{post.one_line_review}}
+          </div>
+          <hr>
+
+          <!-- 추가 카테코리, 긴리뷰 보기 -->
+          <div class="container" style="border-color:#5d38fd; text-align:center;">
+              <a data-bs-toggle="collapse" href="#collapseextra{{n.id}}" style="color:#000000; ">
+                  <i class="fitted plus square outline icon"></i>&nbsp;
+                  Additional category
+              </a>
+          </div>
+
+          <div class="collapse" id="collapseextra{{n.id}}">
+              <table class="table" >
+                  <tbody>
+                      <tr class="center aligned">
+                          <td style="width:40%;">
+                          {{post.etc}}
+                          </td>
+                          <td style="text-align:center; width:60%;">
+                          {{post.etc_intensity}}
+                          </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          Long Review
+                        </td>
+                        <td></td>
+                      </tr>
+                  </tbody>
+              </table>
+              <div style="overflow:auto; width:100%; height:150px; padding:5px; text-align:left;">
+                  &nbsp;&nbsp;{{post.long_review}}
+              </div>
+
+              <hr>
+          </div>
+
           <div style="text-align:center;">
-            <a href="{% url 'tastingnote:user_tastingnote' post.UploadImagekey.owner.id %}" style="color:#000000; font-size:small;">{{post.UploadImagekey.owner.username}} ({{post.UploadImagekey.owner.nickname}})</a>
+            <a href="{% url 'tastingnote:user_tastingnote' post.UploadImagekey.owner.id %}" style="color:#000000; font-size:small; padding:10px;">{{post.UploadImagekey.owner.username}} ({{post.UploadImagekey.owner.nickname}})</a>
           </div>
         </div> 
       </div>

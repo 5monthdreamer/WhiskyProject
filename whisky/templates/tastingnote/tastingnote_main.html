@@ -35,7 +35,6 @@
         </div>
         <div class="col" style="text-align:center">
             <br>
-            <hr>
             <div class="row">
                 <p class="h3"><i class="user outline icon"></i>&nbsp;<strong>{{user.nickname}}</strong></p>
                 <p class="h5">{{user.username}}</p>
@@ -44,21 +43,24 @@
             <br>
             <div class="row">
                 <div class="ui mini two statistics">
+                    <br>
                     <div class="statistic">
                         <div class="value">
-                            <i class="heart icon"></i> {{followers}}
+                            <i class="heart icon" style="font-size:4.5vh;"></i>
+                            <p style="font-size:3.5vh;">{{followers}}</p>
                         </div>
                         <br>
-                        <div class="label">
+                        <div class="label" style="font-size:1.5vh;">
                             Followers
                         </div>
                     </div>
                     <div class="statistic">
                         <div class="value">
-                            <i class="heart outline icon"></i> {{following}}
+                            <i class="heart outline icon" style="font-size:4.5vh;"></i>
+                            <p style="font-size:3.5vh;">{{following}}</p>
                         </div>
                         <br>
-                        <div class="label">
+                        <div class="label" style="font-size:1.5vh;">
                             Following
                         </div>
                     </div>
@@ -203,7 +205,6 @@
                     <br>
   
                     <table class="table" >
-
                     <thead>
                         <tr>
                         <th style="width:40%; text-align:center;">Category</th>
@@ -256,19 +257,56 @@
                         </td>
                         </tr>
                         <tr>
-                            <td colspan='2' class="center aligned">
-                            One Line Review
-                            <br>
-                            &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;{{n.one_line_review}}
+                            <td>
+                                One Line Review
                             </td>
+                            <td></td>
                         </tr>
-
                     </tbody>
                     </table>
-                    <div class="row" >
+                    <div style="overflow:auto; width:100%; height:50px; padding:2px;">
+                        &nbsp;&nbsp;{{n.one_line_review}}
+                    </div>
+                    <hr>
+
+                    <!-- 추가 카테코리, 긴리뷰 보기 -->
+                    <div class="container" style="border-color:#5d38fd; text-align:center;">
+                        <a data-bs-toggle="collapse" href="#collapseextra{{n.id}}" style="color:#000000; ">
+                            <i class="fitted plus square outline icon"></i>&nbsp;
+                            Additional category
+                        </a>
+                    </div>
+
+                    <div class="collapse" id="collapseextra{{n.id}}">
+                        <table class="table" >
+                            <tbody>
+                                <tr class="center aligned">
+                                    <td style="width:40%;">
+                                    {{n.etc}}
+                                    </td>
+                                    <td style="text-align:center; width:60%;">
+                                    {{n.etc_intensity}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                <td colspan='2' class="center aligned">
+                                    Long Review
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="overflow:auto; width:100%; height:150px; padding:5px;">
+                            &nbsp;&nbsp;{{n.long_review}}
+                        </div>
+
+                        <hr>
+                    </div>
+
+
+                    <div class="row" style="padding:10px;">
                         <p style="text-align:center;">Public : {{n.is_public}}</p>
                     </div>
-                    <br>
+                    
 
                     <!-- 하단 테이스팅 노트 관련 버튼들  -->
                     <div class="row" >
@@ -352,7 +390,7 @@
 
 {% else %}
     <br><br><br>
-    <h3 style="text-align:center">Login! Add your note!</h3>
+    <h3 style="text-align:center">{{error_message}}</h3>
     <!-- 버튼으로 노트 추가할 수 있게 만들기 -->
     <br><br><br>
 {% endif %}

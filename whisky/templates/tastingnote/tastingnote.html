@@ -4,11 +4,15 @@
 
 {% block sidebar0 %}
 {{ block.super }}
+
+
 {% endblock %}
 
 
 {% block sidebar1 %}
 <br>
+
+
 <div class="container">
     <div class="row">
       <div class="col">
@@ -28,7 +32,7 @@
             <img src="{{ file_url }}" class="card-img-top" alt="No image">
             <div class="card-body">
                 <div class="row" style="text-align:center">
-                    <h2>{{the_uploadimagemodel.whiskyname}}</h2>
+                    <h3>{{the_uploadimagemodel.whiskyname}}</h3>
                 </div>
             </div>
         </div>
@@ -46,8 +50,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <h1>Whisky Name : {{the_uploadimagemodel.whiskyname}}</h1>
-                            <h2>Tasting Note Name : {{name}}</h2>
+                            <h3>Whisky Name : {{the_uploadimagemodel.whiskyname}}</h3>
+                            <h4>Tasting Note Name : {{name}}</h4>
                             
                         </div>
                         <br>
@@ -60,6 +64,9 @@
                         <p style="text-align:left">Taste : {{taste}} (intensity : {{taste_intensity}})</p>
                         <p style="text-align:left">Flavor : {{flavor}} (intensity : {{flavor_intensity}})</p>
                         <p style="text-align:left">alchol_finish : {{alchol_finish}}</p>
+                        <p style="text-align:left">etc : {{etc}}</p>
+                        <p style="text-align:left">etc_intensity : {{etc_intensity}}</p>
+                        <p style="text-align:left">long_review : {{long_review}}</p>
                     </div>
                 </div>
 
@@ -75,8 +82,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <h1>{{the_tastingnotemodel.UploadImagekey.whiskyname}}</h1>
-                            <h2>{{the_tastingnotemodel.name}}</h2>
+                            <h3>{{the_tastingnotemodel.UploadImagekey.whiskyname}}</h3>
+                            <h4>{{the_tastingnotemodel.name}}</h4>
                         </div>
                         <br>
                         
@@ -88,6 +95,9 @@
                         <p style="text-align:left">Taste : {{the_tastingnotemodel.taste}} (intensity : {{the_tastingnotemodel.taste_intensity}})</p>
                         <p style="text-align:left">Flavor : {{the_tastingnotemodel.flavor}} (intensity : {{the_tastingnotemodel.flavor_intensity}})</p>
                         <p style="text-align:left">alchol_finish : {{the_tastingnotemodel.alchol_finish}}</p>
+                        <p style="text-align:left">etc : {{the_tastingnotemodel.etc}}</p>
+                        <p style="text-align:left">etc_intensity : {{the_tastingnotemodel.etc_intensity}}</p>
+                        <p style="text-align:left">long_review : {{the_tastingnotemodel.long_review}}</p>
                     </div>
                 </div>
 
@@ -109,7 +119,7 @@
 
             <h4 class="ui dividing header">Whisky Name</h4>
             <div class="ui form">
-            <div class="ui blue segment">
+            <div class="ui grey segment">
 
                 <select class="form-select" size="10" aria-label="size 3 select example" name="whiskyname">
                     {% for name in whiskynamelist %}
@@ -133,14 +143,13 @@
 
             <h4 class="ui dividing header">Whisky Name</h4>
             <div class="ui form">
-            <div class="ui blue segment">
-
+            <div class="ui grey segment">
                 <select class="form-select" size="10" aria-label="size 3 select example" name="whiskyname">
                     {% for name in whiskynamelist %}
                     <option value="{{name}}">{{name}}</option>
                     {% endfor %}
                 </select>
-
+                <p>※ If whisky name was already selected, you don't need to check again</p>
             </div>
             </div>
             
@@ -150,7 +159,7 @@
             <h4 class="ui dividing header">Tasting Note Name</h4>
             <div class="ui form">
             <div class="ui blue segment">
-                <textarea name="name" id="" cols="20" rows="1"></textarea>
+                <textarea name="name" id="" cols="20" rows="1" required></textarea>
             </div>
             </div>
 
@@ -176,7 +185,7 @@
                     </div>
 
                     <div class="col-md-auto">
-                        <input type="radio" id="star_rating3" name="drumtong_rating" class="hidden" value="3">
+                        <input type="radio" id="star_rating3" name="drumtong_rating" class="hidden" value="3" checked="checked">
                         <label for="star_rating3">
                             <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top"><img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top"><img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="19" height="23" class="d-inline-block align-text-top">
                         </label>
@@ -205,7 +214,7 @@
             <div class="ui form">
             <div class="ui green segment">
                 Write what you think :
-                <textarea name="one_line_review" id="" cols="10" rows="5"></textarea>
+                <textarea name="one_line_review" maxlength="100" id="" cols="10" rows="5" required></textarea>
             </div>
             </div>
 
@@ -217,7 +226,7 @@
                 <div class="container text-left">
                     <div class="row">
                     <div class="col-md-auto">
-                        <input type="radio" id="taste1" name="taste" class="hidden" value="Salty">
+                        <input type="radio" id="taste1" name="taste" class="hidden" value="Salty" checked="checked">
                         <label for="taste1">Salty</label>
                     </div>
 
@@ -278,7 +287,7 @@
                 <div class="container text-left">
                     <div class="row">
                     <div class="col-md-auto">
-                        <input type="radio" id="flavor1" name="flavor" class="hidden" value="Floral">
+                        <input type="radio" id="flavor1" name="flavor" class="hidden" value="Floral" checked="checked">
                         <label for="flavor1">Floral</label>
                     </div>
 
@@ -324,11 +333,38 @@
             </div>
             </div>
 
-            <!-- <h4 class="ui dividing header">Heart</h4>
-            <div class="ui orange segment">Orange</div>
-            <div class="ui yellow segment">Yellow</div>
-            <div class="ui olive segment">Olive</div>
-            <div class="ui green segment">Green</div> -->
+            <h4 class="ui center aligned dividing header">
+                <div class="container" style="border-color:#5d38fd;">
+                    <a data-bs-toggle="collapse" href="#collapseextra" style="color:#5d38fd; ">
+                        <i class="fitted plus square outline icon"></i>&nbsp;
+                        Additional category
+                    </a>
+                </div>
+            </h4>
+            <br>
+            <div class="collapse" id="collapseextra">
+                <h4 class="ui dividing header">
+                    <textarea name="etc" id="" cols="25" rows="1" style="border-color:purple;"></textarea>
+                </h4>
+                
+                <div class="ui form">
+                <div class="ui purple segment">
+                    <label for="etc_intensity" class="form-label">Choose intensity you feel :</label>
+                    <input type="range" name="etc_intensity" class="form-range" min="1" max="5" step="1" id="etc_intensity">
+                </div>
+                </div>
+
+                <h4 class="ui dividing header">Long Review</h4>
+                <div class="ui form">
+                <div class="ui purple segment">
+                    Write what you think :
+                    <textarea name="long_review" maxlength="1000" id="" cols="10" rows="10"></textarea>
+                </div>
+                </div>
+
+
+            </div>
+
 
             <br>
             <div>

@@ -73,90 +73,45 @@ def img_scanning(request):
             # <사진 저장하고 싶을때 아래 명령어 사용!!!>
             post.save()
             postID = post.id
-            
-            # record = UploadImageModel.objects.all()
-            # record.delete()
-            # form.save()  #form.save(commit=False)
-            
-            # img_ID = form.cleaned_data['pk']
+                        
             saved_image = form.cleaned_data['image']
             fss = FileSystemStorage()
             file_url = fss.url(saved_image)
             
-            # global model
-            # model = UploadImageModel.objects.get(image=post.image)
-            # modelID = model.id
-            # Getting the current instance object to display in the template  
-            # img_object = form.instance  
             
-            
-            img_result = teachablemachine(saved_image)
+            # 머신러닝 개선 중
+            # img_result = teachablemachine(saved_image)
 
-            whisky_name = ["JAMESON","WILD TURCKEY"]
+            # whisky_name = ["JAMESON","WILD TURCKEY"]
 
 
-            for order in range(2):
-                print(np.max(img_result),img_result[0,order])
-                if img_result[0,order]>=0.999:
-                    global name1
-                    global percent1
-                    name1 = whisky_name[order]
-                    percent1 = str(round(img_result[0,order]*100))+"%"
-                    break
-                else:
-                    name1 = "There is not the same whisky in our AI."
-                    percent1 = "-"
-                    continue
-
-
-            return render(request, 'labelscanner/labelscanner.html', {'file_url': file_url, 'result1': name1, 'result2':percent1,'test_result1':'없음','postID':postID})
-                        
-            # return render(request, 'showcase.showcase.html', {'form': form, 'img_obj': img_object})
-    
-    # elif request.method == 'POST':
-    #     tastingform = UserTastingNoteForm (request.POST)  
-        
-    #     # form.save()
-    #     if tastingform.is_valid():  
-
-    #         # global note
-    #         note = tastingform.save(commit=False)
+            # for order in range(2):
+            #     print(np.max(img_result),img_result[0,order])
+            #     if img_result[0,order]>=0.999:
+            #         global name1
+            #         global percent1
+            #         name1 = whisky_name[order]
+            #         percent1 = str(round(img_result[0,order]*100))+"%"
+            #         break
+            #     else:
+            #         name1 = "There is not the same whisky in our AI."
+            #         percent1 = "-"
+            #         continue
             
-    #         # # <사진 저장하고 싶을때 아래 명령어 사용!!!>
-            
-            
-    #         # tasingnote = TastingNoteModel.objects.all()
-            
-            
-            
-            
-    #         # review = note.one_line_review
-    #         # sweetness = note.sweetness
-    #         # acidity = note.acidity
-    #         # alchol = note.alchol_finish
-            
-    #         review = note.cleaned_data['one_line_review']
-    #         sweetness = note.cleaned_data['sweetness']
-    #         acidity = note.cleaned_data['acidity']
-    #         alchol = note.cleaned_data['alchol_finish']
-            
-    #         note.save()
-            
-    #         # review.save()
-    #         # sweetness.save()
-    #         # acidity.save()
-    #         # alchol.save()
-            
-            
-            
-    #         # record = UploadImageModel.objects.all()
-    #         # record.delete()
-    #         # form.save()  #form.save(commit=False)
+            # 안내메시지
+            inform = "Machine learning is in preparation (come back soon)"
             
 
-    #         return render(request, 'tastingnote/tastingnote.html', {'review':review, 'sweetness': sweetness, 'acidity':acidity,'alchol':alchol,'tastingform':tastingform})
-        
-    
+            if request.user.is_anonymous:
+                error_message = "※ If you want to use more fantastic functions, Sign in!"
+            else:
+                error_message = ""
+
+            return render(request, 'labelscanner/labelscanner.html', {'file_url': file_url, 'postID':postID, 'error_message':error_message, 'inform':inform})
+            
+            # 머신러닝 개선 중
+            # 'result1': name1, 'result2':percent1,'test_result1':'없음'
+
     
     else:
         form = UserImageForm()

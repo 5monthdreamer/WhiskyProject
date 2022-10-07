@@ -2,6 +2,17 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from common.forms import UserForm
 
+# import all model, form
+from showcase.forms import *
+from showcase.models import *
+
+# pagination 설정
+from django.core.paginator import Paginator
+
+# Django ORM
+from django.db.models import F, Sum, Count, Case, When
+
+
 
 def signup(request):
     if request.method == "POST":
@@ -16,3 +27,21 @@ def signup(request):
     else:
         form = UserForm()
     return render(request, 'common/signup.html', {'form': form})
+
+
+
+def qna_main(request):
+    
+
+    # 댓글 폼과 모델
+    form = qnaquestionform()
+    questionmodel = qnaquestionmodel.objects.all()
+    model = questionmodel.order_by('-pub_date')
+    
+    paginator = Paginator(model,10)
+    page = request.GET.get('page')
+    question = paginator.get_page(page)
+    
+    
+    
+    return render(request, 'common/QnA.html', {'question':question, 'form':form})

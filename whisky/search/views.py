@@ -38,16 +38,20 @@ class SearchFormView(FormView):
         
                
         whiskyname_list = UploadImageModel.objects.filter(
-            Q(whiskyname__icontains=word)
+            Q(is_public=True), Q(whiskyname__icontains=word)
+            # Q 객체를 사용해서 검색한다.
+            # whiskyname 칼럼에 대소문자를 구분하지 않고  단어가 포함되어있는지 (icontains) 검사
+        ).distinct() #중복을 제거한다.
+
+        note_list = TastingNoteModel.objects.filter(
+            Q(is_public=True),
+            Q(name__icontains=word) | Q(one_line_review__icontains=word) | Q(drumtong_rating__icontains=word) | Q(taste__icontains=word) | Q(taste_intensity__icontains=word) | Q(flavor__icontains=word) | Q(flavor_intensity__icontains=word) | Q(etc__icontains=word) | Q(etc_intensity__icontains=word) | Q(long_review__icontains=word)
             # Q 객체를 사용해서 검색한다.
             # whiskyname 칼럼에 대소문자를 구분하지 않고  단어가 포함되어있는지 (icontains) 검사
         ).distinct() #중복을 제거한다.
         
-        note_list = TastingNoteModel.objects.filter(
-            Q(name__icontains=word) | Q(one_line_review__icontains=word) | Q(long_review__icontains=word)
-            # Q 객체를 사용해서 검색한다.
-            # whiskyname 칼럼에 대소문자를 구분하지 않고  단어가 포함되어있는지 (icontains) 검사
-        ).distinct() #중복을 제거한다.
+        # note_list = note_list_before.filter(is_public=True)
+        
         
         comment_list = CommentModel.objects.filter(
             Q(comment__icontains=word)
@@ -55,6 +59,7 @@ class SearchFormView(FormView):
             # whiskyname 칼럼에 대소문자를 구분하지 않고  단어가 포함되어있는지 (icontains) 검사
         ).distinct() #중복을 제거한다.
         
+                
                 
         context = {}
         context['search_word']= word # 검색어를 컨텍스트 변수에 담는다.
@@ -64,3 +69,17 @@ class SearchFormView(FormView):
         context['comment_list'] = comment_list # 검색된 결과를 컨텍스트 변수에 담는다.
         
         return render(self.request, 'search/search_main.html', context)
+    
+    
+    
+        # whiskyname_list = UploadImageModel.objects.filter(
+        #     Q(whiskyname__icontains=word)
+        #     # Q 객체를 사용해서 검색한다.
+        #     # whiskyname 칼럼에 대소문자를 구분하지 않고  단어가 포함되어있는지 (icontains) 검사
+        # ).distinct() #중복을 제거한다.
+        
+        # note_list = TastingNoteModel.objects.filter(
+        #     Q(name__icontains=word) | Q(one_line_review__icontains=word) | Q(etc__icontains=word) | Q(long_review__icontains=word)
+        #     # Q 객체를 사용해서 검색한다.
+        #     # whiskyname 칼럼에 대소문자를 구분하지 않고  단어가 포함되어있는지 (icontains) 검사
+        # ).distinct() #중복을 제거한다.

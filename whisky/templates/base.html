@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--SEO process-->
+    <link rel="canonical" href="https://www.feelbarrel.com/home.html">
+    <meta name="description" content="MZ세대 위스키 테이스팅노트 술장 라벨스캐닝 young whisky(whiskey) Tastingnote Showcase scanner">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Feel barrel">
+    <meta property="og:description" content="This is whisky(whiskey) site for young people">
+    <!--<meta property="og:image" content="http://www.mysite.com/myimage.jpg">-->
+    <meta property="og:url" content="https://www.feelbarrel.com">
+
+    <!--google adsense-->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2638083594501687" crossorigin="anonymous"></script>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,19 +21,19 @@
     <!-- 페이지별 필요한 css추가 -->
     {% block css1 %}{%endblock%}
 
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 
-    <title>{%block title%}My whisky homepage{%endblock%}</title>
+    <title>{%block title%}Feel Barrel{%endblock%}</title>
     <!-- 위 타이틀은 크롬창에 뜨는 제목 (홈페이지 안의 내용이 아님) -->
 
-    
+
     <!--네이버 검색도구 -->
-    <meta name="naver-site-verification" content="e70049a755f3031c800813df9dfe8f6a2e72e337" />
+    <meta name="naver-site-verification" content="9ea927b507b6a702fc8f2b9a65af867448505619" />
 
 
-    <!-- Go to www.addthis.com/dashboard to customize your tools --> 
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-625aba234b18b217"></script>
     {% block ifmobile %}{%endblock%}
 
@@ -38,18 +50,18 @@
 </head>
 <body>
   <div class="sidebar">
-      <!-- style="background-color:transparent;" -->
-      <nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background-color:rgb(255, 255, 255);">
+
+      <nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background-color:rgb(255, 255, 255); border-bottom: 1px solid rgb(221, 221, 221);">
         <div class="container-fluid" >
           <a class="navbar-brand" href="{% url 'home' %}" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
               <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" height="50" class="d-inline-block align-text-top">
               <img src="{%static 'img/base/mainlogo.png'%}" alt="" height="50" class="d-inline-block align-text-top">
           </a>
-          
+
           <!-- 모바일용 로그인 기능 생성 -->
           {%block sidebar0%}{%endblock%}
-          
-          
+
+
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -62,7 +74,7 @@
                 <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="">About</a>
+                <a class="nav-link" href="#">About</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'search:search_main' %}">Search</a>
@@ -77,7 +89,7 @@
                 <a class="nav-link" href="{% url 'showcase:main_showcase' %}">Showcase</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="">Q&A</a>
+                <a class="nav-link" href="{% url 'common:qna_main' %}">Q&A</a>
               </li>
 
 
@@ -95,17 +107,17 @@
               <li class="nav-item">
                 <a class="nav-link disabled">미사용</a>
               </li> -->
-              
+
               <!-- 로그인 기능 생성 -->
               <!-- {% if user.is_authenticated %}
-              <a class="nav-link" href="{% url 'common:logout' %}">로그아웃</a>
+              <a class="nav-link" href="{% url 'common:logout' %}">Sign out</a>
               <a class="nav-link" >  {{ user.username }}님 반갑습니다!</a>
               {% else %}
-              <a class="nav-link" href="{% url 'common:login' %}">로그인</a>
+              <a class="nav-link" href="{% url 'common:login' %}">Sign in</a>
               {% endif %} -->
             </ul>
 
-            
+
             <!-- 로그인 기능 생성 -->
             {% if user.is_authenticated %}
             <i class="large user circle outline icon"></i>
@@ -118,55 +130,58 @@
 
 
           </div>
-          
+
         </div>
       </nav>
-      <hr>
 
+      <!-- 카카오애드핏 -->
+      <ins class="kakao_ad_area" style="display:none;"
+      data-ad-unit    = "DAN-3kIb4HyHlCWfrgG8"
+      data-ad-width   = "320"
+      data-ad-height  = "50"></ins>
+      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
       <br>
 
       <!-- 메인배너 -->
-      <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active" data-bs-interval="10000">
-            <img src="{%static 'img/banner/banner1.png'%}" width="auto" height="200" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Welcome to Drumtog</h5>
-              <p>You can enjoy Whisky! Right here with us</p>
-            </div>
-          </div>
-          <div class="carousel-item" data-bs-interval="2000">
-            <img src="{%static 'img/banner/banner1.png'%}" width="auto" height="200" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Find your whisky and Record!</h5>
-              <p>You can find your Whisky! and record how you taste!</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img src="{%static 'img/banner/banner1.png'%}" width="auto" height="200" class="d-block w-100" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Make your spacial whisky showcase!</h5>
-              <p>You can make showcase only one in the world!</p>
-            </div>
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-      <br>
-      
-
+      <!--<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">-->
+      <!--  <div class="carousel-indicators">-->
+      <!--    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>-->
+      <!--    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>-->
+      <!--    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>-->
+      <!--  </div>-->
+      <!--  <div class="carousel-inner">-->
+      <!--    <div class="carousel-item active" data-bs-interval="10000">-->
+      <!--      <img src="{%static 'img/banner/banner1.png'%}" width="auto" height="200" class="d-block w-100" alt="...">-->
+      <!--      <div class="carousel-caption d-none d-md-block">-->
+      <!--        <h5>Welcome to Drumtog</h5>-->
+      <!--        <p>You can enjoy Whisky! Right here with us</p>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--    <div class="carousel-item" data-bs-interval="2000">-->
+      <!--      <img src="{%static 'img/banner/banner1.png'%}" width="auto" height="200" class="d-block w-100" alt="...">-->
+      <!--      <div class="carousel-caption d-none d-md-block">-->
+      <!--        <h5>Find your whisky and Record!</h5>-->
+      <!--        <p>You can find your Whisky! and record how you taste!</p>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--    <div class="carousel-item">-->
+      <!--      <img src="{%static 'img/banner/banner1.png'%}" width="auto" height="200" class="d-block w-100" alt="...">-->
+      <!--      <div class="carousel-caption d-none d-md-block">-->
+      <!--        <h5>Make your spacial whisky showcase!</h5>-->
+      <!--        <p>You can make showcase only one in the world!</p>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <!--  </div>-->
+      <!--  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">-->
+      <!--    <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+      <!--    <span class="visually-hidden">Previous</span>-->
+      <!--  </button>-->
+      <!--  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">-->
+      <!--    <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+      <!--    <span class="visually-hidden">Next</span>-->
+      <!--  </button>-->
+      <!--</div>-->
+      <!--<br>-->
 
 
 
@@ -175,29 +190,32 @@
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </div>
-  
 
 
-  <br><br><br>
-  <footer>
 
-      <div class="row bg-light p-3">
-        <div class="col">
-          <div style="text-align:center">
-          Though beginning seems humble,<br> We go after what you really want.
-          </div>
+  <footer class="py-5">
+
+    <div class="row bg-light p-3">
+      <div class="col">
+        <div style="text-align:center">
+          <h6>Though beginning seems humble,<br><strong>We go after what you really want.</strong></h6>
         </div>
-        <!-- <div class="col"></div> -->
-        {% block content1 %}{%endblock%}
       </div>
+      <!-- <div class="col"></div> -->
+      {% block content1 %}{%endblock%}
+    </div>
 
+    <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top" style="padding:20px;">
+      <div style="text-align:center;">
+        <p><strong>Contact</strong>&nbsp;&nbsp;&nbsp;&nbsp;feelbarrel@gmail.com</p>
+      </div>
+      <p style="text-align:center;">© 2022 FeelBarrel, Non-Inc. but All rights reserved.</p>
+    </div>
   </footer>
-  <br><br>
 
 
-
-  <div class="ui bottom fixed fluid five item menu bg-light">
-
+  <!-- 하단메뉴버튼 -->
+  <div class="ui bottom fixed fluid five item menu bg-light" style="padding=2px;">
     <a class="item" href="{% url 'home' %}">
       <i class="home icon">
       </i>
@@ -215,14 +233,14 @@
       </i>
     </a>
 
- 
+
     <a class="item" href="{% url 'tastingnote:tastingnote' %}">
       <i class="edit outline icon">
       </i>
     </a>
 
 
-    <a class="item" href="{% url 'showcase:main_showcase' %}"> 
+    <a class="item" href="{% url 'showcase:main_showcase' %}">
       <i class="icons">
         <i class="glass martini icon"></i>
         <i class="bottom right corner bookmark outline icon"></i>

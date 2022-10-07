@@ -40,7 +40,7 @@ class TastingNoteModel(models.Model):
     flavor = models.CharField(max_length=20)
     flavor_intensity = models.IntegerField()
     alchol_finish = models.IntegerField()
-    long_review = models.CharField(max_length=300, blank=True, null=True)
+    long_review = models.CharField(max_length=1000, blank=True, null=True)
     
     etc = models.CharField(max_length=50, blank=True, null=True)
     etc_intensity = models.CharField(max_length=50, blank=True, null=True)
@@ -95,3 +95,22 @@ class CommentCommentlikeModel(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, db_constraint=False, blank=False, null=False) # 하나의 사진은 여려명의 팔로워에게 속할 수 있음. 1:N의 관계
     is_like = models.BooleanField(default=False) # 좋아요 여부
 
+
+
+
+
+
+# Q&A Question
+class qnaquestionmodel(models.Model):
+    questioner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, db_constraint=False, blank=True, null=True)
+    pub_date = models.DateTimeField(auto_now_add=True)
+    is_public = models.BooleanField(default=False)
+    question_title = models.CharField(max_length=50)
+    question = models.CharField(max_length=1000)
+
+# Q&A Answer
+class qnaanswermodel(models.Model):
+    qnaquestionkey = models.ForeignKey(qnaquestionmodel, on_delete=models.CASCADE)
+    pub_date = models.DateTimeField(auto_now_add=True)
+    is_public = models.BooleanField(default=False)
+    answer = models.CharField(max_length=1000, blank=True, null=True)

@@ -38,7 +38,7 @@ class UserTastingNoteForm(ModelForm):
         model = TastingNoteModel
         
         # It includes all the fields of model  
-        fields = ['name','drumtong_rating','one_line_review','taste','taste_intensity','flavor','flavor_intensity','alchol_finish',]
+        fields = ['name','drumtong_rating','one_line_review','taste','taste_intensity','flavor','flavor_intensity','alchol_finish','etc','etc_intensity','long_review',]
 
 
 
@@ -55,4 +55,14 @@ class CommentModelForm(ModelForm):
 # 서치 폼
 class SearchForm(forms.Form):
     word = forms.CharField(label='Search Word')
-    
+
+
+
+# QnA 폼
+class qnaquestionform(ModelForm):
+    class Meta:
+        # To specify the model to be used to create form  
+        model = qnaquestionmodel
+        # It includes all the fields of model  
+        fields = ['question_title', 'question', 'is_public',]
+        # exclude = ('nickname','owner','pub_date','is_public')

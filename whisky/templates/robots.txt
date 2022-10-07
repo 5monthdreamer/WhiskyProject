@@ -1,3 +1,3 @@
 User-agent: *
 Allow:/
-Sitemap: http://jiyk528.pythonanywhere.com/sitemap.xml
+Sitemap: http://www.feelbarrel.com/sitemap.xml

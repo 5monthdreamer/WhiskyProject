@@ -29,18 +29,20 @@
 <main>
     <br>
 
+    
     <div class="container">
       <div class="row">
         <div class="col">
 
           <!-- 파일 첨부 후 자동 스캐닝 -->
           {% if file_url %}
-          <div class="card" >
+          <div class="card">
             <img src="{{ file_url }}" class="card-img-top" alt="No image">
             <br>
             <div class="card-body">
-              <h5 class="whisky-name">{{ result1 }}</h5>
-              <p class="whisky-percent">Percentage : {{ result2 }}</p>
+              <h5>{{inform}}</h5>
+              <!-- <h5 class="whisky-name">{{ result1 }}</h5>
+              <p class="whisky-percent">Percentage : {{ result2 }}</p> -->
             </div>
             <br>
           </div>
@@ -73,6 +75,8 @@
               </div>
             </div>
           </div>
+          <!-- 비로그인일 경우 발생 -->
+          <p>{{error_message}}</p>
           <br>
 
           <!-- 클릭하면 밑에 열림. 테이스팅노트 한줄평 완료 -->

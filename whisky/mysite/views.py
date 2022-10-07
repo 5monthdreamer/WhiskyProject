@@ -32,7 +32,7 @@ class HomeView(TemplateView):
 def home_main(request):
     
     obj = UploadImageModel.objects.exclude(owner__isnull=True)
-    images_public = obj.filter(is_public=True)
+    images_public = obj.filter(is_public=True).order_by('-pub_date')
 
     paginator = Paginator(images_public,9)
     page = request.GET.get('page')

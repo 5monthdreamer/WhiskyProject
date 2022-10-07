@@ -8,9 +8,10 @@
 
 
 {% block sidebar1 %}
-
+<br><br>
+{%if images %}
 <div class="row">
-    {% for m in images reversed %}
+    {% for m in images %}
     {% for p in m.imagefollowmodel_set.all %}
     {% if p.is_follow == True and p.follower == request.user %}
       <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
@@ -102,17 +103,50 @@
                             </td>
                             </tr>
                             <tr>
-                                <td colspan='2' class="center aligned">
-                                One Line Review
-                                <br>
-                                &nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;{{n.one_line_review}}
-                                
+                                <td>
+                                    One Line Review
                                 </td>
+                                <td></td>
                             </tr>
-                            
-
                         </tbody>
                         </table>
+                        <div style="overflow:auto; width:100%; height:50px; padding:2px;">
+                            &nbsp;&nbsp;{{n.one_line_review}}
+                        </div>
+                        <hr>
+    
+                        <!-- 추가 카테코리, 긴리뷰 보기 -->
+                        <div class="container" style="border-color:#5d38fd; text-align:center;">
+                            <a data-bs-toggle="collapse" href="#collapseextra{{n.id}}" style="color:#000000; ">
+                                <i class="fitted plus square outline icon"></i>&nbsp;
+                                Additional category
+                            </a>
+                        </div>
+    
+                        <div class="collapse" id="collapseextra{{n.id}}">
+                            <table class="table" >
+                                <tbody>
+                                    <tr class="center aligned">
+                                        <td style="width:40%;">
+                                        {{n.etc}}
+                                        </td>
+                                        <td style="text-align:center; width:60%;">
+                                        {{n.etc_intensity}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    <td colspan='2' class="center aligned">
+                                        Long Review
+                                    </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="overflow:auto; width:100%; height:150px; padding:5px;">
+                                &nbsp;&nbsp;{{n.long_review}}
+                            </div>
+    
+                            <hr>
+                        </div>
                         <hr>
 
                     {% endif %}
@@ -132,6 +166,10 @@
     <p>No whisky added.</p>
     {% endfor %}
 </div>
+{% else %}
+<br><br>
+<h4 style = "text-align: center;">{{error_message}}</h4>
+{% endif %}
 
 
 
