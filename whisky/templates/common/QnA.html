@@ -11,13 +11,13 @@
 <h2 class="text-center">Q & A</h2>
 <br>
 <div class="container">
-    <table class="table table-striped">
+    <table class="table table-striped" style="table-layout:fixed; width:100%; word-wrap:break-word; word-break:break-all;">
         <thead class="text-center">
             <tr>
-                <th>No.</th>
-                <th>Title</th>
-                <th>Questioner</th>
-                <th>Date</th>
+                <th width="3%">No.</th>
+                <th width="12%">Title</th>
+                <th width="5%">User</th>
+                <th width="4%">Date</th>
             </tr>
         </thead>
         <tbody>
@@ -25,39 +25,39 @@
                 {% if n.is_public is False %}
                     {% if n.questioner == request.user %}
                     <tr>
-                        <th>{{n.id}}</th>
-                        <th>
-                            <a data-bs-toggle="collapse" href="#collapseExample{{n.id}}" style="color:#000000">
+                        <th class="text-center">{{n.id}}</th>
+                        <th class="text-left">
+                            <a data-bs-toggle="collapse" href="#collapseExample{{n.id}}" style="color:#000000; word-wrap:break-word; word-break:break-all;">
                                 <i class="lock icon"></i>{{n.question_title}}
                             </a>
                         </th>
-                        <th>{{n.questioner}}</th>
-                        <th>{{n.pub_date.date}}</th>
+                        <th class="text-center">{{n.questioner}}</th>
+                        <th class="text-center">{{n.pub_date.date}}</th>
                     </tr>
 
-                    <div class="collapse" id="collapseExample{{n.id}}">
+                    <div class="collapse" id="collapseExample{{n.id}}" style="word-wrap:break-word; word-break:break-all;">
                         <div class="ui blue segment">
                             <strong>{{n.question_title}}</strong>
                             <br>
-                            Q : {{n.question}}
+                            Q : {{n.question}} ({{n.pub_date}})
                         </div>
                         {% for m in n.qnaanswermodel_set.all%}
-                            <div class="ui red segment">
-                                A : {{m.answer}}
+                            <div class="ui red segment" style="width:100%;">
+                                A : {{m.answer}} ({{m.pub_date}})
                             </div>
                         {% endfor %}
                     <br>
                     </div>
                     {% else %}
                     <tr>
-                        <th>{{n.id}}</th>
-                        <th>
+                        <th class="text-center">{{n.id}}</th>
+                        <th class="text-left">
                             <a data-bs-toggle="collapse" style="color:#000000">
                                 <i class="lock icon"></i>Secret Question
                             </a>
                         </th>
-                        <th>Anonymous</th>
-                        <th>{{n.pub_date.date}}</th>
+                        <th class="text-center">Anonymous</th>
+                        <th class="text-center">{{n.pub_date.date}}</th>
                     </tr>
 
                     {% endif %}
@@ -65,36 +65,36 @@
 
                 {% else %}
                 <tr>
-                    <th>{{n.id}}</th>
-                    <th>
-                        <a data-bs-toggle="collapse" href="#collapseExample{{n.id}}" style="color:#000000">
+                    <th class="text-center">{{n.id}}</th>
+                    <th class="text-left">
+                        <a data-bs-toggle="collapse" href="#collapseExample{{n.id}}" style="color:#000000; word-wrap:break-word; word-break:break-all;">
                             <i class="unlock icon"></i>{{n.question_title}}
                         </a>
                     </th>
-                    <th>{{n.questioner}}</th>
-                    <th>{{n.pub_date.date}}</th>
+                    <th class="text-center">{{n.questioner}}</th>
+                    <th class="text-center">{{n.pub_date.date}}</th>
                 </tr>
                 
-                <div class="collapse" id="collapseExample{{n.id}}">
+                <div class="collapse" id="collapseExample{{n.id}}" style="color:#000000; word-wrap:break-word; word-break:break-all;">
                     <div class="ui blue segment">
                         <strong>{{n.question_title}}</strong>
                         <br>
-                        Q : {{n.question}}
+                        Q : {{n.question}} ({{n.pub_date}})
                     </div>
                     {% for m in n.qnaanswermodel_set.all%}
                         {% if m.is_public is False %}
                             {% if n.questioner == request.user %}
-                            <div class="ui red segment">
-                                A : {{m.answer}}
+                            <div class="ui red segment" style="color:#000000; word-wrap:break-word; word-break:break-all;">
+                                A : {{m.answer}} ({{m.pub_date}})
                             </div>
                             {%else%}
                             <div class="ui red segment">
-                                A : Secret Answer
+                                A : <i class="lock icon"></i>Secret Answer
                             </div>
                             {%endif%}
                         {% else %}
-                        <div class="ui red segment">
-                            A : {{m.answer}}
+                        <div class="ui red segment" style="color:#000000; word-wrap:break-word; word-break:break-all;">
+                            A : {{m.answer}} ({{m.pub_date}})
                         </div>
                         {% endif %}
                     {% endfor %}
@@ -109,24 +109,6 @@
     </table>
 
     <br>
-    <form action="">
-        <div class="ui grey segment">
-            <i class="write icon"></i>Question Title
-            <textarea class="fluid" name="question_write" maxlength="50" id="" cols="40%" rows="1" style="width:100%;"></textarea>
-            <br><br>
-            <i class="write icon"></i>Ask a question
-            <textarea class="fluid" name="question_write" maxlength="1000" id="" cols="40%" rows="5" style="width:100%;"></textarea>
-            &nbsp; Public : &nbsp; {{form.is_public}}
-        </div>
-        <div style="text-align:right;">
-            <button type="submit" class="ui blue labeled icon button" id="submit-file">
-                <i class="icon edit"></i>Submit
-            </button>
-        </div>
-    </form>
-    <hr>
-    
-
     <div class="text-center">
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
@@ -146,6 +128,29 @@
             </ul>
           </nav>
     </div>
+
+
+    <hr>
+    
+    <form action="{% url 'common:qna_main' %}" method="post">
+        {% csrf_token %}
+        <div class="ui grey segment">
+            <i class="write icon"></i>Question Title
+            <textarea class="fluid" name="question_title" maxlength="50" id="" cols="40%" rows="1" style="width:100%;"></textarea>
+            <br><br>
+            <i class="write icon"></i>Ask a question
+            <textarea class="fluid" name="question" maxlength="1000" id="" cols="40%" rows="5" style="width:100%;"></textarea>
+            <br>
+            &nbsp; Public : &nbsp; {{form.is_public}}
+        </div>
+        <div style="text-align:right;">
+            <button type="submit" class="ui blue labeled icon button" id="submit-qna">
+                <i class="icon edit"></i>Submit
+            </button>
+        </div>
+    </form>
+
+    
 
     
 

@@ -42,6 +42,13 @@ def qna_main(request):
     page = request.GET.get('page')
     question = paginator.get_page(page)
     
-    
+    if request.method == 'POST':
+        form = qnaquestionform(request.POST)
+        
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.questioner = request.user
+            note.save()
+            
     
     return render(request, 'common/QnA.html', {'question':question, 'form':form})
