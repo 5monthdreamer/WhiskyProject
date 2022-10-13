@@ -9,6 +9,7 @@ from django.core.files.storage import FileSystemStorage
 # image form 저장
 from showcase.forms import *  
 from showcase.models import *
+from common.forms import *  
 
 from django.db.models import Count
 
@@ -23,6 +24,9 @@ from django.contrib.auth import get_user_model
 # Create your views here.
 def tastingnote(request):
 
+    form = UserProfileForm()
+    
+    
     if request.user.is_authenticated:
         obj = UploadImageModel.objects.filter(owner=request.user).order_by('-pub_date')
         
@@ -34,11 +38,11 @@ def tastingnote(request):
         followers = UserFollowModel.objects.filter(User=request.user).count()
         following = UserFollowModel.objects.filter(follower=request.user).count()
         
-        return render(request, 'tastingnote/tastingnote_main.html', {'images':images, 'following':following, 'followers':followers})
+        return render(request, 'tastingnote/tastingnote_main.html', {'form':form, 'images':images, 'following':following, 'followers':followers})
     else:
         error_message = "If you want to use more fantastic functions, Sign in!"
         
-        return render(request, 'tastingnote/tastingnote_main.html', {'error_message':error_message})
+        return render(request, 'tastingnote/tastingnote_main.html', {'form':form,'error_message':error_message})
 
 
 
@@ -111,6 +115,8 @@ def tastingnote_write(request, UploadImagekey_id):
                     long_review = form2.cleaned_data['long_review']
 
                     return render(request, 'tastingnote/tastingnote.html', {'name':name, 'drumtong_rating': drumtong_rating, 'one_line_review':one_line_review, 'taste':taste, 'taste_intensity':taste_intensity, 'flavor':flavor, 'flavor_intensity':flavor_intensity, 'alchol_finish':alchol_finish, 'etc':etc, 'etc_intensity':etc_intensity, 'long_review':long_review, 'the_uploadimagemodel':the_uploadimagemodel, 'file_url':file_url})
+                
+                return redirect('/')
                 
                     
             else:
@@ -392,3 +398,6 @@ def tastingnote_userfollow(request, userfollow_id):
             followmodel.save()
     
     return redirect('tastingnote:user_tastingnote', userfollow_id)
+
+
+

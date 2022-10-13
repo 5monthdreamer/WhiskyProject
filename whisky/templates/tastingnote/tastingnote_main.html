@@ -28,9 +28,22 @@
 
 <div class="card h-100 p-20" style="text-align:center">
     <div class="row">
-        <div class="col" style="text-align:right">
+        <div class="col">
             <br>
-            <img class="ui medium centered circular bordered image" src="https://produits.bienmanger.com/2943-0w0h0_Monkey_Shoulder_Triple_Malt_Scotch_Whisky.jpg" alt="" style="text-align:right">
+            <form action="{% url 'common:pofileimage_edit'%}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <div class="image_upload_input">
+                        <label for="chooseFile">
+                            {% if user.profileimage %}
+                            <img class="ui medium centered circular bordered image" style="object-fit: cover;"  src="{{user.profileimage.url}}">
+                            {% else %}
+                            <img class="ui medium centered circular bordered image" style="object-fit: cover;"  src="https://produits.bienmanger.com/2943-0w0h0_Monkey_Shoulder_Triple_Malt_Scotch_Whisky.jpg">
+                            <h5 style="text-align:center">Edit Profile Image</h5>
+                            {% endif %}
+                        </label>
+                    </div>
+                    <input type="file" id="chooseFile" name="profileimage" alt="Your photo!" accept="image/*" onchange="form.submit()">
+            </form>
             <br>
         </div>
         <div class="col" style="text-align:center">
@@ -66,10 +79,9 @@
                     </div>
                 </div>
             </div>
-            <br>
-            <div class="ui vertical divider">
+            <!-- <div class="ui vertical divider">
                 <i class="paw icon"></i>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

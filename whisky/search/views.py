@@ -1,4 +1,5 @@
 # Create your views here.
+from tkinter.tix import COLUMN
 from django.views.generic.base import TemplateView
 from django.views.generic import TemplateView, FormView
 
@@ -25,6 +26,29 @@ from django.contrib.auth import get_user_model
 class SearchFormView(FormView):
     form_class = SearchForm
     template_name = 'search/search_main.html'
+        
+    
+    def get_context_data(self):       
+
+        # 검색input에서 datalist값들 / 검색할때 자동으로 생성
+        # value vs value_list 차이 알기☆
+        whiskyname = UploadImageModel.objects.values_list('whiskyname', flat=True)
+        username = get_user_model().objects.values_list('username', flat=True)
+        nickname = get_user_model().objects.values_list('nickname', flat=True)
+        notename = TastingNoteModel.objects.values_list('name', flat=True)
+        
+        list = whiskyname.union(username, nickname, notename)
+        
+        global total_list
+        total_list = []
+        for li in list:
+            total_list = total_list + [li]
+        
+        context = {}
+        context['search_datalist'] = total_list
+        
+        return context
+    
 
     def form_valid(self,form): # post method로 값이 전달 됬을 경우
         word = '%s' %self.request.POST['word'] # 검색어
@@ -68,7 +92,26 @@ class SearchFormView(FormView):
         context['note_list'] = note_list # 검색된 결과를 컨텍스트 변수에 담는다.
         context['comment_list'] = comment_list # 검색된 결과를 컨텍스트 변수에 담는다.
         
+        
+        # 검색input에서 datalist값들 / 검색할때 자동으로 생성
+        # value vs value_list 차이 알기☆
+        whiskyname = UploadImageModel.objects.values_list('whiskyname', flat=True)
+        username = get_user_model().objects.values_list('username', flat=True)
+        nickname = get_user_model().objects.values_list('nickname', flat=True)
+        notename = TastingNoteModel.objects.values_list('name', flat=True)
+        
+        list = whiskyname.union(username, nickname, notename)
+        
+        global total_list
+        total_list = []
+        for li in list:
+            total_list = total_list + [str(li)]
+            
+        context['search_datalist'] = total_list
+        
+        
         return render(self.request, 'search/search_main.html', context)
+    
     
     
     

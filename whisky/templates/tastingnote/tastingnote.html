@@ -126,6 +126,12 @@
                     <option value="{{name}}">{{name}}</option>
                     {% endfor %}
                 </select>
+                <a data-bs-toggle="collapse" href="#collapseExample{{m.id}}" style="color:#000000">
+                    <i class="edit icon"></i><strong>Typing whiskyname directly</strong>
+                </a>
+                <div class="collapse" id="collapseExample{{m.id}}">
+                    <textarea name="whiskyname" id="" cols="20" rows="1" maxlength="100" required></textarea>
+                </div>
 
             </div>
             </div>
@@ -149,6 +155,13 @@
                     <option value="{{name}}">{{name}}</option>
                     {% endfor %}
                 </select>
+                <a data-bs-toggle="collapse" href="#collapseExample{{m.id}}" style="color:#000000">
+                    <i class="edit icon"></i><strong>Typing whiskyname directly</strong>
+                </a>
+                <div class="collapse" id="collapseExample{{m.id}}">
+                    <textarea name="whiskyname" id="" cols="20" rows="1" maxlength="100" required></textarea>
+                </div>
+                <br>
                 <p>※ If whisky name was already selected, you don't need to check again</p>
             </div>
             </div>
@@ -159,7 +172,7 @@
             <h4 class="ui dividing header">Tasting Note Name</h4>
             <div class="ui form">
             <div class="ui blue segment">
-                <textarea name="name" id="" cols="20" rows="1" required></textarea>
+                <textarea name="name" id="" cols="20" rows="1" maxlength="100" required></textarea>
             </div>
             </div>
 
@@ -344,7 +357,7 @@
             <br>
             <div class="collapse" id="collapseextra">
                 <h4 class="ui dividing header">
-                    <textarea name="etc" id="" cols="25" rows="1" style="border-color:purple;"></textarea>
+                    <textarea name="etc" maxlength="50" id="" cols="25" rows="1" style="border-color:purple;"></textarea>
                 </h4>
                 
                 <div class="ui form">

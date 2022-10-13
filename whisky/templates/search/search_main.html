@@ -29,12 +29,16 @@
 </div>
 <br>
 <main>
-
   <form action="{% url 'search:search_main' %}" method="post">
     {% csrf_token %}
     <div class="ui fluid center aligned search" style="text-align:center;">
       <div class="ui icon input">
-        <input class="prompt" name="word" type="text" placeholder="what you want to search">
+        <input class="prompt" list="search-options" name="word" type="text" placeholder="Search">
+        <datalist id="search-options">
+          {% for d in search_datalist %}
+          <option value={{d}}></option>
+          {% endfor %}
+        </datalist>
         &nbsp;&nbsp;
         <i class="search icon"></i>
         <input type="submit" value="Submit">
@@ -45,7 +49,6 @@
 
   <br>
   <hr>
-
 
   <div class="results" style="text-align:center; padding:20px;">
    

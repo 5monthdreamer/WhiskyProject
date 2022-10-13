@@ -5,6 +5,7 @@ from common.forms import UserForm
 # import all model, form
 from showcase.forms import *
 from showcase.models import *
+from common.forms import *
 
 # pagination 설정
 from django.core.paginator import Paginator
@@ -12,6 +13,11 @@ from django.core.paginator import Paginator
 # Django ORM
 from django.db.models import F, Sum, Count, Case, When
 
+# 이미지저장
+from django.core.files.storage import FileSystemStorage
+
+# 유저모델
+from django.contrib.auth import get_user_model
 
 
 def signup(request):
@@ -52,3 +58,22 @@ def qna_main(request):
             
     
     return render(request, 'common/QnA.html', {'question':question, 'form':form})
+
+
+
+def pofileimage_edit(request):
+    if request.user.is_authenticated:        
+        if request.method == "POST" and request.FILES:
+            form = UserProfileForm(request.POST, request.FILES, instance = request.user)
+            if form.is_valid():
+                form.save()
+                # user = form.save(commit=False)
+                # user.save()
+                # model.profileimage = form.cleaned_data['profileimage']
+                # model.save()
+                
+                # saved_image = form.cleaned_data['profileimage']
+                # fss = FileSystemStorage()
+                # file_url = fss.url(saved_image)
+                
+    return redirect('tastingnote:tastingnote')

@@ -8,8 +8,49 @@
 
 
 <url>
-  <loc>http://www.feelbarrel.com/</loc>
-  <lastmod>2022-04-25T08:20:55+00:00</lastmod>
+  <loc>https://www.feelbarrel.com/</loc>
+  <lastmod>2022-10-09T08:27:09+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://www.feelbarrel.com/search/</loc>
+  <lastmod>2022-10-09T08:27:09+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.feelbarrel.com/labelcanner/</loc>
+  <lastmod>2022-10-09T08:27:09+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.feelbarrel.com/tastingnote/</loc>
+  <lastmod>2022-10-09T08:27:09+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.feelbarrel.com/showcase/</loc>
+  <lastmod>2022-10-09T08:27:09+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.feelbarrel.com/common/qna/</loc>
+  <lastmod>2022-10-09T08:27:09+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.feelbarrel.com/common/login/</loc>
+  <lastmod>2022-10-09T08:27:09+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.feelbarrel.com/?page=2</loc>
+  <lastmod>2022-10-09T08:27:09+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.feelbarrel.com/?page=1</loc>
+  <lastmod>2022-10-09T08:27:09+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 
 

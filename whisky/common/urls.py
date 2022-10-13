@@ -9,4 +9,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('signup/', views.signup, name='signup'),
     path('qna/', views.qna_main, name='qna_main'),
+    path('pofileimage_edit/', views.pofileimage_edit, name='pofileimage_edit'),
 ]

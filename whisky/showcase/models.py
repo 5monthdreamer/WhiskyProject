@@ -32,7 +32,7 @@ class TastingNoteModel(models.Model):
     
     UploadImagekey = models.ForeignKey(UploadImageModel, on_delete=models.CASCADE)
     # notekey = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, db_column="note_id")
-    name = models.CharField(max_length=20) #required 넣기!!
+    name = models.CharField(max_length=100) #required 넣기!!
     drumtong_rating = models.IntegerField()
     one_line_review = models.CharField(max_length=100)
     taste = models.CharField(max_length=20)
