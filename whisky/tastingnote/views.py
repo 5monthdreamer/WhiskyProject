@@ -116,9 +116,10 @@ def tastingnote_write(request, UploadImagekey_id):
 
                     return render(request, 'tastingnote/tastingnote.html', {'name':name, 'drumtong_rating': drumtong_rating, 'one_line_review':one_line_review, 'taste':taste, 'taste_intensity':taste_intensity, 'flavor':flavor, 'flavor_intensity':flavor_intensity, 'alchol_finish':alchol_finish, 'etc':etc, 'etc_intensity':etc_intensity, 'long_review':long_review, 'the_uploadimagemodel':the_uploadimagemodel, 'file_url':file_url})
                 
-                return redirect('/')
+                return render(request, 'labelscanner/labelscanner.html')
                 
-                    
+                
+                  
             else:
                     
                 # return render(request, 'tastingnote/tastingnote.html')

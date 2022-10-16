@@ -49,17 +49,21 @@
                   </div>
   
                   <h3>Whisky Name</h3>
+                  <a data-bs-toggle="collapse" href="#collapseExample{{m.id}}" style="color:#000000">
+                      <i class="edit icon"></i><strong>Typing whiskyname directly</strong>
+                  </a>
+                  <div class="mb-3">
+                    <input name="whiskyname" class="form-control" type="text">
+                  </div>
+                  <a data-bs-toggle="collapse" href="#collapseExample{{m.id}}" style="color:#000000">
+                    <i class="edit icon"></i><strong>Or Choose whiskyname</strong>
+                  </a>
                   <select class="form-select" size="10" aria-label="size 3 select example" name="whiskyname">
                     {% for name in whiskynamelist %}
                     <option value="{{name}}">{{name}}</option>
                     {% endfor %}
                   </select>
-                  <a data-bs-toggle="collapse" href="#collapseExample{{m.id}}" style="color:#000000">
-                      <i class="edit icon"></i><strong>Typing whiskyname directly</strong>
-                  </a>
-                  <div class="collapse" id="collapseExample{{m.id}}">
-                      <textarea name="whiskyname" id="" cols="100" rows="1" maxlength="100" style="width:100%;" required></textarea>
-                  </div>
+
                   <br>
                   </div>
               </div>
