@@ -1,21 +1,9 @@
-{% extends 'base.html' %}  
+{% extends 'home.html' %}  
 
 {% load static %}
 
 {% block sidebar0 %}
 {{ block.super }}
-
-<script type="text/javascript">
-    function myFunction(value) {
-      var x = document.getElementById("myDIV"+value);
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
-    }
-</script>
-
 {% endblock %}
 
 {% block css1 %}
@@ -23,68 +11,65 @@
 {%endblock%}
 
 
-{% block sidebar1 %}
-<br>
 
-<div class="card h-100 p-20" style="text-align:center">
-    <div class="row">
-        <div class="col">
-            <br>
-            <form action="{% url 'common:pofileimage_edit'%}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                    <div class="image_upload_input">
-                        <label for="chooseFile">
-                            {% if user.profileimage %}
-                            <img class="ui medium centered circular bordered image" style="object-fit: cover;"  src="{{user.profileimage.url}}">
-                            {% else %}
-                            <img class="ui medium centered circular bordered image" style="object-fit: cover;"  src="https://produits.bienmanger.com/2943-0w0h0_Monkey_Shoulder_Triple_Malt_Scotch_Whisky.jpg">
-                            <h5 style="text-align:center">Edit Profile Image</h5>
-                            {% endif %}
-                        </label>
-                    </div>
-                    <input type="file" id="chooseFile" name="profileimage" alt="Your photo!" accept="image/*" onchange="form.submit()">
-            </form>
-            <br>
-        </div>
-        <div class="col" style="text-align:center">
-            <br>
+{% block sidebar1 %}
+    {% block intro %}
+    <div class="card h-100 p-20" style="text-align:center">
+        <div class="container text-center">
             <div class="row">
-                <p class="h3"><i class="user outline icon"></i>&nbsp;<strong>{{user.nickname}}</strong></p>
-                <p class="h5">{{user.username}}</p>
-            </div>
-            <hr>
-            <br>
-            <div class="row">
-                <div class="ui mini two statistics">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
                     <br>
-                    <div class="statistic">
-                        <div class="value">
-                            <i class="heart icon" style="font-size:4.5vh;"></i>
-                            <p style="font-size:3.5vh;">{{followers}}</p>
-                        </div>
-                        <br>
-                        <div class="label" style="font-size:1.5vh;">
-                            Followers
-                        </div>
+                    <div class="row">
+                        <form action="{% url 'common:pofileimage_edit'%}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                                <div class="image_upload_input">
+                                    <label for="chooseFile">
+                                        {% if user.profileimage %}
+                                        <img class="ui medium circular image" style="max-width:200px; max-height:250px; object-fit: cover; border: 2px solid rgb(212, 212, 212); "  src="{{user.profileimage.url}}" title="If you want to change Profile Image, Click it!">
+                                        {% else %}
+                                        <img class="ui medium centered circular bordered image" style="object-fit: cover;"  src="{%static 'img/plusimage2.png'%}" title="If you want to change Profile Image, Click it!">
+                                        <h5 style="text-align:center">Edit Profile Image</h5>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                                <input type="file" id="chooseFile" name="profileimage" alt="Your photo!" accept="image/*" onchange="form.submit()">
+                        </form>
+
+                        <p class="h3"><i class="user outline icon"></i>&nbsp;<strong>{{user.nickname}}</strong></p>
+                        <p class="h5">{{user.username}}</p>
                     </div>
-                    <div class="statistic">
-                        <div class="value">
-                            <i class="heart outline icon" style="font-size:4.5vh;"></i>
-                            <p style="font-size:3.5vh;">{{following}}</p>
-                        </div>
-                        <br>
-                        <div class="label" style="font-size:1.5vh;">
-                            Following
+                    <hr>
+                    <div class="row" style="text-align:center; font-size:1.2rem;">
+                        <div class="ui two column grid" style="padding:20px;">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="ui fluid card" style="border: 1px solid rgb(255, 221, 221); margin:10px; padding:20px;">
+                                        <div>
+                                            <i class="fitted red heart icon"></i>&nbsp;{{followers}}
+                                        </div>
+                                        <div style="margin-top:5px;">Followers</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="ui fluid card" style="border: 1px solid rgb(255, 221, 221); margin:10px; padding:20px;">
+                                        <div>
+                                            <i class="fitted red heart outline icon"></i>&nbsp;{{following}}
+                                        </div>
+                                        <div style="margin-top:5px;">Following</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-2"></div>
             </div>
-            <!-- <div class="ui vertical divider">
-                <i class="paw icon"></i>
-            </div> -->
         </div>
     </div>
-</div>
+    {% endblock %}
 
 <br>
 
@@ -128,285 +113,130 @@
 
 
 <!-- 테이스팅노트들 전시 -->
+<main>
+    {% if images %}
+        <h3 id="Tasting Note" class="ui top attached purple header">
+            <i class="angle right icon"></i>Tasting Note
+        </h3>
+        <br>
 
-{% if images %}
-<h3 id="Tasting Note" class="ui top attached purple header">
-    <i class="angle right icon"></i>Tasting Note
-</h3>
-<br>
-<div class="row">
-    {% for m in images %}
-    <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
-        <div class="card h-100 p-4">
+        {% block whiskyfeed %}
+        {{block.super}}
+            {% if m %}
+                {% block userinfor %}
+                <p style="text-align:right">{{m.pub_date}}</p>    
+                {% endblock %}
 
-            <p style="text-align:right">{{m.pub_date}}</p>    
-            <div class="card h-10 p-2">
-                <h3 style="text-align:center">{{m.whiskyname}}</h3>
-            </div>
-            <img id="{{m.id}}" src="{{ m.image.url }}" class="card-img-top">
-
-            <!-- 위스키 공개여부, 삭제 버튼 -->
-            <div class="ui three bottom attached buttons" style="background-color:#FFD9EC">
-                <div class="ui animated button" tabindex="0">
-                  <div class="visible content">
-                    <i class="edit icon"></i>
-                  </div>
-                  <div class="hidden content">
-                    <a href="{{m.id}}/editwhisky" style="color:#000000">Edit</a>
-                  </div>
-                </div>
-                <div class="ui animated button" tabindex="0">
-                  <div class="visible content">
-                    <i class="trash alternate outline icon"></i>
-                  </div>
-                  <div class="hidden content">
-                    <a href="{{m.id}}/deletewhisky" onclick="if(!confirm('Do you really want to delete this whisky?? \n(All whisky pictures and notes are gone)')){return false;}" style="color:#000000">Delete</a>
-                  </div>
-                </div>
-                <div class="ui animated button" tabindex="0">
-                  <div class="visible content">
-                    <i class="share square outline icon"></i>
-                  </div>
-                  <div class="hidden content">
-                    <a href="{{m.id}}/publicwhisky" style="color:#000000">Public : {{m.is_public}}</a>
-                  </div>
-                </div>
-            </div>
-
-
-            <!-- 노트 추가 / 노트보기 버튼 -->            
-            <br>
-            <div class="row" >
-                <div class="col" style="text-align:center">
-                    <div class="card h-10 p-2">
-                        <a href="{{m.id}}" style="color:#000000">
-                            <i class="plus square outline icon"></i>
-                            Add note
-                        </a>
+                <!-- 위스키 수정, 삭제, 공개여부 버튼 -->
+                {% block additionalbutton  %}
+                <div class="ui three bottom attached buttons" style="background-color:#FFD9EC">
+                    <div class="ui animated button" tabindex="0">
+                    <div class="visible content">
+                        <i class="edit icon"></i>
+                    </div>
+                    <div class="hidden content">
+                        <a href="{{m.id}}/editwhisky" style="color:#000000">Edit</a>
+                    </div>
+                    </div>
+                    <div class="ui animated button" tabindex="0">
+                    <div class="visible content">
+                        <i class="trash alternate outline icon"></i>
+                    </div>
+                    <div class="hidden content">
+                        <a href="{{m.id}}/deletewhisky" onclick="if(!confirm('Do you really want to delete this whisky?? \n(All whisky pictures and notes are gone)')){return false;}" style="color:#000000">Delete</a>
+                    </div>
+                    </div>
+                    <div class="ui animated button" tabindex="0">
+                    <div class="visible content">
+                        <i class="share square outline icon"></i>
+                    </div>
+                    <div class="hidden content">
+                        <a href="{{m.id}}/publicwhisky" style="color:#000000">Public : {{m.is_public}}</a>
+                    </div>
                     </div>
                 </div>
-                <div class="col" style="text-align:center">
-                    <div class="card h-10 p-2">
-                        <a id="buttondesign" onclick="myFunction({{m.id}})">
-                            <p style="text-align:center">
+                {%endblock%}
+
+                <!-- 노트 추가 / 노트보기 버튼 -->            
+                {% block addtastingnotebutton %}
+                <div class="row" >
+                    <div class="col" style="text-align:center">
+                        <div class="card h-10 p-2">
+                            <a href="{{m.id}}" style="color:#000000">
+                                <i class="plus square outline icon"></i>
+                                Add note
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col" style="text-align:center">
+                        <div class="card h-10 p-2">
+                            <a data-bs-toggle="collapse" href="#collapsenote{{m.id}}" style="color:#000000">
                                 <i class="list icon"></i>View notes
-                            </p>
-                        </a>    
-                    </div>
-                </div>
-            </div>
-
-            <br>
-
-
-            <!-- 클릭하면 밑에 열림. 테이스팅노트 한줄평 완료 -->
-            
-            <!-- 테이스팅 노트들 -->
-            <div id="myDIV{{m.id}}">
-                {% for n in m.tastingnotemodel_set.all %} 
-                <div class="card h-10 p-4">
-                    <div class="row">
-                        <div class="col">
-                            <p style="text-align:right">{{n.pub_date}}</p>
+                            </a>    
                         </div>
                     </div>
-                    <br>
-                    <div class="row">
-                        <h3><i class="paw icon"></i>{{n.name}}</h3>
-                    </div>
-                    <br>
-  
-                    <table class="table" >
-                    <thead>
-                        <tr>
-                        <th style="width:40%; text-align:center;">Category</th>
-                        <th style="width:60%; text-align:center;">Rating</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="center aligned">
-                        <td>
-                            Barrel Rating
-                        </td>
-                        <td style="text-align:center;">
-                            <p>
-                            {% if n.drumtong_rating == 1 %}
-                            <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
-                            {% elif n.drumtong_rating == 2 %}
-                            <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
-                            {% elif n.drumtong_rating == 3 %}
-                            <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
-                            {% elif n.drumtong_rating == 4 %}
-                            <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
-                            {% elif n.drumtong_rating == 5 %}
-                            <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
-                            {% endif %}
-                            </p>
-                        </td>
-                        </tr>
-                        <tr class="center aligned">
-                        <td>
-                            Taste
-                        </td>
-                        <td style="text-align:center;">
-                            {{n.taste}} ({{n.taste_intensity}})
-                        </td>
-                        </tr>
-                        <tr class="center aligned">
-                        <td>
-                            Flavor
-                        </td>
-                        <td style="text-align:center;">
-                            {{n.flavor}} ({{n.flavor_intensity}})
-                        </td>
-                        </tr>
-                        <tr class="center aligned">
-                        <td>
-                            Alchol Finish
-                        </td>
-                        <td style="text-align:center;">
-                            {{n.alchol_finish}}
-                        </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                One Line Review
-                            </td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                    </table>
-                    <div style="overflow:auto; width:100%; height:50px; padding:2px;">
-                        &nbsp;&nbsp;{{n.one_line_review}}
-                    </div>
-                    <hr>
-
-                    <!-- 추가 카테코리, 긴리뷰 보기 -->
-                    <div class="container" style="border-color:#5d38fd; text-align:center;">
-                        <a data-bs-toggle="collapse" href="#collapseextra{{n.id}}" style="color:#000000; ">
-                            <i class="fitted plus square outline icon"></i>&nbsp;
-                            Additional category
-                        </a>
-                    </div>
-
-                    <div class="collapse" id="collapseextra{{n.id}}">
-                        <table class="table" >
-                            <tbody>
-                                <tr class="center aligned">
-                                    <td style="width:40%;">
-                                    {{n.etc}}
-                                    </td>
-                                    <td style="text-align:center; width:60%;">
-                                    {{n.etc_intensity}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                <td colspan='2' class="center aligned">
-                                    Long Review
-                                </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div style="overflow:auto; width:100%; height:150px; padding:5px;">
-                            &nbsp;&nbsp;{{n.long_review}}
-                        </div>
-
-                        <hr>
-                    </div>
-
-
-                    <div class="row" style="padding:10px;">
-                        <p style="text-align:center;">Public : {{n.is_public}}</p>
-                    </div>
-                    
-
-                    <!-- 하단 테이스팅 노트 관련 버튼들  -->
-                    <div class="row" >
-                        <div class="col" style="text-align:center">
-                            <div class="card h-10 p-2">
-                                    <a href="{{n.id}}/edit">
-                                        <i class="edit icon"></i>
-                                        Edit
-                                    </a>
-                            </div>
-                        </div>
-                        <div class="col" style="text-align:center">
-                            <div class="card h-10 p-2">
-                                <a href="{{n.id}}/delete" onclick="if(!confirm('Do you really want to delete this note?')){return false;}">
-                                    <i class="eraser icon"></i>
-                                    Erase
-                                </a>    
-                            </div>
-                        </div>
-                        <div class="col" style="text-align:center">
-                            <div class="card h-10 p-2">
-                                <a href="{{n.id}}/public">
-                                    <i class="share square outline icon"></i>
-                                    Public
-                                </a>    
-                            </div>
-                        </div>
-                    </div>
-
-
                 </div>
                 <br>
-    
-                {% empty %}
-                <div class="card h-100 p-4">
-                    <p>No TastingNote added.</p>
+                {% endblock %}
+
+
+
+                <!-- 하단 테이스팅 노트 관련 버튼들  -->
+                {% block edittastingnotebutton %}
+                <div class="row" style="padding:10px;">
+                    <p style="text-align:center;">Public : {{n.is_public}}</p>
                 </div>
-                {% endfor %}
-            </div>
+                <div class="row" >
+                    <div class="col" style="text-align:center">
+                        <div class="card h-10 p-2">
+                            <a href="{{n.id}}/edit">
+                                <i class="edit icon"></i>
+                                Edit
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col" style="text-align:center">
+                        <div class="card h-10 p-2">
+                            <a href="{{n.id}}/delete" onclick="if(!confirm('Do you really want to delete this note?')){return false;}">
+                                <i class="eraser icon"></i>
+                                Erase
+                            </a>    
+                        </div>
+                    </div>
+                    <div class="col" style="text-align:center">
+                        <div class="card h-10 p-2">
+                            <a href="{{n.id}}/public">
+                                <i class="share square outline icon"></i>
+                                Public
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
 
+            {% endif %}
+        {% endblock %}
 
-        </div>
+    {% else %}
+        <br><br><br>
+        <h3 style="text-align:center">{{error_message}}</h3>
+        <!-- 버튼으로 노트 추가할 수 있게 만들기 -->
+        <br><br><br>
+    {% endif %}
+
+    {% block pagenation %}
+    {{block.super}}
+    {% endblock %}
+
+    <!-- 맨위로 버튼 생성 -->
+    {% block gotopbutton %}
+    <div style="position:fixed; bottom:50px; right:15px;">
+        <a href="#showcase" style="color:#000000"><i class="large caret square up outline icon"></i>Top</a>
     </div>
-    {% empty %}
-    <p>No whisky added.</p>
-    {% endfor %}
-
-</div>
-
-<br>
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    {% if images.has_previous %}
-    <li class="page-item"><a class="page-link" href="?page={{images.previous_page_number}}">Previous</a></li>
-    {% else %}
-    <li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
-    {% endif %}
-    
-    <li class="page-item disabled"><a class="page-link" href="">{{images.number}}/{{images.paginator.num_pages}}</a></li>
-    
-    {% if images.has_next %}
-    <li class="page-item"><a class="page-link" href="?page={{images.next_page_number}}">Next</a></li>
-    {% else %}
-    <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
-    {% endif %}
-  </ul>
-</nav>
+    {% endblock %}
 
 
+</main>
 
+{% endblock%}
 
-
-<br><hr><br>
-
-
-<!-- 맨위로 버튼 생성 -->
-<div style="position:fixed; bottom:50px; right:15px;">
-    <a href="#showcase" style="color:#000000"><i class="large caret square up outline icon"></i>Top</a>
-</div>
-
-
-{% else %}
-    <br><br><br>
-    <h3 style="text-align:center">{{error_message}}</h3>
-    <!-- 버튼으로 노트 추가할 수 있게 만들기 -->
-    <br><br><br>
-{% endif %}
-
-
-
-{%endblock%}

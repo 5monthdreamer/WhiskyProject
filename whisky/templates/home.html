@@ -31,8 +31,7 @@
 {% block sidebar1 %}
 <main>
 
-
-
+    {% block intro %}
     <div class="about">
       <div class="container">
         <div class="row d_flex">
@@ -60,102 +59,107 @@
         </div>
       </div>
     </div>
+    {% endblock %}
+
+    
 
     <br><hr>
     <h2 style="text-align:center" id="NewsFeed">News Feed</h2>
     <br>
+
+    
+    {% block whiskyfeed %}
     <div class="row" style="padding:20px;">
     {% for m in images %}
       <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
           <div class="card h-100 p-4">
+              {% block userinfor %}
+              <div class="row">
+                <div class="col">
+                  <a href="{% url 'tastingnote:user_tastingnote' m.owner.id %}" style="color:#000000; text-align:left;">
+                    {% if m.owner.profileimage %}
+                    <img style="width:40px; height:40px; object-fit: cover; border-radius: 50%; border: 1px solid rgb(212, 212, 212); "  src="{{m.owner.profileimage.url}}">
+                    {% else %}
+                    <i class="large user circle outline icon"></i>
+                    {% endif %}
+                    &nbsp;&nbsp;&nbsp;{{m.owner.username}}
+                  </a>
+                </div>
+              </div>
+              <br>
+              {% endblock %}
+
               
-              {% if m.is_public == True %}
-
-                
+              <div class="card h-10 p-2">
+                <h3 style="text-align:center">{{m.whiskyname}}</h3>
+              </div>
+              <br>
+              <img id="{{m.id}}" src="{{ m.image.url }}" class="card-img-top" style="max-height: 560px; object-fit: contain;">
+              {% block additionalbutton  %}{%endblock%}
+              <br>
+              <!-- 좋아요, 댓글, 저장버튼 -->
+              <div class="top attached card" style="padding:10px;">
                 <div class="row">
-                  <div class="col">
-                    <a href="{% url 'tastingnote:user_tastingnote' m.owner.id %}" style="color:#000000">
-                      <i class="large user circle outline icon"></i>&nbsp;&nbsp;&nbsp;{{m.owner.username}}
-                    </a>
+                  <div class="col" style="text-align:left">
+
+                    &nbsp;&nbsp;&nbsp;<i class="large heart red icon"></i>&nbsp;
+                    {% for follow in likecounting %}
+                      {% if follow.image == m.image %}
+                      {{follow.like_count}}
+                      {% endif %}
+                    {% endfor %}
+                    
+
+                    &nbsp;&nbsp;&nbsp;<i class="large bookmark blue icon"></i>&nbsp;
+                    {% for follow in followcounting %}
+                      {% if follow.image == m.image %}
+                      {{follow.follow_count}}
+                      {% endif %}
+                    {% endfor %}
+
+                  </div>
+                  <div class="col" style="text-align:right">
+                      <a data-bs-toggle="collapse" href="#collapseExample{{m.id}}" style="color:#000000">
+                        <i class="large icons">
+                          <i class="comments outline icon"></i>
+                        </i>
+                      </a>
+                      
+                      &nbsp;&nbsp;&nbsp;
+                      <a href="{% url 'home_imagelike' m.id %}" style="color:#000000" >
+                        <i class="large icons">
+                          <i class="heart outline icon"></i>
+                          {% for p in follow %}
+                            {% if p.UploadImagekey.id == m.id %}
+                              {% if p.is_like == True  %}
+                              <i class="corner red heart icon"></i></a>
+                              {% endif %}
+                            {% endif %}
+                          {% endfor %}
+                        </i>
+                      </a>
+                      &nbsp;&nbsp;&nbsp;
+                      <a href="{% url 'home_imagesave' m.id %}" style="color:#000000" >
+                        <i class="large icons">
+                          <i class="bookmark outline icon"></i>
+                          {% for p in follow %}
+                            {% if p.UploadImagekey.id == m.id %}
+                              {% if p.is_follow == True %}
+                              <i class="corner blue bookmark icon"></i>
+                              {% endif %}
+                            {% endif %}
+                          {% endfor %}
+                        </i>
+                      </a>
+                      &nbsp;&nbsp;&nbsp;
+
+
+                          
                   </div>
                 </div>
-                <br>
 
-                <div class="card h-10 p-2">
-                  <h3 style="text-align:center">{{m.whiskyname}}</h3>
-                </div>
-                <br>
-                <img src="{{ m.image.url }}" class="card-img-top" style="max-height: 560px; object-fit: contain;">
-                <br>
-                <!-- 좋아요, 댓글, 저장버튼 -->
-                <div class="top attached card" style="padding:10px;">
-                  <div class="row">
-                    <div class="col" style="text-align:left">
+              </div>
 
-                      &nbsp;&nbsp;&nbsp;<i class="large heart red icon"></i>&nbsp;
-                      {% for follow in likecounting %}
-                        {% if follow.image == m.image %}
-                        {{follow.like_count}}
-                        {% endif %}
-                      {% endfor %}
-                     
-
-                      &nbsp;&nbsp;&nbsp;<i class="large bookmark blue icon"></i>&nbsp;
-                      {% for follow in followcounting %}
-                        {% if follow.image == m.image %}
-                        {{follow.follow_count}}
-                        {% endif %}
-                      {% endfor %}
-
-                    </div>
-                    <div class="col" style="text-align:right">
-                        <a data-bs-toggle="collapse" href="#collapseExample{{m.id}}" style="color:#000000">
-                          <i class="large icons">
-                            <i class="comments outline icon"></i>
-                          </i>
-                        </a>
-                        
-                        &nbsp;&nbsp;&nbsp;
-                        <a href="{% url 'home_imagelike' m.id %}" style="color:#000000" >
-                          <i class="large icons">
-                            <i class="heart outline icon"></i>
-                            {% for p in follow %}
-                              {% if p.UploadImagekey.id == m.id %}
-                                {% if p.is_like == True  %}
-                                <i class="corner red heart icon"></i></a>
-                                {% endif %}
-                              {% endif %}
-                            {% endfor %}
-                          </i>
-                        </a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a href="{% url 'home_imagesave' m.id %}" style="color:#000000" >
-                          <i class="large icons">
-                            <i class="bookmark outline icon"></i>
-                            {% for p in follow %}
-                              {% if p.UploadImagekey.id == m.id %}
-                                {% if p.is_follow == True %}
-                                <i class="corner blue bookmark icon"></i>
-                                {% endif %}
-                              {% endif %}
-                            {% endfor %}
-                          </i>
-                        </a>
-                        &nbsp;&nbsp;&nbsp;
-
-
-                            
-                    </div>
-                  </div>
-
-                </div>
-
-
-
-
-              {% else %}
-                  <p>Anonymous</p>
-              {% endif %}
               <br>
 
               <!-- 댓글리스트 -->
@@ -191,25 +195,6 @@
                       {% endfor %}
                       
                       <br>
-                      <!-- <div class="comments">
-                        <div class="comment">
-                          <a class="avatar">
-                            <img src="/images/avatar/small/jenny.jpg">
-                          </a>
-                          <div class="content">
-                            <a class="author">Jenny Hess</a>
-                            <div class="metadata">
-                              <span class="date">Just now</span>
-                            </div>
-                            <div class="text">
-                              Elliot you are always so right :)
-                            </div>
-                            <div class="actions">
-                              <a class="reply">Reply</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div> -->
                     </div>
                     
                     <form class="ui reply form" action="{% url 'home_imagecomment' m.id %}" method="post">
@@ -229,25 +214,24 @@
 
               <!-- 테이스팅노트 -->
 
-              
+              {% block addtastingnotebutton %}
               <div class="card p-2 h-2">
                 <a data-bs-toggle="collapse" href="#collapsenote{{m.id}}" style="color:#000000">
                   <h4 style="text-align:center">Tasting note</h4>
                 </a>
               </div>
+              {% endblock %}
               
               <div class="collapse" id="collapsenote{{m.id}}">
-              
-              {% for n in m.tastingnotemodel_set.all %}
-              {% if n.is_public == True %}
-                <div class="card p-2 h-2">
+                {% for n in m.tastingnotemodel_set.all reversed %}
+                {% if n.is_public == True or m.owner == user %}
+                  <div class="card p-2 h-2">
                     <h3>
                       <i class="paw icon"></i>
                       {{n.name}}
                     </h3>
 
                     <table class="table" >
-
                       <thead>
                         <tr>
                           <th style="width:40%; text-align:center;">Category</th>
@@ -305,66 +289,68 @@
                           </td>
                           <td></td>
                       </tr>
-                  </tbody>
-                  </table>
-                  <div style="overflow:auto; width:100%; height:50px; padding:2px;">
-                      &nbsp;&nbsp;{{n.one_line_review}}
-                  </div>
-                  <hr>
+                    </tbody>
+                    </table>
+                    <div style="overflow:auto; width:100%; height:50px; padding:2px;">
+                        &nbsp;&nbsp;{{n.one_line_review}}
+                    </div>
+                    <hr>
 
-                  <!-- 추가 카테코리, 긴리뷰 보기 -->
-                  <div class="container" style="border-color:#5d38fd; text-align:center;">
-                      <a data-bs-toggle="collapse" href="#collapseextra{{n.id}}" style="color:#000000; ">
-                          <i class="fitted plus square outline icon"></i>&nbsp;
-                          Additional category
-                      </a>
-                  </div>
+                    <!-- 추가 카테코리, 긴리뷰 보기 -->
+                    <div class="container" style="border-color:#5d38fd; text-align:center;">
+                        <a data-bs-toggle="collapse" href="#collapseextra{{n.id}}" style="color:#000000; ">
+                            <i class="fitted plus square outline icon"></i>&nbsp;
+                            Additional category
+                        </a>
+                    </div>
 
-                  <div class="collapse" id="collapseextra{{n.id}}">
-                      <table class="table" >
-                          <tbody>
-                              <tr class="center aligned">
-                                  <td style="width:40%;">
-                                  {{n.etc}}
-                                  </td>
-                                  <td style="text-align:center; width:60%;">
-                                  {{n.etc_intensity}}
-                                  </td>
-                              </tr>
-                              <tr>
-                              <td colspan='2' class="center aligned">
-                                  Long Review
-                              </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                      <div style="overflow:auto; width:100%; height:150px; padding:5px;">
-                          &nbsp;&nbsp;{{n.long_review}}
-                      </div>
-
-                      <hr>
-                  </div>
-
-                </div> 
-                <br>
-              {% endif %}
+                    <div class="collapse" id="collapseextra{{n.id}}">
+                        <table class="table" >
+                            <tbody>
+                                <tr class="center aligned">
+                                    <td style="width:40%;">
+                                    {{n.etc}}
+                                    </td>
+                                    <td style="text-align:center; width:60%;">
+                                    {{n.etc_intensity}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                <td colspan='2' class="center aligned">
+                                    Long Review
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="overflow:auto; width:100%; height:150px; padding:5px;">
+                            &nbsp;&nbsp;{{n.long_review}}
+                        </div>
+                        <hr>
+                    </div>
+                  
                     
-              {% empty %}
-              
-              {% endfor %}
-              
+                    <br>
+                    {% block edittastingnotebutton %}{% endblock %}
+                  </div>
+
+                {% endif %}
+                      
+                {% empty %}
+                
+                {% endfor %}
+                
               </div>
           </div>
       </div>
-
-
-
-
-      {% empty %}
+    
+    {% empty %}
       <p>No whisky added.</p>
-      {% endfor %}
+    {% endfor %}
     </div>
+    {% endblock %}
+    
 
+    {% block pagenation %}
     <br>
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
@@ -383,17 +369,15 @@
         {% endif %}
       </ul>
     </nav>
-
-
-
-
-
     <br><hr><br>
+    {% endblock %}
 
+    {% block gotopbutton %}
     <!-- 맨위로 버튼 생성 -->
     <div style="position:fixed; bottom:50px; right:15px;">
       <a href="#NewsFeed" style="color:#000000"><i class="large caret square up outline icon"></i>Top</a>
     </div>
+    {% endblock %}
 
 </main>
 

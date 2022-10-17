@@ -1,3 +1,4 @@
+from distutils.log import error
 from django.views.generic.base import TemplateView
 
 from django.shortcuts import  render, get_object_or_404, redirect
@@ -13,6 +14,7 @@ from django.core.paginator import Paginator
 
 # Django ORM
 from django.db.models import F, Sum, Count, Case, When
+
 
 
 
@@ -107,8 +109,18 @@ def home_main(request):
 
 def home_imagesave(request, imagemodel_id):
     
-    the_uploadimagemodel = get_object_or_404(UploadImageModel, pk=imagemodel_id, is_public=True)
-    # ImageFollowModel.UploadImagekey = the_UploadImageModel
+    try:
+        # (홈화면) 공개된 경우
+        the_uploadimagemodel = get_object_or_404(UploadImageModel, pk=imagemodel_id, is_public=True)
+        # ImageFollowModel.UploadImagekey = the_UploadImageModel
+    
+    except:
+        try:
+            # (테이스팅노트화면) 비공개지만 자기 위스키인 경우
+            the_uploadimagemodel = get_object_or_404(UploadImageModel, pk=imagemodel_id, is_public=False, owner=request.user)
+        
+        except:
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
     
     try:
         the_ImageFollowModel = get_object_or_404(ImageFollowModel, UploadImagekey_id = imagemodel_id, follower=request.user)
@@ -127,13 +139,23 @@ def home_imagesave(request, imagemodel_id):
         the_ImageFollowModel.is_follow = True
         the_ImageFollowModel.save()
     
-    return redirect(reverse('home'))
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
 def home_imagelike(request, imagemodel_id):
     
-    the_uploadimagemodel = get_object_or_404(UploadImageModel, pk=imagemodel_id, is_public=True)
-    # ImageFollowModel.UploadImagekey = the_UploadImageModel
+    try:
+        # (홈화면) 공개된 경우
+        the_uploadimagemodel = get_object_or_404(UploadImageModel, pk=imagemodel_id, is_public=True)
+        # ImageFollowModel.UploadImagekey = the_UploadImageModel
+    
+    except:
+        try:
+            # (테이스팅노트화면) 비공개지만 자기 위스키인 경우
+            the_uploadimagemodel = get_object_or_404(UploadImageModel, pk=imagemodel_id, is_public=False, owner=request.user)
+        
+        except:
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
     
     try:
         the_ImagelikeModel = get_object_or_404(ImageFollowModel, UploadImagekey_id = imagemodel_id, follower=request.user)
@@ -152,15 +174,26 @@ def home_imagelike(request, imagemodel_id):
         the_ImagelikeModel.is_like = True
         the_ImagelikeModel.save()
     
-    return redirect(reverse('home'))
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
  
 
 
 def home_notesave(request, notemodel_id):
 
-    the_tastingnotemodel = get_object_or_404(NoteFollowModel, pk=notemodel_id, is_public=True)
-    # ImageFollowModel.UploadImagekey = the_UploadImageModel
+    try:
+        # 공개된 경우
+        the_tastingnotemodel = get_object_or_404(NoteFollowModel, pk=notemodel_id, is_public=True)
+        # ImageFollowModel.UploadImagekey = the_UploadImageModel
     
+    except:
+        try:
+            # 비공개지만 자기 위스키인 경우
+            the_tastingnotemodel = get_object_or_404(NoteFollowModel, pk=notemodel_id, is_public=False)
+            test = get_object_or_404(the_tastingnotemodel, owner=request.user)
+            
+        except:
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+            
     try:
         the_notefollowmodel = get_object_or_404(NoteFollowModel, UploadNotekey_id = notemodel_id, follower=request.user, is_follow = True)     
         the_notefollowmodel.delete()
@@ -172,40 +205,35 @@ def home_notesave(request, notemodel_id):
         the_notefollowmodel.is_follow = True
         the_notefollowmodel.save()
     
-    return redirect(reverse('home'))
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 
 def home_imagecomment(request, imagemodel_id):
     
-    the_uploadimagemodel = get_object_or_404(UploadImageModel, pk=imagemodel_id, is_public=True)
-    # ImageFollowModel.UploadImagekey = the_UploadImageModel
+    try:
+        # (홈화면) 공개된 경우
+        the_uploadimagemodel = get_object_or_404(UploadImageModel, pk=imagemodel_id, is_public=True)
+        # ImageFollowModel.UploadImagekey = the_UploadImageModel
     
+    except:
+        try:
+            # (테이스팅노트화면) 비공개지만 자기 위스키인 경우
+            the_uploadimagemodel = get_object_or_404(UploadImageModel, pk=imagemodel_id, is_public=False, owner=request.user)
+        
+        except:
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+        
     if request.method == 'POST':
         form1 = CommentModelForm(request.POST)
-        
+    
         if form1.is_valid():
-            
             post = form1.save(commit=False) # 여기서 오류나는 중 해결해야함
-            
             post.UploadImagekey = the_uploadimagemodel
             post.comment_user = request.user
-            
             post.save()
-                       
-           
 
-            return redirect(reverse('home'))
-    
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
     else:
-
-        return redirect(reverse('home'))
-
-
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
         
     
-
-
-
-
-
-

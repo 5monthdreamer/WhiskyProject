@@ -19,12 +19,19 @@ from django.core.paginator import Paginator
 # 유저모델 사용
 from django.contrib.auth import get_user_model
 
+# Django ORM
+from django.db.models import F, Sum, Count, Case, When
+
 
 
 # Create your views here.
 def tastingnote(request):
 
+    # 유저 프로필이미지 폼
     form = UserProfileForm()
+    
+    # 댓글 폼
+    form2 = CommentModelForm()
     
     
     if request.user.is_authenticated:
@@ -34,15 +41,74 @@ def tastingnote(request):
         page = request.GET.get('page')
         images = paginator.get_page(page)
         
-        
+        # 팔로워,팔로잉숫자 계산
         followers = UserFollowModel.objects.filter(User=request.user).count()
         following = UserFollowModel.objects.filter(follower=request.user).count()
         
-        return render(request, 'tastingnote/tastingnote_main.html', {'form':form, 'images':images, 'following':following, 'followers':followers})
+        
+                    
+        try:
+            follow = ImageFollowModel.objects.filter(follower=request.user)
+            
+            # Django DRM 미쳤다... 이래서 django가 중요. DB를 잘 조작하는게 핵심 능력. html은 표현만 할뿐
+            
+            follow_qs = ImageFollowModel.objects.annotate(
+                image=F('UploadImagekey__image')
+            ).values(
+                'image', 'is_follow', 'is_like'
+            )
+            
+            
+            followcounting = follow_qs.filter(
+                is_follow = True
+            ).values(
+                'image'
+            ).annotate(
+                follow_count = Count('is_follow')
+            )
+            
+            likecounting = follow_qs.filter(
+                is_like = True
+            ).values(
+                'image'
+            ).annotate(
+                like_count = Count('is_like')
+            )
+            
+                                                
+            return render(request, 'tastingnote/tastingnote_main.html', {'form':form, 'form2':form2, 'images':images, 'following':following, 'followers':followers, 'follow':follow, 'follow_qs':follow_qs, 'followcounting':followcounting, 'likecounting':likecounting})
+        
+        except:
+            
+            follow_qs = ImageFollowModel.objects.annotate(
+                image=F('UploadImagekey__image')
+            ).values(
+                'image', 'is_follow', 'is_like'
+            )
+            
+            
+            followcounting = follow_qs.filter(
+                is_follow = True
+            ).values(
+                'image'
+            ).annotate(
+                follow_count = Count('is_follow')
+            )
+            
+            likecounting = follow_qs.filter(
+                is_like = True
+            ).values(
+                'image'
+            ).annotate(
+                like_count = Count('is_like')
+            )
+            
+            return render(request, 'tastingnote/tastingnote_main.html', {'form':form, 'form2':form2, 'images':images, 'follow_qs':follow_qs, 'followers':followers, 'followcounting':followcounting, 'likecounting':likecounting})
+        
     else:
         error_message = "If you want to use more fantastic functions, Sign in!"
         
-        return render(request, 'tastingnote/tastingnote_main.html', {'form':form,'error_message':error_message})
+        return render(request, 'tastingnote/tastingnote_main.html', {'form':form, 'form2':form2, 'error_message':error_message})
 
 
 
@@ -358,6 +424,9 @@ def whisky_edit(request, UploadImagekey_id):
 # Create your views here.
 def tastingnote_user(request,user_id):
 
+    # 댓글 폼
+    form = CommentModelForm()
+
     obj = UploadImageModel.objects.filter(owner = user_id, is_public=True)
     
     paginator = Paginator(obj,9)
@@ -374,9 +443,66 @@ def tastingnote_user(request,user_id):
         followbutton = "Unfollow"
     else:
         followbutton = "Follow"
-        
     
-    return render(request, 'tastingnote/tastingnote_user.html', {'images':images, 'following':following, 'followers':followers, 'tastingnoteuser':tastingnoteuser, "followbutton":followbutton}) 
+    
+    try:
+        follow = ImageFollowModel.objects.filter(follower=request.user)
+        
+        # Django DRM 미쳤다... 이래서 django가 중요. DB를 잘 조작하는게 핵심 능력. html은 표현만 할뿐
+        
+        follow_qs = ImageFollowModel.objects.annotate(
+            image=F('UploadImagekey__image')
+        ).values(
+            'image', 'is_follow', 'is_like'
+        )
+        
+        
+        followcounting = follow_qs.filter(
+            is_follow = True
+        ).values(
+            'image'
+        ).annotate(
+            follow_count = Count('is_follow')
+        )
+        
+        likecounting = follow_qs.filter(
+            is_like = True
+        ).values(
+            'image'
+        ).annotate(
+            like_count = Count('is_like')
+        )
+        
+                                            
+        return render(request, 'tastingnote/tastingnote_user.html', {'form':form, 'images':images, 'following':following, 'followers':followers, 'follow':follow, 'follow_qs':follow_qs, 'followcounting':followcounting, 'likecounting':likecounting, 'tastingnoteuser':tastingnoteuser, "followbutton":followbutton})
+    
+    except:
+        
+        follow_qs = ImageFollowModel.objects.annotate(
+            image=F('UploadImagekey__image')
+        ).values(
+            'image', 'is_follow', 'is_like'
+        )
+        
+        
+        followcounting = follow_qs.filter(
+            is_follow = True
+        ).values(
+            'image'
+        ).annotate(
+            follow_count = Count('is_follow')
+        )
+        
+        likecounting = follow_qs.filter(
+            is_like = True
+        ).values(
+            'image'
+        ).annotate(
+            like_count = Count('is_like')
+        )
+        
+        return render(request, 'tastingnote/tastingnote_user.html', {'form':form, 'images':images, 'follow_qs':follow_qs, 'followers':followers, 'followcounting':followcounting, 'likecounting':likecounting, 'tastingnoteuser':tastingnoteuser, "followbutton":followbutton})
+        
 
 
 
