@@ -25,7 +25,6 @@
                             <img class="ui medium circular image" style="max-width:200px; max-height:250px; object-fit: cover; border: 2px solid rgb(212, 212, 212); "  src="{{tastingnoteuser.profileimage.url}}" title="If you want to change Profile Image, Click it!">
                             {% else %}
                             <img class="ui medium centered circular bordered image" style="object-fit: cover;"  src="{%static 'img/plusimage2.png'%}" title="If you want to change Profile Image, Click it!">
-                            <h5 style="text-align:center">Edit Profile Image</h5>
                             {% endif %}
                         </div>
                         <input type="file" id="chooseFile" name="profileimage" alt="Your photo!" accept="image/*" onchange="form.submit()">
@@ -35,14 +34,30 @@
                     </div>
                     <hr>
                     <div class="row" style="text-align:center; font-size:1.2rem;">
-                        <div class="ui two column grid" style="padding:20px;">
+                        <div class="ui two column grid" style="padding:30px;">
                             <div class="col">
                                 <div class="row">
                                     <div class="ui fluid card" style="border: 1px solid rgb(255, 221, 221); margin:10px; padding:20px;">
+                                        {% if followbutton == "None" %}
                                         <div>
-                                            <i class="fitted red heart icon"></i>&nbsp;{{followers}}
+                                            <i class="fitted red heart outline icon"></i>&nbsp;{{followers}}
                                         </div>
                                         <div style="margin-top:5px;">Followers</div>
+                                        {% elif followbutton == "Unfollow" %}
+                                        <a href="{% url 'tastingnote:userfollow_tastingnote' tastingnoteuser.id %}" style="color:black;">
+                                            <div>
+                                                <i class="fitted red heart icon"></i>&nbsp;{{followers}}
+                                            </div>
+                                            <div style="margin-top:5px;">Followers</div>
+                                        </a>
+                                        {% elif followbutton == "Follow" %}
+                                        <a href="{% url 'tastingnote:userfollow_tastingnote' tastingnoteuser.id %}" style="color:black;">
+                                            <div>
+                                                <i class="fitted red heart outline icon"></i>&nbsp;{{followers}}
+                                            </div>
+                                            <div style="margin-top:5px;">Followers</div>
+                                        </a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

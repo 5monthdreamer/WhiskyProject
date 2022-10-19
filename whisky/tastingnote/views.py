@@ -439,10 +439,14 @@ def tastingnote_user(request,user_id):
     followers = UserFollowModel.objects.filter(User=tastingnoteuser).count()
     following = UserFollowModel.objects.filter(follower=tastingnoteuser).count()
     
-    if UserFollowModel.objects.filter(User=tastingnoteuser, follower=request.user):
-        followbutton = "Unfollow"
+    if request.user.is_authenticated:        
+        if UserFollowModel.objects.filter(User=tastingnoteuser, follower=request.user):
+            followbutton = "Unfollow"
+        else:
+            followbutton = "Follow"
     else:
-        followbutton = "Follow"
+        followbutton = "None"
+    
     
     
     try:
@@ -501,7 +505,7 @@ def tastingnote_user(request,user_id):
             like_count = Count('is_like')
         )
         
-        return render(request, 'tastingnote/tastingnote_user.html', {'form':form, 'images':images, 'follow_qs':follow_qs, 'followers':followers, 'followcounting':followcounting, 'likecounting':likecounting, 'tastingnoteuser':tastingnoteuser, "followbutton":followbutton})
+        return render(request, 'tastingnote/tastingnote_user.html', {'form':form, 'images':images, 'follow_qs':follow_qs, 'following':following, 'followers':followers, 'followcounting':followcounting, 'likecounting':likecounting, 'tastingnoteuser':tastingnoteuser, "followbutton":followbutton})
         
 
 

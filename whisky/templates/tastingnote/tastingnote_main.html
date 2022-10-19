@@ -29,7 +29,6 @@
                                         <img class="ui medium circular image" style="max-width:200px; max-height:250px; object-fit: cover; border: 2px solid rgb(212, 212, 212); "  src="{{user.profileimage.url}}" title="If you want to change Profile Image, Click it!">
                                         {% else %}
                                         <img class="ui medium centered circular bordered image" style="object-fit: cover;"  src="{%static 'img/plusimage2.png'%}" title="If you want to change Profile Image, Click it!">
-                                        <h5 style="text-align:center">Edit Profile Image</h5>
                                         {% endif %}
                                     </label>
                                 </div>
@@ -46,7 +45,7 @@
                                 <div class="row">
                                     <div class="ui fluid card" style="border: 1px solid rgb(255, 221, 221); margin:10px; padding:20px;">
                                         <div>
-                                            <i class="fitted red heart icon"></i>&nbsp;{{followers}}
+                                            <i class="fitted red heart outline icon"></i>&nbsp;{{followers}}
                                         </div>
                                         <div style="margin-top:5px;">Followers</div>
                                     </div>
