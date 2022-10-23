@@ -26,9 +26,9 @@
                                 <div class="image_upload_input">
                                     <label for="chooseFile">
                                         {% if user.profileimage %}
-                                        <img class="ui medium circular image" style="max-width:200px; max-height:250px; object-fit: cover; border: 2px solid rgb(212, 212, 212); "  src="{{user.profileimage.url}}" title="If you want to change Profile Image, Click it!">
+                                        <img class="ui medium circular image" style="max-width:200px; max-height:250px; object-fit: cover; border: 2px solid rgb(212, 212, 212); "  src="{{user.profileimage.url}}" title="If you want to change Profile Image, Click it!" alt="Profile image" loading="lazy">
                                         {% else %}
-                                        <img class="ui medium centered circular bordered image" style="object-fit: cover;"  src="{%static 'img/plusimage2.png'%}" title="If you want to change Profile Image, Click it!">
+                                        <img class="ui medium centered circular bordered image" style="object-fit: cover;"  src="{%static 'img/plusimage2.png'%}" title="If you want to change Profile Image, Click it!" alt="Profile image" loading="lazy">
                                         {% endif %}
                                     </label>
                                 </div>
@@ -80,11 +80,11 @@
 <div class="ui centered cards">
     {% for m in images %}
     <div class="red card" style="height: 23vh; width: 19vw;" >
-        <img id="imagetag" style="height: 100%; object-fit: cover;" src="{{ m.image.url }}" onclick="location.href='#{{m.id}}'">
+        <img id="imagetag" style="height: 100%; object-fit: cover;" src="{{ m.image.url }}" onclick="location.href='#{{m.id}}'" alt="Whisky image" loading="lazy">
     </div>
     {% endfor %}
     <div class="blue card" style="height: 23vh; width: 19vw;">
-        <img src="{%static 'img/plusimage2.png'%}" style="height: 100%; object-fit: scale-down;" onclick="location.href='{% url 'labelscanner:main_labelscanner' %}'">
+        <img src="{%static 'img/plusimage2.png'%}" style="height: 100%; object-fit: scale-down;" onclick="location.href='{% url 'labelscanner:main_labelscanner' %}'" alt="Whisky image" loading="lazy">
     </div>
 </div>
 <br>

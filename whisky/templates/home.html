@@ -78,7 +78,7 @@
                 <div class="col">
                   <a href="{% url 'tastingnote:user_tastingnote' m.owner.id %}" style="color:#000000; text-align:left;">
                     {% if m.owner.profileimage %}
-                    <img style="width:40px; height:40px; object-fit: cover; border-radius: 50%; border: 1px solid rgb(212, 212, 212); "  src="{{m.owner.profileimage.url}}">
+                    <img style="width:40px; height:40px; object-fit: cover; border-radius: 50%; border: 1px solid rgb(212, 212, 212); "  src="{{m.owner.profileimage.url}}" alt="Profile image">
                     {% else %}
                     <i class="large user circle outline icon"></i>
                     {% endif %}
@@ -94,7 +94,7 @@
                 <h3 style="text-align:center">{{m.whiskyname}}</h3>
               </div>
               <br>
-              <img id="{{m.id}}" src="{{ m.image.url }}" class="card-img-top" style="max-height: 560px; object-fit: contain;">
+              <img id="{{m.id}}" src="{{ m.image.url }}" class="card-img-top" style="max-height: 560px; object-fit: contain;" alt="Whisky image" loading="lazy">
               {% block additionalbutton  %}{%endblock%}
               <br>
               <!-- 좋아요, 댓글, 저장버튼 -->
@@ -343,6 +343,7 @@
           </div>
       </div>
     
+
     {% empty %}
       <p>No whisky added.</p>
     {% endfor %}

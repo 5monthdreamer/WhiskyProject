@@ -427,7 +427,7 @@ def tastingnote_user(request,user_id):
     # 댓글 폼
     form = CommentModelForm()
 
-    obj = UploadImageModel.objects.filter(owner = user_id, is_public=True)
+    obj = UploadImageModel.objects.filter(owner = user_id, is_public=True).order_by('-pub_date')
     
     paginator = Paginator(obj,9)
     page = request.GET.get('page')

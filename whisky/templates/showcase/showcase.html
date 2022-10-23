@@ -1,4 +1,4 @@
-{% extends 'base.html' %}  
+{% extends 'home.html' %}  
 
 {% load static %}
 
@@ -6,171 +6,104 @@
 {{ block.super }}
 {% endblock %}
 
+{% block css1 %}
+  <link rel="stylesheet" type="text/css" href="{% static 'style_labelscanner.css'%}">
+{%endblock%}
+
 
 {% block sidebar1 %}
-<br><br>
-{%if images %}
-<div class="row">
+    {% block intro %}
+    {% endblock %}
+
+
+<!-- 사진들만 전시, 클릭할 경우 이동 -->
+<h3 id="showcase" class="ui top attached violet header">
+    <i class="angle right icon"></i>Saved Whisky
+</h3>
+<br>
+<div class="ui centered cards">
     {% for m in images %}
-    {% for p in m.imagefollowmodel_set.all %}
-    {% if p.is_follow == True and p.follower == request.user %}
-      <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
-          <div class="card h-100 p-4">
-                    <div>
-                    <div style="text-align:right">
-                        <a href="{% url 'home_imagesave' m.id %}" style="color:#000000">
-                        &nbsp;&nbsp;<i class="large bookmark icon"></i>
-                        </a>
-                    </div>
-                    </div>
-
-                    <div class="row">
-                    <i class="large user circle outline icon"></i>&nbsp;&nbsp;&nbsp;{{m.owner.username}}
-                    </div>
-                    <br>
-
-                    <div class="card h-10 p-2">
-                    <h3 style="text-align:center">{{m.whiskyname}}</h3>
-                    </div>
-                    <img src="{{ m.image.url }}" class="card-img-top">
-
-                <br>
-                <div class="card p-2">
-                    <h4 style="text-align:center">Tasting note</h4>
-                </div>
-
-
-                <div class="card h-10 p-4">
-                {% for n in m.tastingnotemodel_set.all %}
-                    {% if n.is_public == True %}
-
-                        <h3>
-                        <i class="paw icon"></i>
-                        {{n.name}}
-                        </h3>
-
-                        <table class="table" >
-
-                        <thead>
-                            <tr>
-                            <th style="width:40%; text-align:center;">Category</th>
-                            <th style="width:60%; text-align:center;">Rating</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="center aligned">
-                            <td>
-                                Barrel Rating
-                            </td>
-                            <td style="text-align:center;">
-                                <p>
-                                {% if n.drumtong_rating == 1 %}
-                                <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
-                                {% elif n.drumtong_rating == 2 %}
-                                <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
-                                {% elif n.drumtong_rating == 3 %}
-                                <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
-                                {% elif n.drumtong_rating == 4 %}
-                                <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
-                                {% elif n.drumtong_rating == 5 %}
-                                <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top"> <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" width="15" height="20" class="d-inline-block align-text-top">
-                                {% endif %}
-                                </p>
-                            </td>
-                            </tr>
-                            <tr class="center aligned">
-                            <td>
-                                Taste
-                            </td>
-                            <td style="text-align:center;">
-                                {{n.taste}} ({{n.taste_intensity}})
-                            </td>
-                            </tr>
-                            <tr class="center aligned">
-                            <td>
-                                Flavor
-                            </td>
-                            <td style="text-align:center;">
-                                {{n.flavor}} ({{n.flavor_intensity}})
-                            </td>
-                            </tr>
-                            <tr class="center aligned">
-                            <td>
-                                Alchol Finish
-                            </td>
-                            <td style="text-align:center;">
-                                {{n.alchol_finish}}
-                            </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    One Line Review
-                                </td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                        </table>
-                        <div style="overflow:auto; width:100%; height:50px; padding:2px;">
-                            &nbsp;&nbsp;{{n.one_line_review}}
-                        </div>
-                        <hr>
-    
-                        <!-- 추가 카테코리, 긴리뷰 보기 -->
-                        <div class="container" style="border-color:#5d38fd; text-align:center;">
-                            <a data-bs-toggle="collapse" href="#collapseextra{{n.id}}" style="color:#000000; ">
-                                <i class="fitted plus square outline icon"></i>&nbsp;
-                                Additional category
-                            </a>
-                        </div>
-    
-                        <div class="collapse" id="collapseextra{{n.id}}">
-                            <table class="table" >
-                                <tbody>
-                                    <tr class="center aligned">
-                                        <td style="width:40%;">
-                                        {{n.etc}}
-                                        </td>
-                                        <td style="text-align:center; width:60%;">
-                                        {{n.etc_intensity}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                    <td colspan='2' class="center aligned">
-                                        Long Review
-                                    </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div style="overflow:auto; width:100%; height:150px; padding:5px;">
-                                &nbsp;&nbsp;{{n.long_review}}
-                            </div>
-    
-                            <hr>
-                        </div>
-                        <hr>
-
-                    {% endif %}
-                        
-                {% empty %}
-                        
-                {% endfor %}
-                </div>
-                
-            </div>
-        </div>
-    {% endif %}
-    {% endfor %}
-
-
-    {% empty %}
-    <p>No whisky added.</p>
+    <div class="red card" style="height: 23vh; width: 19vw;" >
+        <img id="imagetag" style="height: 100%; object-fit: cover;" src="{{ m.image.url }}" onclick="location.href='#{{m.id}}'" alt="Whisky image" loading="lazy">
+    </div>
     {% endfor %}
 </div>
-{% else %}
-<br><br>
-<h4 style = "text-align: center;">{{error_message}}</h4>
-{% endif %}
+<br>
+<br>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+    {% if images.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{images.previous_page_number}}">Previous</a></li>
+    {% else %}
+    <li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
+    {% endif %}
+    
+    <li class="page-item disabled"><a class="page-link" href="">{{images.number}}/{{images.paginator.num_pages}}</a></li>
+    
+    {% if images.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{images.next_page_number}}">Next</a></li>
+    {% else %}
+    <li class="page-item disabled"><a class="page-link" href="">Next</a></li>
+    {% endif %}
+    </ul>
+</nav>
+<br>
+
+<hr>
 
 
+<!-- 테이스팅노트들 전시 -->
+<main>
+    {% if images %}
+        <h3 id="Tasting Note" class="ui top attached purple header">
+            <i class="angle right icon"></i>Saved Whisky List
+        </h3>
+        <br>
 
-{%endblock%}
+        {% block whiskyfeed %}
+        {{block.super}}
+            {% if m %}
+                {% block userinfor %}
+                {{block.super}}
+                {% endblock %}
+
+                <!-- 위스키 수정, 삭제, 공개여부 버튼 -->
+                {% block additionalbutton  %}
+                {%endblock%}
+
+                <!-- 노트 추가 / 노트보기 버튼 -->            
+                {% block addtastingnotebutton %}
+                {{block.super}}
+                {% endblock %}
+
+                <!-- 하단 테이스팅 노트 관련 버튼들  -->
+                {% block edittastingnotebutton %}
+                {% endblock %}
+
+            {% endif %}
+        {% endblock %}
+
+    {% else %}
+        <br><br><br>
+        <h3 style="text-align:center">{{error_message}}</h3>
+        <!-- 버튼으로 노트 추가할 수 있게 만들기 -->
+        <br><br><br>
+    {% endif %}
+
+    {% block pagenation %}
+    {{block.super}}
+    {% endblock %}
+
+    <!-- 맨위로 버튼 생성 -->
+    {% block gotopbutton %}
+    <div style="position:fixed; bottom:50px; right:15px;">
+        <a href="#showcase" style="color:#000000"><i class="large caret square up outline icon"></i>Top</a>
+    </div>
+    {% endblock %}
+    
+
+</main>
+
+{% endblock%}
+
+
