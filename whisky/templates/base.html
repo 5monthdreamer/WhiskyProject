@@ -65,9 +65,10 @@
   <div class="sidebar">
 
       <nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background-color:rgb(255, 255, 255); border-bottom: 1px solid rgb(221, 221, 221);">
-        <div class="container-fluid" >
+        <div class="container-fluid">
           <a class="navbar-brand" href="{% url 'home' %}" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
-              <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" height="50" class="d-inline-block align-text-top" alt="main favicon" loading="lazy">
+              &nbsp;&nbsp;
+              <img src="{%static 'img/base/mainlogoimg.png'%}" alt="" height="50" class="d-inline-block align-text-top" alt="main favicon" loading="lazy">&nbsp;
               <img src="{%static 'img/base/mainlogo.png'%}" alt="" height="50" class="d-inline-block align-text-top" alt="mainlogo image" loading="lazy">
           </a>
 
@@ -84,25 +85,25 @@
                 <a class="nav-link" href="#"></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'home' %}" style="padding-left: 20px;">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="{% url 'common:intro' %}" style="padding-left: 20px;">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'search:search_main' %}">Search</a>
+                <a class="nav-link" href="{% url 'search:search_main' %}" style="padding-left: 20px;">Search</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'labelscanner:main_labelscanner' %}">Scanner</a>
+                <a class="nav-link" href="{% url 'labelscanner:main_labelscanner' %}" style="padding-left: 20px;">Scanner</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'tastingnote:tastingnote' %}">Note</a>
+                <a class="nav-link" href="{% url 'tastingnote:tastingnote' %}" style="padding-left: 20px;">Note</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'showcase:main_showcase' %}">Showcase</a>
+                <a class="nav-link" href="{% url 'showcase:main_showcase' %}" style="padding-left: 20px;">Showcase</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'common:qna_main' %}">Q&A</a>
+                <a class="nav-link" href="{% url 'common:qna_main' %}" style="padding-left: 20px;">Q&A</a>
               </li>
 
 
@@ -140,6 +141,8 @@
             <i class="large user circle icon"></i>
             <a class="nav-link" href="{% url 'common:login' %}">Sign in</a>
             {% endif %}
+
+
 
 
           </div>

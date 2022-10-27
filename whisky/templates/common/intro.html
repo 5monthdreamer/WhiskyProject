@@ -1,0 +1,43 @@
+{%extends "base.html"%}
+
+{% load static %}
+
+{% block sidebar1 %}
+<br><br><br>
+
+<main>
+
+    <div class="w-100 overflow-hidden bg-gray-100" id="top">
+  
+        <div class="container position-relative">
+            <div class="col-12 col-lg-8 mt-0 h-100 position-absolute top-0 end-0 bg-cover aos-init aos-animate" data-aos="fade-left" style="background-image: url({%static 'img/intro/intro.jpg'%});">
+            </div>
+
+            <!-- <figure><img src="{%static 'img/base/mainlogoimg.png'%}" alt=""></figure> -->
+            
+            <br><br><br><br><br>
+            <div class="row">
+              
+              <div class="col-lg-7 py-vh-6 position-relative aos-init aos-animate" data-aos="fade-right" style="opacity:0.9; background-color: white; ">
+                <h1 class="display-1 fw-bold mt-5">Just Play Just Feel</h1>
+                <p class="lead">To be honest, this site is just a stupid playground. I don´t know how to make the site perfect, but I know how to make me feel free in it!</p>
+                <p class="lead">As I'm a true whisky lover, so I wanna show my whisky showcase to everyone and share how I feel freedom in this site. I love whisky and this playground. I'm so serious about it. So Just play and just feel free in this playground with us.</p>
+                <p class="lead">Join us!</p>
+                <div class="h5" style="text-align: right;">From just player&nbsp;&nbsp;&nbsp;</div>
+                <a href="{% url 'common:login' %}" class="btn btn-dark btn-xl shadow me-3 rounded-0 my-5">Get started now</a>
+                
+              </div>
+              
+              
+            </div>
+            <br><br><br><br><br>
+        </div>
+        
+    </div>
+    <br><br><br>
+
+    
+
+</main>
+
+{% endblock %}

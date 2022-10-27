@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
+from django.shortcuts import HttpResponse, render, redirect
 from common.forms import UserForm
 
 # import all model, form
@@ -18,6 +18,10 @@ from django.core.files.storage import FileSystemStorage
 
 # 유저모델
 from django.contrib.auth import get_user_model
+
+# 템플릿뷰
+from django.views.generic.base import TemplateView
+
 
 
 def signup(request):
@@ -77,3 +81,10 @@ def pofileimage_edit(request):
                 # file_url = fss.url(saved_image)
                 
     return redirect('tastingnote:tastingnote')
+
+
+
+class intro(TemplateView):
+    
+    template_name = 'common/intro.html'
+    

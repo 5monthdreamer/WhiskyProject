@@ -10,4 +10,5 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('qna/', views.qna_main, name='qna_main'),
     path('pofileimage_edit/', views.pofileimage_edit, name='pofileimage_edit'),
+    path('intro/', views.intro.as_view(), name='intro'),
 ]
